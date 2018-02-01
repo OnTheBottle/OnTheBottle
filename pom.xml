@@ -11,6 +11,9 @@
     <modules>
         <module>apiGateway</module>
         <module>coreLib</module>
+        <module>user-subsystem-webapp</module>
+        <module>message-subsystem-webapp</module>
+        <module>place-subsystem-webapp</module>
     </modules>
 
 
