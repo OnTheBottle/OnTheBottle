@@ -9,6 +9,7 @@
     <artifactId>user-subsystem-webapp</artifactId>
     <packaging>war</packaging>
     <name>user-subsystem-webapp Maven Webapp</name>
+
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
