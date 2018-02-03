@@ -3,7 +3,6 @@ package com.bottle.event.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 
 @Entity
