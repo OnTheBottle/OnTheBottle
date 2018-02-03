@@ -28,5 +28,4 @@ public class CreateEventServlet extends APIHandlerServlet.APIRequestHandler  {
         jsonObject.put("result", result);
         return jsonObject;
     }
-
 }
