@@ -1,10 +1,14 @@
 package com.bottle.event.service;
 
+import com.bottle.event.model.DAO.EntityDAO;
+import com.bottle.event.model.DAO.EntityDAOImpl;
 import com.bottle.event.model.entity.Event;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -22,17 +26,15 @@ public class EventRegistrationService {
     }
 
     public String registrationEvent(Map<String, String[]> paramMap) {
-        String resultData;
-
         String text = paramMap.get("text")[0];
-        String startTimeS = paramMap.get("start_time")[0];
-        String endTimeS = paramMap.get("end_time")[0];
-        Calendar startTime = Calendar.getInstance();
-        Calendar endTime = Calendar.getInstance();
+        int idPlace = Integer.parseInt(paramMap.get("idPlace")[0]);
+        Date startTime = new Date();
+        Date endTime = new Date();
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss", Locale.ENGLISH);
-            startTime.setTime(dateFormat.parse(startTimeS));
-            endTime.setTime(dateFormat.parse(endTimeS));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yy");
+            startTime = dateFormat.parse(paramMap.get("start_time")[0]);
+            endTime = dateFormat.parse(paramMap.get("end_time")[0]);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -41,8 +43,17 @@ public class EventRegistrationService {
         event.setText(text);
         event.setStartTime(startTime);
         event.setEndTime(endTime);
+        event.setIdPlace(idPlace);
 
-        resultData = "complete";
+        String resultData;
+        EntityDAO<Event> eventEntityDAO = new EntityDAOImpl<>();
+        try {
+            eventEntityDAO.addEntity(event);
+            resultData = "complete";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            resultData = "error";
+        }
         return resultData;
     }
 }
