@@ -1,7 +1,7 @@
 package com.bottle.gateway.rest;
 
-import com.bottle.gateway.conf.ReportCodec;
-import com.bottle.gateway.conf.WebApp;
+import com.bottle.gateway.codec.ReportCodec;
+import com.bottle.properties.conf.WebApp;
 import com.bottle.gateway.dto.ReportsWrapper;
 import com.bottle.properties.OnTheBottle;
 import com.bottle.properties.Verticle;

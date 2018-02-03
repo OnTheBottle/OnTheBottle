@@ -1,8 +1,8 @@
 package com.bottle.gateway.rest.controller;
 
 import com.bottle.gateway.dto.ReportsWrapper;
-import com.bottle.gateway.rest.exceptions.ErrorHandler;
-import com.bottle.gateway.rest.exceptions.ResponseExceptionFunction;
+import com.bottle.properties.exceptions.ErrorHandler;
+import com.bottle.properties.exceptions.ResponseExceptionFunction;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
@@ -10,7 +10,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import lombok.extern.slf4j.Slf4j;
-import com.bottle.gateway.rest.exceptions.ResponseException;
+import com.bottle.properties.exceptions.ResponseException;
 
 import static com.bottle.properties.utils.JsonFields.ERROR;
 import static com.bottle.properties.utils.JsonFields.ERROR_CODE;

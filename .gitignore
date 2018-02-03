@@ -2,3 +2,4 @@
 */target
 .vertx
 *.iml
+api-gateway/api-gateway.iml

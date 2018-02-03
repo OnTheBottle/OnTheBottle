@@ -14,8 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import com.bottle.gateway.conf.VertxConfiguration;
-import com.bottle.gateway.conf.WebApp;
+import com.bottle.properties.conf.VertxConfiguration;
+import com.bottle.properties.conf.WebApp;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;

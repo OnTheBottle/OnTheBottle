@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.bottle.gateway.conf.HawkularMetricsConfiguration,\
-com.bottle.gateway.conf.VertxConfiguration

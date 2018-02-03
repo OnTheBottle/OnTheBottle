@@ -6,15 +6,18 @@
 
     <groupId>on-the-bottle</groupId>
     <artifactId>on-the-bottle</artifactId>
-    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>apiGateway</module>
-        <module>coreLib</module>
-        <module>user-subsystem-webapp</module>
+        <module>api-gateway</module>
         <module>message-subsystem-webapp</module>
         <module>place-subsystem-webapp</module>
+        <module>user-subsystem-webapp</module>
     </modules>
-
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
 </project>
