@@ -10,10 +10,13 @@
         <property name="connection.characterEncoding">UTF-8</property>
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="show_sql">true</property>
-        <property name="hbm2ddl.auto">create</property>
-
-        <mapping class="com.bottle.event.model.entity.Event"/>
+        <property name="hbm2ddl.auto">update</property>
+        <property name="hibernate.cache.use_structured_entries">true</property>
+        <mapping class="com.bottle.messenger.hibernate.model.Message"/>
+        <mapping class="com.bottle.messenger.hibernate.model.Conversation"/>
+        <mapping class="com.bottle.messenger.hibernate.model.PersonToConversation"/>
+        <mapping class="com.bottle.messenger.hibernate.model.MessageToConversation"/>
     </session-factory>
 </hibernate-configuration>
