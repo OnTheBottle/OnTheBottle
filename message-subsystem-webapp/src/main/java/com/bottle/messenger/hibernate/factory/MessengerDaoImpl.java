@@ -23,12 +23,12 @@ public class MessengerDaoImpl implements MessengerDao {
     }
 
     @Override
-    public void addMessage(Message message) throws SQLException {
-
+    public boolean addMessage(Message message) throws SQLException {
+        return true;
     }
 
     @Override
-    public void addConversation(Conversation conversation) throws SQLException {
-
+    public boolean addConversation(Conversation conversation) throws SQLException {
+        return true;
     }
 }

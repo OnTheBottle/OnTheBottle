@@ -10,6 +10,6 @@ public interface MessengerDao {
     List<Conversation> getConversationsByUserId(int userId) throws SQLException;
     Message getLastMessageByConversationId(int conversationId) throws SQLException;
     List<Message> getMessageListByConversationId(int conversationId) throws SQLException;
-    void addMessage(Message message) throws SQLException;
-    void addConversation(Conversation conversation) throws SQLException;
+    boolean addMessage(Message message) throws SQLException;
+    boolean addConversation(Conversation conversation) throws SQLException;
 }
