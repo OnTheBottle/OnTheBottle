@@ -88,4 +88,20 @@ public class EventService {
         }
         return resultData;
     }
+
+    public String deleteEvent(Map<String, String[]> paramMap) {
+        long id = Long.parseLong(paramMap.get("id")[0]);
+
+        String resultData;
+        EntityDAO<Event> eventEntityDAO = new EventDAOImpl();
+        try {
+            Event event = eventEntityDAO.getEntityByID(id);
+            eventEntityDAO.deleteEntity(event);
+            resultData = "complete";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            resultData = "error";
+        }
+        return resultData;
+    }
 }

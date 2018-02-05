@@ -9,7 +9,10 @@ import java.util.Set;
 
 public class EventDAOImpl extends EntityDAOImpl<Event> {
     public Event getEntityByID(long id) {
-        return SESSION.get(Event.class, id);
+        SESSION.beginTransaction();
+        Event event = SESSION.get(Event.class, id);
+        SESSION.getTransaction().commit();
+        return event;
     }
 
     public Set<Event> getAllEntities() {
