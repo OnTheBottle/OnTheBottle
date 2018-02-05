@@ -8,14 +8,14 @@ import org.json.simple.JSONStreamAware;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-public class CreateEventServlet extends APIHandlerServlet.APIRequestHandler  {
-    private static final CreateEventServlet instance = new CreateEventServlet();
+public class UpdateEventServlet extends APIHandlerServlet.APIRequestHandler  {
+    private static final UpdateEventServlet instance = new UpdateEventServlet();
 
-    public static CreateEventServlet getInstance() {
+    public static UpdateEventServlet getInstance() {
         return instance;
     }
 
-    private CreateEventServlet() {
+    private UpdateEventServlet() {
     }
 
     @Override
@@ -24,7 +24,7 @@ public class CreateEventServlet extends APIHandlerServlet.APIRequestHandler  {
         EventService eventService = EventService.getEventService();
 
         JSONObject jsonObject = new JSONObject();
-        String result = eventService.registrationEvent(map);
+        String result = eventService.updateEvent(map);
         jsonObject.put("result", result);
         return jsonObject;
     }
