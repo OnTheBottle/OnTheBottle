@@ -21,7 +21,9 @@ public abstract class EntityDAOImpl<T> implements EntityDAO<T> {
     }
 
     public void deleteEntity(T object) {
-
+        SESSION.beginTransaction();
+        SESSION.delete(object);
+        SESSION.getTransaction().commit();
     }
 
     public abstract T getEntityByID(long id);
