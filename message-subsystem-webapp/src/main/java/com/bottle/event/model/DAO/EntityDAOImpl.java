@@ -5,8 +5,8 @@ import org.hibernate.Session;
 
 import java.util.Set;
 
-public class EntityDAOImpl<T> implements EntityDAO<T> {
-    private final static Session SESSION = HibernateSessionFactory.getSessionFactory().openSession();
+public abstract class EntityDAOImpl<T> implements EntityDAO<T> {
+    protected final static Session SESSION = HibernateSessionFactory.getSessionFactory().openSession();
 
     public void addEntity(T object) {
         SESSION.beginTransaction();
@@ -15,18 +15,16 @@ public class EntityDAOImpl<T> implements EntityDAO<T> {
     }
 
     public void updateEntity(T object) {
-
+        SESSION.beginTransaction();
+        SESSION.update(object);
+        SESSION.getTransaction().commit();
     }
 
     public void deleteEntity(T object) {
 
     }
 
-    public T getEntityByID(long id) {
-        return null;
-    }
+    public abstract T getEntityByID(long id);
 
-    public Set<T> getAllEntities() {
-        return null;
-    }
+    public abstract Set<T> getAllEntities();
 }
