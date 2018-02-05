@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Proba</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">"
+    <link href=css/style.css rel="stylesheet">"
+</head>
+<body>
+<button id="myBtn">Add post</button>
+<button id="showAllPosts" >Show All My Posts</button>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <span>Post text </span><br>
+        <textarea id="post" cols="30" rows="10"></textarea>
+        <span>Post image</span><br>
+        <span>Vision</span><br>
+        <select id="selectSecurity"  style="width: 100px;height: 20px">
+            <option>For me</option>
+            <option>For Friends</option>
+            <option>For All</option>
+        </select>
+        <button id="button" onclick="doPost()" style="margin-top: 10px">Do Post</button>
+    </div>
+</div>
+
+<div id="posts"></div>
+
+
+<script src="js/jquery-1.11.1.js"></script>
+<script src="js/doPost.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>

@@ -4,4 +4,15 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+  <servlet>
+    <servlet-name>DoPost</servlet-name>
+    <servlet-class>utils.DoPost</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>DoPost</servlet-name>
+    <url-pattern>/doPost</url-pattern>
+  </servlet-mapping>
+
 </web-app>
