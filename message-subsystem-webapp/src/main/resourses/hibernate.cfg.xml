@@ -14,5 +14,6 @@
         <property name="hbm2ddl.auto">update</property>
 
         <mapping class="com.bottle.news.dao.entity.Post"></mapping>
+        <mapping class="com.bottle.news.dao.entity.Security"></mapping>
     </session-factory>
 </hibernate-configuration>

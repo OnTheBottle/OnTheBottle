@@ -9,10 +9,9 @@ import java.util.Date;
 @Table(name = "posts")
 public class Post {
     @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "incrementID")
-    @GenericGenerator(name = "incrementID", strategy = "increment")
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "UUIDGenerator")
     private long id;
 
     @Column(name = "autor_id")
