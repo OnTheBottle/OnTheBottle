@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "posts")
@@ -12,7 +13,7 @@ public class Post {
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "UUIDGenerator")
-    private long id;
+    private UUID id;
 
     @Column(name = "autor_id")
     private long authorId;
@@ -29,11 +30,11 @@ public class Post {
     public Post() {
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
