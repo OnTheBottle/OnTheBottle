@@ -4,69 +4,71 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "posts")
 public class Post {
-    @Id
-    @Column(name = "id", updatable = false, nullable = false, unique = true)
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "UUIDGenerator")
-    private UUID id;
 
-    @Column(name = "autor_id")
-    private long authorId;
-
-    @Column(name = "date")
+    private String id;
+    private String authorId;
     private Date date;
+    private String post;
+    private Security securityId;
 
-    @Column(name = "text")
-    private String text;
-
-    @Column(name = "security_id")
-    private byte securityId;
+    //@PrimaryKeyJoinColumn
+    //@JoinColumn(name = "security_id")
+    //@OneToOne(cascade = CascadeType.ALL)
 
     public Post() {
     }
 
-    public UUID getId() {
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "POST_ID")
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public long getAuthorId() {
+    @Column(name = "AUTOR_ID")
+    public String getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(long authorId) {
-        this.authorId = authorId;
-    }
-
+    @Column(name = "DATE")
     public Date getDate() {
         return date;
+    }
+
+    @Column(name = "POST")
+    public String getPost() {
+        return post;
+    }
+
+    //@Column(name = "SECURITY_ID")
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="SECURITY_ID")
+    public Security getSecurityId() {
+        return securityId;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getText() {
-        return text;
+    public void setPost(String post) {
+        this.post = post;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public byte getSecurityId() {
-        return securityId;
-    }
-
-    public void setSecurityId(byte security) {
+    public void setSecurityId(Security security) {
         this.securityId = security;
     }
 }

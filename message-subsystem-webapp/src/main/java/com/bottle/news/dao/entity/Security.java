@@ -1,24 +1,28 @@
 package com.bottle.news.dao.entity;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "security")
 public class Security {
 
     @Id
-    @Column(name = "id", updatable = false, nullable = false, unique = true)
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "UUIDGenerator")
-    private byte id;
+    @GeneratedValue(generator = "INCREMENT")
+    @GenericGenerator(name = "INCREMENT", strategy = "increment")
+    @Column(name = "SECURITY_ID", unique = true)
+    private int id;
+
+    @Column(name = "NAME")
     private String name;
 
     public Security(){
     }
 
-    public byte getId(){
+    public int getId(){
         return id;
     }
 
@@ -26,7 +30,7 @@ public class Security {
         return name;
     }
 
-    public void setId(byte id) {
+    public void setId(int id) {
         this.id = id;
     }
 
