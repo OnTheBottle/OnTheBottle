@@ -16,9 +16,10 @@
         <property name="use_sql_comments">false</property>
         <property name="hibernate.connection.autocommit">false</property>
         <property name="current_session_context_class">thread</property>
-        <property name="hbm2ddl.auto">create</property>
+        <property name="hbm2ddl.auto">update</property>
 
         <mapping class="com.bottle.news.dao.entity.Post"></mapping>
         <mapping class="com.bottle.news.dao.entity.Security"></mapping>
+        <mapping class="com.bottle.news.dao.entity.User"></mapping>
     </session-factory>
 </hibernate-configuration>

@@ -1,5 +1,7 @@
 package com.bottle.news.dao.entity;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,11 +17,15 @@ public class Post {
     private String post;
     private Security securityId;
 
-    //@PrimaryKeyJoinColumn
-    //@JoinColumn(name = "security_id")
-    //@OneToOne(cascade = CascadeType.ALL)
-
     public Post() {
+    }
+
+    public Post(String id, String authorId, Date date, String post, Security securityId) {
+        this.id = id;
+        this.authorId = authorId;
+        this.date = date;
+        this.post = post;
+        this.securityId = securityId;
     }
 
     @Id
@@ -47,7 +53,7 @@ public class Post {
 
     //@Column(name = "SECURITY_ID")
     @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="SECURITY_ID")
+    @JoinColumn(name="SECURITY_ID",nullable = false)
     public Security getSecurityId() {
         return securityId;
     }
@@ -70,5 +76,17 @@ public class Post {
 
     public void setSecurityId(Security security) {
         this.securityId = security;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id='" + id + '\'' +
+                ", authorId='" + authorId + '\'' +
+                ", date=" + date +
+                ", post='" + post + '\'' +
+                ", securityId=" + securityId +
+                '}';
     }
 }
