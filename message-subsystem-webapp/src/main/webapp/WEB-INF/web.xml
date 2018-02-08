@@ -4,15 +4,45 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-
   <servlet>
     <servlet-name>DoPost</servlet-name>
     <servlet-class>utils.DoPost</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>Show</servlet-name>
+    <servlet-class>utils.Show</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>DeleteAll</servlet-name>
+    <servlet-class>utils.DeleteAll</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ShowLast3</servlet-name>
+    <servlet-class>utils.ShowLast3</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Show</servlet-name>
+    <url-pattern>/show</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>DoPost</servlet-name>
     <url-pattern>/doPost</url-pattern>
   </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>DeleteAll</servlet-name>
+    <url-pattern>/deleteAll</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ShowLast3</servlet-name>
+    <url-pattern>/showLast3</url-pattern>
+  </servlet-mapping>
+
 
 </web-app>

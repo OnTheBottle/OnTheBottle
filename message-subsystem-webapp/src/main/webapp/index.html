@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Proba</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">"
-    <link href=css/style.css rel="stylesheet">"
+    <link href =css/style.css rel="stylesheet">"
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
-<body>
-<button id="myBtn">Add post</button>
-<button id="showAllPosts" >Show All My Posts</button>
+<body onload="showLast3()">
+<button id="myBtn" >Add post</button>
+
 <div id="myModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -17,7 +19,7 @@
         <span>Post image</span><br>
         <span>Vision</span><br>
         <select id="selectSecurity"  style="width: 100px;height: 20px">
-            <option>For me</option>
+            <option>For Me</option>
             <option>For Friends</option>
             <option>For All</option>
         </select>
@@ -25,12 +27,23 @@
     </div>
 </div>
 
-<div id="posts"></div>
 
+<button id="all" style="margin-top: 10px">Show All</button>
+<div class="content">
+</div>
+
+
+<button type="submit" id="searchsubmit" value=""><i class="fa fa-plus-circle"></i></button>
+
+<form action="" method="post" name="Form" >
+    <div id="DynamicExtraFieldsContainer">
+    </div>
+</form>
 
 <script src="js/jquery-1.11.1.js"></script>
 <script src="js/doPost.js"></script>
 <script src="js/script.js"></script>
-
+<script src="js/show.js"></script>
+<script src="js/last30.js"></script>
 </body>
 </html>
