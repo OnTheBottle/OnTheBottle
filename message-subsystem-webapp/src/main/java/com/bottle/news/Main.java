@@ -1,46 +1,43 @@
 package com.bottle.news;
 
+import com.bottle.news.dao.FactoryDAO;
 import com.bottle.news.dao.HibernateFactory;
 import com.bottle.news.dao.entity.Post;
 import com.bottle.news.dao.entity.Security;
 import com.bottle.news.dao.entity.User;
+import javafx.geometry.Pos;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.jws.soap.SOAPBinding;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("BUGAGAGAGGAGA!!!!!");
-        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
 
-            FirstStart.initialization(session);
+        FirstStart.initialization();
 
-/*
-            Transaction transaction;
-            transaction = session.beginTransaction();
-            Post post = new Post();
-            post.setAuthorId("43657843654365L");
-            post.setDate(new Date());
-            post.setPost("Hello World");
-            session.save(post);
-            //post.setSecurityId(security1);
-            session.getTransaction().commit();
-            System.out.println(post);
+        //test getPosts()
+        List<Post> posts = FactoryDAO.getFactory().getPostDAO().getPosts(5);
+        for (Post p: posts){
+            System.out.println(p);
+        }
 
-            String ya = String.valueOf(UUID.randomUUID());
-            System.out.println(ya);
-*/
+        //test getPostById()
+        String postId = "cf227275-ef2b-4273-a0e5-4af707276372";
+        Post post = FactoryDAO.getFactory().getPostDAO().getPostById(postId);
+        System.out.println(post);
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        //test getPostsByUserId()
+        String userId = "8c339571-5b51-48d1-a70e-840071ab778c";
+        List<Post> postList = FactoryDAO.getFactory().getPostDAO().getPostsByUserId(userId);
+        for (Post p: postList){
+            System.out.println(p);
         }
 
         HibernateFactory.getSessionFactory().close();
-
     }
 }

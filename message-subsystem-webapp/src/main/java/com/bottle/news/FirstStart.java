@@ -1,5 +1,6 @@
 package com.bottle.news;
 
+import com.bottle.news.dao.HibernateFactory;
 import com.bottle.news.dao.entity.Post;
 import com.bottle.news.dao.entity.Security;
 import com.bottle.news.dao.entity.User;
@@ -13,18 +14,14 @@ public final class FirstStart {
     private static List<User> userList;
     private static List<Post> postList;
 
-    public static void initialization(Session session) {
-        initSecurity(session);
-        initUser(session);
-        initPost(session);
-    }
-
-    public static Set<User> getFriends() {
-        Set<User> friends = new HashSet<>();
-        friends.add(userList.get(1));
-        friends.add(userList.get(3));
-        friends.add(userList.get(4));
-        return friends;
+    public static void initialization() {
+        try (Session session = HibernateFactory.getSessionFactory().openSession()) {
+            initSecurity(session);
+            initUser(session);
+            initPost(session);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void initSecurity(Session session) {
@@ -86,7 +83,7 @@ public final class FirstStart {
         }
     }
 
-    private static void initPost(Session session) {
+    private static void initPost(Session session) throws InterruptedException {
         postList = session.createQuery("from Post ").setFirstResult(1).list();
         if (postList.size() == 0) {
             Transaction transaction = session.beginTransaction();
@@ -98,6 +95,7 @@ public final class FirstStart {
                     "Okey Okey Okey. It's first post!",
                     securityList.get(0)
             ));
+            Thread.sleep(3000);
             session.save(new Post(
                     String.valueOf(UUID.randomUUID()),
                     userList.get(1).getId(),
@@ -105,6 +103,7 @@ public final class FirstStart {
                     "It's second post!",
                     securityList.get(1)
             ));
+            Thread.sleep(3000);
             session.save(new Post(
                     String.valueOf(UUID.randomUUID()),
                     userList.get(0).getId(),
@@ -112,6 +111,7 @@ public final class FirstStart {
                     "It's third post!",
                     securityList.get(2)
             ));
+            Thread.sleep(3000);
             session.save(new Post(
                     String.valueOf(UUID.randomUUID()),
                     userList.get(0).getId(),
@@ -119,6 +119,7 @@ public final class FirstStart {
                     "It's fourth post!",
                     securityList.get(0)
             ));
+            Thread.sleep(3000);
             session.save(new Post(
                     String.valueOf(UUID.randomUUID()),
                     userList.get(2).getId(),
@@ -126,6 +127,7 @@ public final class FirstStart {
                     "It's fifth post!",
                     securityList.get(0)
             ));
+            Thread.sleep(3000);
             session.save(new Post(
                     String.valueOf(UUID.randomUUID()),
                     userList.get(2).getId(),
@@ -133,6 +135,7 @@ public final class FirstStart {
                     "djushfdjshfdsfh",
                     securityList.get(0)
             ));
+            Thread.sleep(3000);
             session.save(new Post(
                     String.valueOf(UUID.randomUUID()),
                     userList.get(2).getId(),
@@ -140,6 +143,7 @@ public final class FirstStart {
                     "ФЫывфы выавыаололд фвыакфыв вфыавфы авфыа фыва вфыавы",
                     securityList.get(0)
             ));
+            Thread.sleep(3000);
             session.save(new Post(
                     String.valueOf(UUID.randomUUID()),
                     userList.get(3).getId(),
@@ -147,6 +151,7 @@ public final class FirstStart {
                     "Hello all!",
                     securityList.get(0)
             ));
+            Thread.sleep(3000);
             session.save(new Post(
                     String.valueOf(UUID.randomUUID()),
                     userList.get(4).getId(),
@@ -154,6 +159,7 @@ public final class FirstStart {
                     "I want drink",
                     securityList.get(1)
             ));
+            Thread.sleep(3000);
             session.save(new Post(
                     String.valueOf(UUID.randomUUID()),
                     userList.get(5).getId(),
@@ -163,5 +169,13 @@ public final class FirstStart {
             ));
             transaction.commit();
         }
+    }
+
+    public static Set<User> getFriends() {
+        Set<User> friends = new HashSet<>();
+        friends.add(userList.get(1));
+        friends.add(userList.get(3));
+        friends.add(userList.get(4));
+        return friends;
     }
 }

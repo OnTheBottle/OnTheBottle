@@ -52,7 +52,7 @@ public class Post {
     }
 
     //@Column(name = "SECURITY_ID")
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="SECURITY_ID",nullable = false)
     public Security getSecurityId() {
         return securityId;
@@ -78,7 +78,6 @@ public class Post {
         this.securityId = security;
     }
 
-
     @Override
     public String toString() {
         return "Post{" +
@@ -86,7 +85,7 @@ public class Post {
                 ", authorId='" + authorId + '\'' +
                 ", date=" + date +
                 ", post='" + post + '\'' +
-                ", securityId=" + securityId +
+                ", securityId=" + securityId.getName() +
                 '}';
     }
 }
