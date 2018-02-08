@@ -48,6 +48,13 @@
             <version>1.16.4</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20171018</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>message-subsystem-webapp</finalName>

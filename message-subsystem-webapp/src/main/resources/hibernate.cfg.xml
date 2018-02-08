@@ -1,22 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sub_message</property>
-        <property name="connection.characterEncoding">UTF-8</property>
-        <property name="hibernate.connection.password">root</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="show_sql">true</property>
-        <property name="hbm2ddl.auto">update</property>
-        <property name="hibernate.cache.use_structured_entries">true</property>
-        <mapping class="com.bottle.messenger.hibernate.model.Message"/>
-        <mapping class="com.bottle.messenger.hibernate.model.Conversation"/>
-        <mapping class="com.bottle.messenger.hibernate.model.PersonToConversation"/>
-        <mapping class="com.bottle.messenger.hibernate.model.MessageToConversation"/>
-    </session-factory>
+  <session-factory>
+      <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="connection.url">jdbc:mysql://localhost:3306/onthebottle?useSSL=false</property>
+      <property name="connection.username">root</property>
+      <property name="connection.password">110119841</property>
+      <property name="connection.pool_size">10</property>
+      <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+      <property name="show_sql">true</property>
+      <property name="hbm2ddl.auto">update</property>
+      <property name="hibernate.connection.autocommit">false</property>
+      <property name="current_session_context_class">thread</property>
+
+    <mapping class="dao.Posts"/>
+ </session-factory>
+
 </hibernate-configuration>
