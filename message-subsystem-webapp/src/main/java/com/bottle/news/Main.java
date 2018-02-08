@@ -3,16 +3,8 @@ package com.bottle.news;
 import com.bottle.news.dao.FactoryDAO;
 import com.bottle.news.dao.HibernateFactory;
 import com.bottle.news.dao.entity.Post;
-import com.bottle.news.dao.entity.Security;
-import com.bottle.news.dao.entity.User;
-import javafx.geometry.Pos;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import javax.jws.soap.SOAPBinding;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class Main {
 
@@ -20,9 +12,9 @@ public class Main {
 
         FirstStart.initialization();
 
-        //test getPosts()
-        List<Post> posts = FactoryDAO.getFactory().getPostDAO().getPosts(5);
-        for (Post p: posts){
+        //test getAllPosts()
+        List<Post> posts = FactoryDAO.getFactory().getPostDAO().getAllPosts(5);
+        for (Post p : posts) {
             System.out.println(p);
         }
 
@@ -33,8 +25,13 @@ public class Main {
 
         //test getPostsByUserId()
         String userId = "8c339571-5b51-48d1-a70e-840071ab778c";
-        List<Post> postList = FactoryDAO.getFactory().getPostDAO().getPostsByUserId(userId);
-        for (Post p: postList){
+        List<Post> postList = FactoryDAO.getFactory().getPostDAO().getPostsByUser(userId, 10);
+        for (Post p : postList) {
+            System.out.println(p);
+        }
+
+        List<Post> friendsPosts = FactoryDAO.getFactory().getPostDAO().getPostsOfFriends(FirstStart.getFriends(), 20);
+        for (Post p : friendsPosts) {
             System.out.println(p);
         }
 
