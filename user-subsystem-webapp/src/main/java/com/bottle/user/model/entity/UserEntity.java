@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user", schema = "sub_user")
 public class UserEntity {
-    private int id;
+    private long id;
     private String login;
     private String password;
     private String email;
@@ -18,11 +18,11 @@ public class UserEntity {
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -136,7 +136,7 @@ public class UserEntity {
 
         return true;
     }
-
+/*
     @Override
     public int hashCode() {
         int result = id;
@@ -150,5 +150,5 @@ public class UserEntity {
         result = 31 * result + (country != null ? country.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         return result;
-    }
+    }*/
 }

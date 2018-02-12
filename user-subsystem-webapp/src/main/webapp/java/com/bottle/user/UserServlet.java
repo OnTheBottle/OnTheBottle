@@ -9,34 +9,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
+
+import com.bottle.user.model.DAO.*;
+import com.bottle.user.model.entity.*;
 
 public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("ShowAnimals in MainServlet servlet is working!");
+        System.out.println("MainServlet servlet is working!");
         JSONStreamAware responseJSONStreamAware;
         JSONObject resultJSONObject = new JSONObject();
-        JSONObject animalsJSONObject = new JSONObject();
 
- //       ArrayList<Animal> animalsList = Service.serviceShowAnimals();
+        UserDAOImpl userDAO = new UserDAOImpl();
+        UserEntity user = null;
 
- //       for(int i= 0; i<animalsList.size(); i++) {
- //           JSONObject animalJson = new JSONObject();
- //           animalJson.put("name", animalsList.get(i).getAnimalName());
- //           animalJson.put("age", animalsList.get(i).getAnimalAge());
- //           animalJson.put("class", animalsList.get(i).getAnimalClass());
- //           animalsJSONObject.put(i, animalJson);
- //       }
+        user = (UserEntity)userDAO.getEntityByID(3);
 
-//        resultJSONObject.put("result",animalsJSONObject);
- //       System.out.print("resultJSONObject is ");
-  //      System.out.println(resultJSONObject.toString());
-  //      responseJSONStreamAware = resultJSONObject;
-  //      try (Writer writer = resp.getWriter()) {
-  //          responseJSONStreamAware.writeJSONString(writer);
-  //      }
+        JSONObject userJson = new JSONObject();
+        userJson.put("id", user.getId());
+        userJson.put("name", user.getName());
+        userJson.put("surname", user.getSurname());
+        userJson.put("age", user.getAge());
+
+
+        resultJSONObject.put("result",userJson);
+        System.out.print("resultJSONObject is ");
+        System.out.println(resultJSONObject.toString());
+        responseJSONStreamAware = resultJSONObject;
+        try (Writer writer = resp.getWriter()) {
+            responseJSONStreamAware.writeJSONString(writer);
+        }
     }
 
 }

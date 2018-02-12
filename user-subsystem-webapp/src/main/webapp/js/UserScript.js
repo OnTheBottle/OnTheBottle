@@ -5,31 +5,33 @@ function showUsers() {
         url:"/showUsers",
         dataType: "json",
         success: function(data) {
-//            var responce = data.result;
-//            var table = document.createElement("table");
 
-//            var rowHeader = table.insertRow();
-/*            rowHeader.setAttribute("class", "tableheader");
-            var cellHeader1 = rowHeader.insertCell(0);
-            var cellHeader2 = rowHeader.insertCell(1);
-            var cellHeader3 = rowHeader.insertCell(2);
+            var responce = data.result;
+            //      document.getElementById("user-surname-label").innerText = responce.surname;
+            var table = document.createElement("table");
 
-            cellHeader1.innerText = "Name";
-            cellHeader2.innerText = "Age";
-            cellHeader3.innerText = "Class";
+            var nameRow = table.insertRow();
+            var nameRowTitle = nameRow.insertCell(0);
+            var nameRowData = nameRow.insertCell(1);
 
-            for (var animalNum in responce) {
+            nameRowTitle.innerText = "name";
+            nameRowData.innerText = responce.name;
 
-                var row = table.insertRow();
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
+            var surnameRow = table.insertRow();
+            var surnameRowTitle = surnameRow.insertCell(0);
+            var surnameRowData = surnameRow.insertCell(1);
 
-                cell1.innerText = responce[animalNum].name;
-                cell2.innerText = responce[animalNum].age;
-                cell3.innerText = responce[animalNum].class;
-            }
-            document.getElementById("tablearea").appendChild(table);*/
+            surnameRowTitle.innerText = "surname";
+            surnameRowData.innerText = responce.surname;
+
+            var ageRow = table.insertRow();
+            var ageRowTitle = ageRow.insertCell(0);
+            var ageRowData = ageRow.insertCell(1);
+
+            ageRowTitle.innerText = "age";
+            ageRowData.innerText = responce.age;
+
+            document.getElementById("table-area").appendChild(table);
         }
     })
 }

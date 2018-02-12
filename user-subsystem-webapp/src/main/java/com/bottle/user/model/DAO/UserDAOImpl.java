@@ -8,13 +8,17 @@ import java.util.Set;
 import com.bottle.user.model.entity.UserEntity;
 
 public class UserDAOImpl implements UserDAO {
-    @Override
-    public Object getEntityByID(long id) throws SQLException {
+
+    public Object getEntityByID(long id){
         Session session = null;
         UserEntity user = null;
         try{
             session = HibernateSessionFactory.getSessionFactory().openSession();
+            session.beginTransaction();
             user = session.load(UserEntity.class, id);
+
+            //         System.out.println("A name of user is " + user.getName());
+            session.getTransaction().commit();
         }catch (Exception e){
             System.err.println(e.getMessage());
         }finally{
@@ -25,7 +29,6 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    @Override
     public Set getAllEntities() throws SQLException {
         return null;
     }
