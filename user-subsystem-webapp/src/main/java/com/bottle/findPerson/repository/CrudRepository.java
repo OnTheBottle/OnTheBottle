@@ -1,4 +1,4 @@
-package com.bottle.findPerson;
+package com.bottle.findPerson.repository;
 
 import org.springframework.data.repository.Repository;
 

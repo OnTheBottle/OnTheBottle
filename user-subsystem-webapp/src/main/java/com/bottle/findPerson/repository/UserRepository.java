@@ -1,4 +1,6 @@
-package com.bottle.findPerson;
+package com.bottle.findPerson.repository;
+
+import com.bottle.findPerson.entity.User;
 
 import java.util.List;
 

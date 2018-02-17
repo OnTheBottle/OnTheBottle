@@ -8928,7 +8928,7 @@ jQuery.extend({
 			i,
 			// URL without anti-cache param
 			cacheURL,
-			// Response headers as string
+			// response headers as string
 			responseHeadersString,
 			// timeout handle
 			timeoutTimer,
@@ -8937,7 +8937,7 @@ jQuery.extend({
 			fireGlobals,
 
 			transport,
-			// Response headers
+			// response headers
 			responseHeaders,
 			// Create the final options object
 			s = jQuery.ajaxSetup( {}, options ),

@@ -1,4 +1,4 @@
-package com.bottle.findPerson;
+package com.bottle.findPerson.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
