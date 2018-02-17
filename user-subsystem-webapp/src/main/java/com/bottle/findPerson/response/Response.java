@@ -1,6 +1,6 @@
 package com.bottle.findPerson.response;
 
-import com.bottle.findPerson.entity.User;
+import com.bottle.findPerson.entity.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Response {
-    private List<User> listOfPersons;
+    private List<UserDTO> listOfPersons;
 }
