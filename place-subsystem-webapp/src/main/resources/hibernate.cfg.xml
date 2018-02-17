@@ -14,6 +14,6 @@
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">update</property>
         <property name="hibernate.cache.use_structured_entries">true</property>
-        <mapping class="com.bottle.pubs.list.Pub"/>
+        <mapping class="com.bottle.pubs.list.entity.Pub"/>
     </session-factory>
 </hibernate-configuration>
