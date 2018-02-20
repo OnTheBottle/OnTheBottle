@@ -1,4 +1,4 @@
-package dao;
+package com.bottle.userWall.dao;
 
 import java.sql.SQLException;
 import java.util.List;

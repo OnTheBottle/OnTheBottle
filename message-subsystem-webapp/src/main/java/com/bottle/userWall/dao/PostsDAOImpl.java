@@ -1,8 +1,8 @@
-package dao;
+package com.bottle.userWall.dao;
 
 import org.hibernate.*;
 import org.hibernate.criterion.Order;
-import utils.HibernateUtil;
+import com.bottle.userWall.utils.HibernateUtil;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

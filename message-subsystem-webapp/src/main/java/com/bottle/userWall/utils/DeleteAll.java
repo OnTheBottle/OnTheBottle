@@ -1,6 +1,6 @@
-package utils;
+package com.bottle.userWall.utils;
 
-import dao.Factory;
+import com.bottle.userWall.dao.Factory;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;

@@ -1,7 +1,7 @@
-package utils;
+package com.bottle.userWall.utils;
 
-import dao.Factory;
-import dao.Posts;
+import com.bottle.userWall.dao.Factory;
+import com.bottle.userWall.dao.Posts;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -12,8 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-
-public class Show extends HttpServlet {
+public class ShowLast3 extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -21,11 +20,11 @@ public class Show extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.setContentType( "charset=UTF-8" );
             PrintWriter out = response.getWriter();
-                    List<Posts> posts = Factory.getInstance().getPostDAO().getAllPosts();
-                    JSONObject jsonToReturn = new JSONObject();
-                    jsonToReturn.put( "posts", posts.toString() );
-                    out.println( jsonToReturn.toString() );
-            } catch (Exception e) {
+            List<Posts> posts = Factory.getInstance().getPostDAO().getPosts();
+            JSONObject jsonToReturn = new JSONObject();
+            jsonToReturn.put( "posts", posts.toString() );
+            out.println( jsonToReturn.toString() );
+        } catch (Exception e) {
             System.out.println( e.toString() );
         }
     }

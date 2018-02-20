@@ -1,4 +1,4 @@
-package dao;
+package com.bottle.userWall.dao;
 
 
 import javax.persistence.*;

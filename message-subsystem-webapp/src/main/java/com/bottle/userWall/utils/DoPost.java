@@ -1,8 +1,8 @@
-package utils;
+package com.bottle.userWall.utils;
 
 
-import dao.Factory;
-import dao.Posts;
+import com.bottle.userWall.dao.Factory;
+import com.bottle.userWall.dao.Posts;
 import org.json.JSONException;
 import org.json.JSONObject;
 

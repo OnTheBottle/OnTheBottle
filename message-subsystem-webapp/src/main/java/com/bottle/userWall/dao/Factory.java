@@ -1,4 +1,4 @@
-package dao;
+package com.bottle.userWall.dao;
 
 public class Factory {
     private static PostDAO postDAO=null;

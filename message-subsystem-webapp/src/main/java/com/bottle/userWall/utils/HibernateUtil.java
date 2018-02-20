@@ -1,4 +1,4 @@
-package utils;
+package com.bottle.userWall.utils;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

@@ -6,22 +6,22 @@
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
     <servlet-name>DoPost</servlet-name>
-    <servlet-class>utils.DoPost</servlet-class>
+    <servlet-class>com.bottle.userWall.utils.DoPost</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>Show</servlet-name>
-    <servlet-class>utils.Show</servlet-class>
+    <servlet-class>com.bottle.userWall.utils.Show</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>DeleteAll</servlet-name>
-    <servlet-class>utils.DeleteAll</servlet-class>
+    <servlet-class>com.bottle.userWall.utils.DeleteAll</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>ShowLast3</servlet-name>
-    <servlet-class>utils.ShowLast3</servlet-class>
+    <servlet-class>com.bottle.userWall.utils.ShowLast3</servlet-class>
   </servlet>
 
   <servlet-mapping>
