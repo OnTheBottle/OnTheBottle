@@ -19,6 +19,7 @@
         <hibernate.version>5.2.2.Final</hibernate.version>
         <lombok.version>1.16.20</lombok.version>
         <junit.version>3.8.1</junit.version>
+        <mysql-connector.version>6.0.6</mysql-connector.version>
     </properties>
 
     <dependencies>
@@ -47,6 +48,11 @@
         </dependency>
 
         <!-- Other -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
