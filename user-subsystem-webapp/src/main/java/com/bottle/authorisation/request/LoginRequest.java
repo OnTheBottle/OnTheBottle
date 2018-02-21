@@ -1,4 +1,4 @@
-package сom.bottle.authorisation.request;
+package com.bottle.authorisation.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

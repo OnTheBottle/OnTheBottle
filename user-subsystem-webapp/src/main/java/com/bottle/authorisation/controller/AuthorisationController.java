@@ -1,14 +1,14 @@
-package сom.bottle.authorisation.controller;
+package com.bottle.authorisation.controller;
+import com.bottle.authorisation.repository.AuthorisationRepository;
+import com.bottle.authorisation.request.RegistrationRequest;
+import com.bottle.authorisation.response.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import сom.bottle.authorisation.entity.User;
-import сom.bottle.authorisation.repository.AuthorisationRepository;
-import сom.bottle.authorisation.request.LoginRequest;
-import сom.bottle.authorisation.request.RegistrationRequest;
-import сom.bottle.authorisation.response.LoginResponse;
-import сom.bottle.authorisation.response.RegistrationResponse;
+import com.bottle.authorisation.entity.User;
+import com.bottle.authorisation.request.LoginRequest;
+import com.bottle.authorisation.response.RegistrationResponse;
 
 
 

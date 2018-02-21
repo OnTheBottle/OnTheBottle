@@ -1,4 +1,4 @@
-package сom.bottle.authorisation.entity;
+package com.bottle.authorisation.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 

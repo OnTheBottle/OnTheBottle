@@ -1,6 +1,6 @@
-package сom.bottle.authorisation.repository;
+package com.bottle.authorisation.repository;
 
-import сom.bottle.authorisation.entity.User;
+import com.bottle.authorisation.entity.User;
 
 import java.util.UUID;
 

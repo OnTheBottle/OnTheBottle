@@ -1,17 +1,15 @@
-package сom.bottle.authorisation.response;
-
+package com.bottle.authorisation.request;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class LoginResponse {
-    private UUID uuid;
+public class RegistrationRequest {
+    private String login;
+    private String password;
+    private String email;
 }

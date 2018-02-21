@@ -1,4 +1,4 @@
-package сom.bottle.authorisation.repository;
+package com.bottle.authorisation.repository;
 import org.springframework.data.repository.Repository;
 import java.io.Serializable;
 
