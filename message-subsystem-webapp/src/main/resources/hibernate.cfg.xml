@@ -15,5 +15,7 @@
         <property name="hbm2ddl.auto">create</property>
 
         <mapping class="com.bottle.event.model.entity.Event"/>
+        <mapping class="com.bottle.event.model.entity.User"/>
+        <mapping class="com.bottle.event.model.entity.Place"/>
     </session-factory>
 </hibernate-configuration>
