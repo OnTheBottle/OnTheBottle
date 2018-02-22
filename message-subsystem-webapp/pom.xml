@@ -17,7 +17,7 @@
         <springframework.web>1.5.9.RELEASE</springframework.web>
         <springframework.data>2.0.2.RELEASE</springframework.data>
         <hibernate.version>5.2.2.Final</hibernate.version>
-        <lombok.version>1.16.20</lombok.version>
+        <lombok.version>1.16.10</lombok.version>
         <junit.version>3.8.1</junit.version>
         <mysql-connector.version>6.0.6</mysql-connector.version>
     </properties>

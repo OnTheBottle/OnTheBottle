@@ -3,43 +3,47 @@ package com.bottle.event.service;
 import com.bottle.event.model.DAO.EntityDAOImpl;
 import com.bottle.event.model.DAO.EventDAOImpl;
 import com.bottle.event.model.entity.Event;
+import com.bottle.event.model.entity.Place;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 public class RegistrationEvent {
-    public String registrationEvent(Map<String, String> paramMap) {
-        String text = paramMap.get("text");
-        int idPlace = Integer.parseInt(paramMap.get("idPlace"));
-        Date startTime = new Date();
-        Date endTime = new Date();
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yy");
-            startTime = dateFormat.parse(paramMap.get("start_time"));
-            endTime = dateFormat.parse(paramMap.get("end_time"));
+    private static final RegistrationPlace REGISTRATION_PLACE = new RegistrationPlace();
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public String registrationEvent(Map<String, String> paramMap) {
+        UUID id = UUID.randomUUID();
+        String title = paramMap.get("title");
+        String text = paramMap.get("text");
+        Date startTime = formatDate(paramMap.get("start_time"));
+        Date endTime = formatDate(paramMap.get("end_time"));
+        Place place = REGISTRATION_PLACE.registration(UUID.fromString(paramMap.get("idPlace")));
 
         Event event = new Event();
+        event.setId(id);
+        event.setTitle(title);
         event.setText(text);
         event.setStartTime(startTime);
         event.setEndTime(endTime);
-        event.setIdPlace(idPlace);
+        event.setPlace(place);
 
-        String resultData;
-        EntityDAOImpl<Event> eventEntityDAO = new EventDAOImpl();
+        //TODO
+
+        return "complete";
+    }
+
+    private Date formatDate(String param) {
+        Date date = new Date();
         try {
-            eventEntityDAO.addEntity(event);
-            resultData = "complete";
-        } catch (SQLException e) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yy");
+            date = dateFormat.parse(param);
+        } catch (ParseException e) {
             e.printStackTrace();
-            resultData = "error";
         }
-        return resultData;
+        return date;
     }
 }

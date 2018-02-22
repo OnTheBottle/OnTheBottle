@@ -6,21 +6,14 @@ import com.bottle.event.model.entity.Event;
 
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.UUID;
 
 public class DeleteEvent {
     public String deleteEvent(Map<String, String> paramMap) {
-        long id = Long.parseLong(paramMap.get("id"));
+        UUID id = UUID.fromString(paramMap.get("id"));
 
-        String resultData;
-        EntityDAOImpl<Event> eventEntityDAO = new EventDAOImpl();
-        try {
-            Event event = eventEntityDAO.getEntityByID(id);
-            eventEntityDAO.deleteEntity(event);
-            resultData = "complete";
-        } catch (SQLException e) {
-            e.printStackTrace();
-            resultData = "error";
-        }
-        return resultData;
+        //TODO
+
+        return "complete";
     }
 }

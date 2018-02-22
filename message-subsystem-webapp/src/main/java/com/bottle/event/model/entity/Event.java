@@ -13,8 +13,8 @@ import java.util.UUID;
 
 @Entity
 @Data
-@EqualsAndHashCode(exclude = {"users", "places"})
-@ToString(exclude = {"users", "places"})
+@EqualsAndHashCode(exclude = {"users", "place"})
+@ToString(exclude = {"users", "place"})
 public class Event {
 
     @Id @GeneratedValue
@@ -28,14 +28,14 @@ public class Event {
     private String text;
 
     @Column(name = "Start_time", nullable = false)
-    private Instant startTime;
+    private Date startTime;
 
     @Column(name = "End_time", nullable = false)
-    private Instant endTime;
+    private Date endTime;
 
     @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
-    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
-    private Set<Place> places = new HashSet<>();
+    @OneToMany(mappedBy = "events", fetch = FetchType.LAZY)
+    private Place place;
 }
