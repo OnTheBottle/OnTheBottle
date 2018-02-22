@@ -8,7 +8,7 @@ public class EventService {
     private static final DeleteEvent DELETE_EVENT = new DeleteEvent();
 
     public String registrationEvent(Map<String, String> paramMap) {
-        return REGISTRATION_EVENT.registrationEvent(paramMap);
+        return REGISTRATION_EVENT.buildAndSave(paramMap);
     }
 
     public String updateEvent(Map<String, String> paramMap) {

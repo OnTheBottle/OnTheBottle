@@ -1,10 +1,12 @@
 package com.bottle.event.model.repository;
 
 import com.bottle.event.model.entity.Event;
+import com.bottle.event.model.entity.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,22 +20,22 @@ public class EventStore {
     }
 
     @Transactional
-    public void createOrUpdate(Event event) {
+    public void createOrUpdate(Event event) throws SQLException {
         eventRepository.save(event);
     }
 
     @Transactional
-    public void delete(UUID id) {
+    public void delete(UUID id) throws SQLException {
         eventRepository.delete(id);
     }
 
     @Transactional
-    public Event getById(UUID id) {
+    public Event getById(UUID id) throws SQLException {
         return eventRepository.getOne(id);
     }
 
     @Transactional
-    public List<Event> getAll() {
+    public List<Event> getAll() throws SQLException {
         return eventRepository.findAll();
     }
 }

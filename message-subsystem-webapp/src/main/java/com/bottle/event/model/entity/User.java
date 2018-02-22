@@ -25,8 +25,4 @@ public class User {
             inverseJoinColumns={@JoinColumn(name="event_id")}
     )
     private Set<Event> events = new HashSet<>();
-
-    public void addUserToAllEvents() {
-        events.forEach(event -> event.getUsers().add(this));
-    }
 }

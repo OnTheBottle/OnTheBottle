@@ -18,15 +18,11 @@ public class Place {
     @Column(columnDefinition = "BINARY(16)", name = "place_id")
     private UUID id;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name="Event_Places",
             joinColumns={@JoinColumn(name="place_id")},
             inverseJoinColumns={@JoinColumn(name="event_id")}
     )
     private Set<Event> events = new HashSet<>();
-
-    public void addPlaceToAllEvents() {
-        events.forEach(event -> event.getPlaces().add(this));
-    }
 }

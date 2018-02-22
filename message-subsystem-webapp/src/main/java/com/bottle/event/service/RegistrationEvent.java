@@ -1,9 +1,10 @@
 package com.bottle.event.service;
 
-import com.bottle.event.model.DAO.EntityDAOImpl;
-import com.bottle.event.model.DAO.EventDAOImpl;
 import com.bottle.event.model.entity.Event;
 import com.bottle.event.model.entity.Place;
+import com.bottle.event.model.repository.EventStore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -12,38 +13,33 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 public class RegistrationEvent {
-    private static final RegistrationPlace REGISTRATION_PLACE = new RegistrationPlace();
+    private BuildEvent buildEvent;
+    private UtilLink utilLink;
+    private EventStore eventStore;
 
-    public String registrationEvent(Map<String, String> paramMap) {
-        UUID id = UUID.randomUUID();
-        String title = paramMap.get("title");
-        String text = paramMap.get("text");
-        Date startTime = formatDate(paramMap.get("start_time"));
-        Date endTime = formatDate(paramMap.get("end_time"));
-        Place place = REGISTRATION_PLACE.registration(UUID.fromString(paramMap.get("idPlace")));
-
-        Event event = new Event();
-        event.setId(id);
-        event.setTitle(title);
-        event.setText(text);
-        event.setStartTime(startTime);
-        event.setEndTime(endTime);
-        event.setPlace(place);
-
-        //TODO
-
-        return "complete";
+    @Autowired
+    public RegistrationEvent(BuildEvent buildEvent, UtilLink utilLink, EventStore eventStore) {
+        this.buildEvent = buildEvent;
+        this.utilLink = utilLink;
+        this.eventStore = eventStore;
     }
 
-    private Date formatDate(String param) {
-        Date date = new Date();
+    public String buildAndSave(Map<String, String> paramMap) {
+        Event event = buildEvent.build(paramMap);
+
+        String result;
+
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yy");
-            date = dateFormat.parse(param);
-        } catch (ParseException e) {
+            eventStore.createOrUpdate(event);
+            utilLink.linkEventAndPlace(event);
+            result = "complete";
+        } catch (SQLException e) {
             e.printStackTrace();
+            result = "error";
         }
-        return date;
+
+        return result;
     }
 }

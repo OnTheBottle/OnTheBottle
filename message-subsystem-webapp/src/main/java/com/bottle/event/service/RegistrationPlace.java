@@ -1,13 +1,29 @@
 package com.bottle.event.service;
 
 import com.bottle.event.model.entity.Place;
+import com.bottle.event.model.repository.PlaceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class RegistrationPlace {
-    public Place registration(UUID id) { //TODO
-        Place place = new Place();
-        place.setId(id);
-        return place;
+    private PlaceRepository placeRepository;
+
+    @Autowired
+    public RegistrationPlace(PlaceRepository placeRepository) {
+        this.placeRepository = placeRepository;
+    }
+
+    public Place getPlace(UUID id) {
+        if (placeRepository.exists(id)) {
+            return placeRepository.getOne(id);
+        } else {
+            Place place = new Place();
+            place.setId(id);
+            placeRepository.save(place);
+            return place;
+        }
     }
 }
