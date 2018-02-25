@@ -1,6 +1,6 @@
 package com.bottle.event.service.event;
 
-import com.bottle.event.model.DTO.request.EventDTO;
+import com.bottle.event.model.DTO.request.EventRequestDTO;
 import com.bottle.event.model.entity.Event;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Service
 public class BuildEvent {
-    public Event build(EventDTO eventDTO) {
+    public Event build(EventRequestDTO eventDTO) {
         UUID id = UUID.randomUUID();
         String title = eventDTO.getTitle();
         String text = eventDTO.getText();

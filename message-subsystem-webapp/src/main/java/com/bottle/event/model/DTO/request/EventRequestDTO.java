@@ -3,7 +3,7 @@ package com.bottle.event.model.DTO.request;
 import lombok.Data;
 
 @Data
-public class EventDTO {
+public class EventRequestDTO {
     private String title;
     private String text;
     private String startTime;

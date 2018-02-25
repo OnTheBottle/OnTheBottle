@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GetterEvent {
@@ -18,16 +17,16 @@ public class GetterEvent {
         this.eventStore = eventStore;
     }
 
-    public List<String> getAllEvents() {
+    public Map<UUID, String> getAllEvents() {
         try {
-            List<String> idEvents = new ArrayList<>();
-            List<Event> events = eventStore.getAll();
+            Map<UUID, String> events = new HashMap<>();
+            List<Event> eventList = eventStore.getAll();
 
-            for (Event event : events) {
-                idEvents.add(String.valueOf(event.getId()));
+            for (Event event : eventList) {
+                events.put(event.getId(), event.getTitle());
             }
 
-            return idEvents;
+            return events;
         } catch (SQLException e) { // TODO
             e.printStackTrace();
             return null;

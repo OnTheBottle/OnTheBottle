@@ -1,6 +1,6 @@
 package com.bottle.event.service.event;
 
-import com.bottle.event.model.DTO.request.EventDTO;
+import com.bottle.event.model.DTO.request.EventRequestDTO;
 import com.bottle.event.model.entity.Event;
 import com.bottle.event.model.entity.Place;
 import com.bottle.event.model.repository.EventStore;
@@ -24,7 +24,7 @@ public class RegistrationEvent {
         this.placeService = placeService;
     }
 
-    public String createAndSave(EventDTO eventDTO) {
+    public String createAndSave(EventRequestDTO eventDTO) {
         Event event = buildEvent.build(eventDTO);
         Place place = placeService.createOrGet(eventDTO);
         event.setPlace(place);
