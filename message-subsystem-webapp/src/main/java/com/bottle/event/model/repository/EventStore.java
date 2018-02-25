@@ -1,7 +1,6 @@
 package com.bottle.event.model.repository;
 
 import com.bottle.event.model.entity.Event;
-import com.bottle.event.model.entity.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,3 +38,4 @@ public class EventStore {
         return eventRepository.findAll();
     }
 }
+

@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +35,7 @@ public class Event {
     @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
     private Set<User> users = new HashSet<>();
 
-    @OneToMany(mappedBy = "events", fetch = FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="place_id")
     private Place place;
 }

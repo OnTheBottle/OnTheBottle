@@ -1,39 +1,42 @@
-package com.bottle.event.service;
+package com.bottle.event.service.event;
 
 import com.bottle.event.model.entity.Event;
 import com.bottle.event.model.entity.Place;
 import com.bottle.event.model.repository.EventStore;
+import com.bottle.event.model.repository.PlaceStore;
+import com.bottle.event.service.place.AllPlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class RegistrationEvent {
     private BuildEvent buildEvent;
-    private UtilLink utilLink;
     private EventStore eventStore;
+    private PlaceStore placeStore;
+    private AllPlaceService placeService;
 
     @Autowired
-    public RegistrationEvent(BuildEvent buildEvent, UtilLink utilLink, EventStore eventStore) {
+    public RegistrationEvent(
+            BuildEvent buildEvent, EventStore eventStore, PlaceStore placeStore,
+            AllPlaceService placeService) {
         this.buildEvent = buildEvent;
-        this.utilLink = utilLink;
         this.eventStore = eventStore;
+        this.placeStore = placeStore;
+        this.placeService = placeService;
     }
 
-    public String buildAndSave(Map<String, String> paramMap) {
+    public String createAndSave(Map<String, String> paramMap) {
         Event event = buildEvent.build(paramMap);
+        Place place = placeService.createOrGet(paramMap);
+        event.setPlace(place);
 
         String result;
-
         try {
             eventStore.createOrUpdate(event);
-            utilLink.linkEventAndPlace(event);
+            placeStore.createOrUpdate(place);
             result = "complete";
         } catch (SQLException e) {
             e.printStackTrace();

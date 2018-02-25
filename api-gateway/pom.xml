@@ -35,6 +35,7 @@
         <guava.version>21.0</guava.version>
         <commons-lang3.version>3.5</commons-lang3.version>
         <hazelcast.version>3.6.3</hazelcast.version>
+        <springframework.data>2.0.2.RELEASE</springframework.data>
     </properties>
 
     <dependencies>
@@ -79,6 +80,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${springframework.data}</version>
         </dependency>
 
         <dependency>
@@ -187,11 +189,6 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>on-the-bottle</groupId>
-            <artifactId>coreLib</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
         <dependency>

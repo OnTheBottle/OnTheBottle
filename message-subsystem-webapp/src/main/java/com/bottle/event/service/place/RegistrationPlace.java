@@ -1,4 +1,4 @@
-package com.bottle.event.service;
+package com.bottle.event.service.place;
 
 import com.bottle.event.model.entity.Place;
 import com.bottle.event.model.repository.PlaceRepository;
@@ -16,7 +16,7 @@ public class RegistrationPlace {
         this.placeRepository = placeRepository;
     }
 
-    public Place getPlace(UUID id) {
+    public Place createOrGet(UUID id) {
         if (placeRepository.exists(id)) {
             return placeRepository.getOne(id);
         } else {
