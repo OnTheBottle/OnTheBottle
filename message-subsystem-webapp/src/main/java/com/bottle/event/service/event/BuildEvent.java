@@ -1,22 +1,23 @@
 package com.bottle.event.service.event;
 
+import com.bottle.event.model.DTO.request.EventDTO;
 import com.bottle.event.model.entity.Event;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
+import java.util.TimeZone;
 import java.util.UUID;
 
 @Service
 public class BuildEvent {
-    public Event build(Map<String, String> paramMap) {
+    public Event build(EventDTO eventDTO) {
         UUID id = UUID.randomUUID();
-        String title = paramMap.get("title");
-        String text = paramMap.get("text");
-        Date startTime = formatDate(paramMap.get("start_time"));
-        Date endTime = formatDate(paramMap.get("end_time"));
+        String title = eventDTO.getTitle();
+        String text = eventDTO.getText();
+        Date startTime = formatDate(eventDTO.getStartTime());
+        Date endTime = formatDate(eventDTO.getEndTime());
 
         Event event = new Event();
         event.setId(id);
@@ -31,7 +32,9 @@ public class BuildEvent {
     private Date formatDate(String param) {
         Date date = new Date();
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yy");
+            param = param.replace('T', ' ');
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             date = dateFormat.parse(param);
         } catch (ParseException e) {
             e.printStackTrace();

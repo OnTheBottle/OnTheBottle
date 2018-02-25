@@ -5,14 +5,33 @@
     <title>Title</title>
 </head>
 <body>
-<input type="text" id="personNumber"/>
-<input type="button" onclick="tryToGame()" value="GO!" >
-<label id="result"></label>
-<select name="select" class="select">
+<p>
+    Заголовок
+    <input type="text" id="title"/>
+</p>
+<p>
+    Текст
+    <input type="text" id="text"/>
+</p>
+<p>
+    Время старта
+    <input type="datetime-local" id="startTime"/>
+</p>
+<p>
+    Время завершения
+    <input type="datetime-local" id="endTime"/>
+</p>
+<p>
+    Место
+    <input type="text" id="place" placeholder="random" disabled/>
+</p>
+<input type="button" onclick="saveEvent()" value="GO!" >
+<label id="result"></label></p>
+<p><select name="select" class="select">
 </select>
 
-<script src="js/lib/jquery-1.11.1.js"></script>
-<script src="js/saveEvent.js"></script>
-<script src="js/loadAllEvents.js"></script>
+    <script src="js/lib/jquery-1.11.1.js"></script>
+    <script src="js/saveEvent.js"></script>
+    <script src="js/loadAllEvents.js"></script>
 </body>
 </html>

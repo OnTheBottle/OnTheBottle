@@ -1,4 +1,4 @@
-package com.bottle.event.model.DTO;
+package com.bottle.event.model.DTO.response;
 
 import lombok.Data;
 

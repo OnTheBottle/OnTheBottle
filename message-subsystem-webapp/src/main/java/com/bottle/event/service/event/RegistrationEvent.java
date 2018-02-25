@@ -1,5 +1,6 @@
 package com.bottle.event.service.event;
 
+import com.bottle.event.model.DTO.request.EventDTO;
 import com.bottle.event.model.entity.Event;
 import com.bottle.event.model.entity.Place;
 import com.bottle.event.model.repository.EventStore;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.Map;
 
 @Service
 public class RegistrationEvent {
@@ -24,9 +24,9 @@ public class RegistrationEvent {
         this.placeService = placeService;
     }
 
-    public String createAndSave(Map<String, String> paramMap) {
-        Event event = buildEvent.build(paramMap);
-        Place place = placeService.createOrGet(paramMap);
+    public String createAndSave(EventDTO eventDTO) {
+        Event event = buildEvent.build(eventDTO);
+        Place place = placeService.createOrGet(eventDTO);
         event.setPlace(place);
 
         String result;
@@ -42,3 +42,4 @@ public class RegistrationEvent {
         return result;
     }
 }
+
