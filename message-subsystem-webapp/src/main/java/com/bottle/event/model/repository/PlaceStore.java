@@ -37,4 +37,9 @@ public class PlaceStore {
     public List<Place> getAll() throws SQLException {
         return placeRepository.findAll();
     }
+
+    @Transactional
+    public boolean exists(UUID id) throws SQLException {
+        return placeRepository.exists(id);
+    }
 }

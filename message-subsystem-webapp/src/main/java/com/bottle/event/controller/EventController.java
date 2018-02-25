@@ -1,6 +1,7 @@
 package com.bottle.event.controller;
 
-import com.bottle.event.model.DTO.ResponseDTO;
+import com.bottle.event.model.DTO.ListResponseDTO;
+import com.bottle.event.model.DTO.StringResponseDTO;
 import com.bottle.event.service.event.AllEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,17 +21,25 @@ public class EventController {
         this.allEventService = allEventService;
     }
 
-    @PostMapping(path = "/doGame")
+    @PostMapping(path = "/saveEvent")
     @ResponseBody
-    public ResponseDTO createEvent() { //TODO
+    public StringResponseDTO createEvent() { //TODO
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("title", "Test");
         paramMap.put("text", "Test text");
         paramMap.put("start_time", "12:25 23.02.18");
         paramMap.put("end_time", "17:25 23.02.18");
         paramMap.put("idPlace", String.valueOf(UUID.randomUUID()));
-        ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setResult(allEventService.registrationEvent(paramMap));
-        return responseDTO;
+        StringResponseDTO stringResponseDTO = new StringResponseDTO();
+        stringResponseDTO.setResult(allEventService.registrationEvent(paramMap));
+        return stringResponseDTO;
+    }
+
+    @PostMapping(path = "/showAllEvents")
+    @ResponseBody
+    public ListResponseDTO showAllEvents() { //TODO
+        ListResponseDTO listResponseDTO = new ListResponseDTO();
+        listResponseDTO.setEventList(allEventService.getAllEvents());
+        return listResponseDTO;
     }
 }

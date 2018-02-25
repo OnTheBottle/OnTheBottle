@@ -16,6 +16,10 @@ public class AllPlaceService {
         this.registrationPlace = registrationPlace;
     }
 
+    public void createOrUpdate(Place place) {
+        registrationPlace.save(place);
+    }
+
     public Place createOrGet(Map<String, String> paramMap) {
         UUID id = UUID.fromString(paramMap.get("idPlace"));
         return registrationPlace.createOrGet(id);

@@ -2,7 +2,7 @@ function tryToGame() {
     var number = document.getElementById("personNumber").value;
     $.ajax({
         type: "POST",
-        url: "/doGame",
+        url: "/saveEvent",
         dataType: "json",
         data: {number: number},
         success: function (data) {
