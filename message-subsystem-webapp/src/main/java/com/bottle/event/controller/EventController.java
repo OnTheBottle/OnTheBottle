@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -37,16 +35,7 @@ public class EventController {
     public EventsResponseDTO showAllEvents() { //TODO
         EventsResponseDTO eventListDTO = new EventsResponseDTO();
         Map<UUID, String> allEvents = allEventService.getAllEvents();
-        List<UUID> uuids = new ArrayList<>();
-        List<String> titles = new ArrayList<>();
-
-        for (Map.Entry<UUID, String> entry : allEvents.entrySet()) {
-            uuids.add(entry.getKey());
-            titles.add(entry.getValue());
-        }
-
-        eventListDTO.setEventsId(uuids);
-        eventListDTO.setEventTitle(titles);
+        eventListDTO.setEvents(allEvents);
 
         return eventListDTO;
     }

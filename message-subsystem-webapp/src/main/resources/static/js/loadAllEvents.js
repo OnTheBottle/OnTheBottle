@@ -6,15 +6,14 @@ $(document).ready(function () {
         data: {},
         success: function (data) {
             var select = document.getElementsByClassName('select')[0];
-            var eventsIdList = data.eventsId;
-            var eventTitleList = data.eventTitle;
+            var events = data.events;
             var choiceEvent;
 
-            if (eventsIdList.length !== 0) {
+            if (events.length !== 0) {
                 choiceEvent = "Выберите эвент";
                 addOption(select, choiceEvent, 0);
-                for (var event in eventsIdList) {
-                    addOption(select, eventTitleList[event], eventsIdList[event]);
+                for (key in events) {
+                    addOption(select, events[key], key);
                 }
             } else {
                 choiceEvent = "Нет ниодного эвента";
