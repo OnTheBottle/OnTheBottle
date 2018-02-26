@@ -3,6 +3,6 @@ package com.bottle.event.model.DTO.response;
 import lombok.Data;
 
 @Data
-public class StringResponseDTO {
+public class ResultResponseDTO {
     private String result;
 }

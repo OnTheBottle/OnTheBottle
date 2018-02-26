@@ -1,6 +1,6 @@
 package com.bottle.event.service.place;
 
-import com.bottle.event.model.DTO.request.EventRequestDTO;
+import com.bottle.event.model.DTO.EventDTO;
 import com.bottle.event.model.entity.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class AllPlaceService {
         registrationPlace.save(place);
     }
 
-    public Place createOrGet(EventRequestDTO eventDTO) {
+    public Place createOrGet(EventDTO eventDTO) {
         UUID id = UUID.fromString(eventDTO.getPlace());
         return registrationPlace.createOrGet(id);
     }

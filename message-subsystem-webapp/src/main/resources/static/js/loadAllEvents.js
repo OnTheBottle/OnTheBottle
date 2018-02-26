@@ -11,27 +11,30 @@ $(document).ready(function () {
 
             if (events.length !== 0) {
                 choiceEvent = "Выберите эвент";
-                addOption(select, choiceEvent, 0);
+                addOption(select, 0, choiceEvent);
                 for (key in events) {
-                    addOption(select, events[key], key);
+                    addOption(select, key, events[key]);
                 }
             } else {
                 choiceEvent = "Нет ниодного эвента";
-                addOption(select, choiceEvent, 0);
+                addOption(select, 0, choiceEvent);
             }
         }
     });
 });
 
-function addOption(oListbox, event, value) {
+function addOption(oListbox, key, value) {
     var oOption = document.createElement("option");
-    oOption.appendChild(document.createTextNode(event));
-    oOption.setAttribute("value", value);
+    oOption.appendChild(document.createTextNode(value));
+    oOption.setAttribute("value", key);
     oListbox.appendChild(oOption);
 }
 
 $("select").change(function () {
-    if($(this).val() == 0) return false;
+    if($(this).val() == 0) {
+        document.getElementById('eventAbout').innerHTML = '';
+        return false;
+    }
 
-    alert($(this).val());
+    load($(this).val());
 });

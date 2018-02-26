@@ -17,7 +17,7 @@ public class GetterEvent {
         this.eventStore = eventStore;
     }
 
-    public Map<UUID, String> getAllEvents() {
+    public Map<UUID, String> getAllIdAndTitle() {
         try {
             Map<UUID, String> events = new HashMap<>();
             List<Event> eventList = eventStore.getAll();
@@ -28,6 +28,15 @@ public class GetterEvent {
 
             return events;
         } catch (SQLException e) { // TODO
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Event getEvent(String id) {
+        try {
+            return eventStore.getById(UUID.fromString(id));
+        } catch (SQLException e) { //TODO
             e.printStackTrace();
             return null;
         }
