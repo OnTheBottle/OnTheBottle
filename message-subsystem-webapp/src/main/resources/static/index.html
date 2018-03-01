@@ -6,7 +6,10 @@
 </head>
 <body>
 <p>
-
+    <label>Ивенты</label>
+    <select name="select" class="select"></select>
+</p>
+<p>
     <label for="title">Заголовок</label>
     <input type="text" id="title"/>
 </p>
@@ -23,14 +26,15 @@
     <input type="datetime-local" id="endTime"/>
 </p>
 <p>
-    <label for="endTime">Место</label>
-    <input type="text" id="place" placeholder="random" disabled/>
+    <label for="place">Место</label>
+    <input type="text" id="place" value="0" disabled/>
 </p>
-<input type="button" onclick="saveEvent()" value="GO!" >
-<p><label id="result"></label></p>
-<p><select name="select" class="select">
-</select></p>
-<p><textarea id="eventAbout"></textarea></p>
+
+<p>
+    <label for="result">Результат последней операции</label>
+    <label id="result">-</label>
+</p>
+<input type="button" onclick="saveEvent()" value="Создать/Обновить!">
 
 <script src="js/lib/jquery-1.11.1.js"></script>
 <script src="js/saveEvent.js"></script>

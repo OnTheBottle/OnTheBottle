@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class EventDTO {
+    private String id;
     private String title;
     private String text;
     private String startTime;

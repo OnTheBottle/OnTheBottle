@@ -29,12 +29,3 @@ function addOption(oListbox, key, value) {
     oOption.setAttribute("value", key);
     oListbox.appendChild(oOption);
 }
-
-$("select").change(function () {
-    if($(this).val() == 0) {
-        document.getElementById('eventAbout').innerHTML = '';
-        return false;
-    }
-
-    load($(this).val());
-});

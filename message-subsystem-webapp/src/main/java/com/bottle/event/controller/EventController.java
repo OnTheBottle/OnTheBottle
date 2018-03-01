@@ -26,7 +26,6 @@ public class EventController {
     @PostMapping(path = "/saveEvent")
     @ResponseBody
     public ResultResponseDTO createEvent(EventDTO eventDTO) { //TODO
-        eventDTO.setPlace(String.valueOf(UUID.randomUUID()));
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
         resultResponseDTO.setResult(allEventService.registrationEvent(eventDTO));
         return resultResponseDTO;
@@ -50,9 +49,9 @@ public class EventController {
 
         eventDTO.setTitle(event.getTitle());
         eventDTO.setText(event.getText());
-        eventDTO.setStartTime(String.valueOf(event.getStartTime()));
-        eventDTO.setEndTime(String.valueOf(event.getEndTime()));
-        eventDTO.setPlace(String.valueOf(event.getPlace()));
+        eventDTO.setStartTime(String.valueOf(event.getStartTime()).replace(' ', 'T'));
+        eventDTO.setEndTime(String.valueOf(event.getEndTime()).replace(' ', 'T'));
+        eventDTO.setPlace(String.valueOf(event.getPlace().getId()));
 
         return eventDTO;
     }

@@ -20,8 +20,9 @@ public class AllPlaceService {
         registrationPlace.save(place);
     }
 
-    public Place createOrGet(EventDTO eventDTO) {
-        UUID id = UUID.fromString(eventDTO.getPlace());
+    public Place createOrGet(EventDTO eventDTO) { // TODO
+        UUID id = eventDTO.getPlace().equals("0") ?
+                UUID.randomUUID() : UUID.fromString(eventDTO.getPlace());
         return registrationPlace.createOrGet(id);
     }
 }

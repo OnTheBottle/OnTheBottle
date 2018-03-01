@@ -12,8 +12,10 @@ import java.util.UUID;
 
 @Service
 public class BuildEvent {
-    public Event build(EventDTO eventDTO) {
-        UUID id = UUID.randomUUID();
+    public Event build(EventDTO eventDTO) { //TODO
+        UUID id = eventDTO.getId().equals("0") ?
+               UUID.randomUUID() : UUID.fromString(eventDTO.getId());
+
         String title = eventDTO.getTitle();
         String text = eventDTO.getText();
         Date startTime = formatDate(eventDTO.getStartTime());
@@ -34,7 +36,7 @@ public class BuildEvent {
         try {
             param = param.replace('T', ' ');
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            dateFormat.setTimeZone(TimeZone.getDefault());
             date = dateFormat.parse(param);
         } catch (ParseException e) {
             e.printStackTrace();

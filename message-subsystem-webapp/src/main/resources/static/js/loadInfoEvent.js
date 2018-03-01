@@ -1,18 +1,36 @@
-function load(id) {
+$("select").change(function () {
+    if($(this).val() == 0) {
+        clearInfo();
+        return false;
+    }
+
+    loadInfoEvent($(this).val());
+});
+
+function loadInfoEvent(id) {
     $.ajax({
         type: "POST",
         url: "/showInfoEvent",
         dataType: "json",
         data: {id: id},
         success: function (data) {
-            var eventAbout = document.getElementById('eventAbout');
-            for (key in data) {
-                addText(eventAbout, key, data[key]);
-            }
+            addText(data);
         }
     });
 }
 
-function addText(textArea, key, value) {
-    textArea.innerHTML += '- ' + key + ' : ' + value + '\n';
+function clearInfo() {
+    document.getElementById('title').value = '';
+    document.getElementById('text').value = '';
+    document.getElementById('startTime').value = '';
+    document.getElementById('endTime').value = '';
+    document.getElementById('place').value = '0';
+}
+
+function addText(data) {
+    document.getElementById('title').value = data.title;
+    document.getElementById('text').value = data.text;
+    document.getElementById('startTime').value = data.startTime;
+    document.getElementById('endTime').value = data.endTime;
+    document.getElementById('place').value = data.place;
 }
