@@ -20,7 +20,7 @@ public class Event {
     @Column(columnDefinition = "BINARY(16)", name = "event_id")
     private UUID id;
 
-    @Column(name = "Title")
+    @Column(name = "Title", nullable = false)
     private String title;
 
     @Column(name = "Text")
@@ -38,4 +38,7 @@ public class Event {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="place_id")
     private Place place;
+
+    @Column(name = "isDelete", nullable = false)
+    private Boolean isDelete = false;
 }

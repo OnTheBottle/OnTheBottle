@@ -12,15 +12,21 @@ import java.util.UUID;
 public class AllEventService {
     private RegistrationEvent registrationEvent;
     private GetterEvent getterEvent;
+    private DeleteEvent deleteEvent;
 
     @Autowired
-    public AllEventService(RegistrationEvent registrationEvent, GetterEvent getterEvent) {
+    public AllEventService(RegistrationEvent registrationEvent, GetterEvent getterEvent, DeleteEvent deleteEvent) {
         this.registrationEvent = registrationEvent;
         this.getterEvent = getterEvent;
+        this.deleteEvent = deleteEvent;
     }
 
     public String registrationEvent(EventDTO eventDTO) {
         return registrationEvent.createAndSave(eventDTO);
+    }
+
+    public String deleteEvent(EventDTO eventDTO) {
+        return deleteEvent.deleteEvent(eventDTO);
     }
 
     public Map<UUID, String> getAllEvents() {

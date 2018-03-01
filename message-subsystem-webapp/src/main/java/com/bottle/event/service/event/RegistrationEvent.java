@@ -29,17 +29,14 @@ public class RegistrationEvent {
         Place place = placeService.createOrGet(eventDTO);
         event.setPlace(place);
 
-        String result;
         try {
             eventStore.createOrUpdate(event);
             placeService.createOrUpdate(place);
-            result = "complete";
+            return "complete";
         } catch (SQLException e) {
             e.printStackTrace();
-            result = "error";
+            return "error";
         }
-
-        return result;
     }
 }
 

@@ -9,7 +9,7 @@ $(document).ready(function () {
             var events = data.events;
             var choiceEvent;
 
-            if (events.length !== 0) {
+            if (Object.keys(events).length !== 0) {
                 choiceEvent = "Выберите эвент";
                 addOption(select, 0, choiceEvent);
                 for (key in events) {

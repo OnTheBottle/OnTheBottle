@@ -31,6 +31,14 @@ public class EventController {
         return resultResponseDTO;
     }
 
+    @PostMapping(path = "/deleteEvent")
+    @ResponseBody
+    public ResultResponseDTO deleteEvent(EventDTO eventDTO) { //TODO
+        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
+        resultResponseDTO.setResult(allEventService.deleteEvent(eventDTO));
+        return resultResponseDTO;
+    }
+
     @PostMapping(path = "/showAllEvents")
     @ResponseBody
     public EventsResponseDTO showAllEvents() { //TODO

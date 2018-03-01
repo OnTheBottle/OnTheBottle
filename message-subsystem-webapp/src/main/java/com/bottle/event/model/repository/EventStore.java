@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @Service
 public class EventStore {
+    private static Boolean isDelete = false;
     private EventRepository eventRepository;
 
     @Autowired
@@ -30,12 +31,12 @@ public class EventStore {
 
     @Transactional
     public Event getById(UUID id) throws SQLException {
-        return eventRepository.getOne(id);
+        return eventRepository.findByIsDelete(id, isDelete);
     }
 
     @Transactional
     public List<Event> getAll() throws SQLException {
-        return eventRepository.findAll();
+        return eventRepository.findAllByIsDelete(isDelete);
     }
 }
 
