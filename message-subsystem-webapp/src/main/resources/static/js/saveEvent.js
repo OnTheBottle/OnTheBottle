@@ -1,5 +1,5 @@
 function saveEvent() {
-    var id = $("select").val();
+    var id = $("#active-events").val();
     var title = document.getElementById("title").value;
     var text = document.getElementById("text").value;
     var startTime = document.getElementById("startTime").value;

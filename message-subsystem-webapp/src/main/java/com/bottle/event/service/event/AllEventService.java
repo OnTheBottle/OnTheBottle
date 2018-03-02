@@ -29,8 +29,12 @@ public class AllEventService {
         return deleteEvent.deleteEvent(eventDTO);
     }
 
-    public Map<UUID, String> getAllEvents() {
-        return getterEvent.getAllIdAndTitle();
+    public Map<UUID, String> getAllActiveEventsId() {
+        return getterEvent.getAllActiveIdAndTitle();
+    }
+
+    public Map<UUID, String> getAllPassedEventsId() {
+        return getterEvent.getAllPassedIdAndTitle();
     }
 
     public Event getEvent(String id) {

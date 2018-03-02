@@ -6,8 +6,12 @@
 </head>
 <body>
 <p>
-    <label>Ивенты</label>
-    <select name="select" class="select"></select>
+    <label>Активные ивенты</label>
+    <select name="select" id="active-events"></select>
+</p>
+<p>
+    <label>Пройденные ивенты</label>
+    <select name="select" id="passed-events"></select>
 </p>
 <p>
     <label for="title">Заголовок</label>
@@ -35,12 +39,12 @@
     <label id="result">-</label>
 </p>
 <input type="button" onclick="saveEvent()" value="Создать/Обновить!">
-<input type="button" onclick="deleteEvent()" value="Удалить!">
+<input type="button" onclick="deleteEvent()" value="Завершить евент!">
 
 <script src="js/lib/jquery-1.11.1.js"></script>
 <script src="js/saveEvent.js"></script>
 <script src="js/loadAllEvents.js"></script>
 <script src="js/loadInfoEvent.js"></script>
-<script src="js/deleteEvent.js"></script>
+<script src="js/closeEvent.js"></script>
 </body>
 </html>

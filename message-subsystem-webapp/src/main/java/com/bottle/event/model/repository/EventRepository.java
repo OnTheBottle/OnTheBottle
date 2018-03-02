@@ -8,10 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface EventRepository extends JpaRepository<Event, UUID> {
-
-    @Query("select u from Event u where u.id = ?1 and u.isDelete = ?2 ")
-    Event findByIsDelete(UUID id, Boolean isDelete);
-
-    @Query("select u from Event u where u.isDelete = ?1")
-    List<Event> findAllByIsDelete(Boolean isDelete);
+    @Query("select u from Event u where u.isActive = ?1")
+    List<Event> findAllByIsActive(Boolean isActive);
 }

@@ -17,10 +17,32 @@ public class GetterEvent {
         this.eventStore = eventStore;
     }
 
-    public Map<UUID, String> getAllIdAndTitle() {
+    public Map<UUID, String> getAllActiveIdAndTitle() {
         try {
             Map<UUID, String> events = new HashMap<>();
-            List<Event> eventList = eventStore.getAll();
+            List<Event> eventList = eventStore.getAllActive();
+            Date dateNow = new Date();
+
+            for (Event event : eventList) {
+                if (event.getEndTime().after(dateNow)) {
+                    events.put(event.getId(), event.getTitle());
+                } else {
+                    event.setIsActive(false);
+                    eventStore.createOrUpdate(event);
+                }
+            }
+
+            return events;
+        } catch (SQLException e) { // TODO
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Map<UUID, String> getAllPassedIdAndTitle() {
+        try {
+            Map<UUID, String> events = new HashMap<>();
+            List<Event> eventList = eventStore.getAllPassed();
 
             for (Event event : eventList) {
                 events.put(event.getId(), event.getTitle());

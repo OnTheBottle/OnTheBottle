@@ -12,14 +12,17 @@ import java.util.UUID;
 
 @Service
 public class BuildEvent {
+    private boolean active;
+
     public Event build(EventDTO eventDTO) { //TODO
         UUID id = eventDTO.getId().equals("0") ?
-               UUID.randomUUID() : UUID.fromString(eventDTO.getId());
+                UUID.randomUUID() : UUID.fromString(eventDTO.getId());
 
         String title = eventDTO.getTitle();
         String text = eventDTO.getText();
         Date startTime = formatDate(eventDTO.getStartTime());
         Date endTime = formatDate(eventDTO.getEndTime());
+
 
         Event event = new Event();
         event.setId(id);

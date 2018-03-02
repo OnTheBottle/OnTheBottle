@@ -21,7 +21,7 @@ public class DeleteEvent {
 
     public String deleteEvent(EventDTO eventDTO) {
         Event event = getterEvent.getEvent(eventDTO.getId());
-        event.setIsDelete(true);
+        event.setIsActive(false);
 
         try {
             eventStore.createOrUpdate(event);

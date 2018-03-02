@@ -31,7 +31,7 @@ public class EventController {
         return resultResponseDTO;
     }
 
-    @PostMapping(path = "/deleteEvent")
+    @PostMapping(path = "/closeEvent")
     @ResponseBody
     public ResultResponseDTO deleteEvent(EventDTO eventDTO) { //TODO
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
@@ -43,8 +43,8 @@ public class EventController {
     @ResponseBody
     public EventsResponseDTO showAllEvents() { //TODO
         EventsResponseDTO eventListDTO = new EventsResponseDTO();
-        Map<UUID, String> allEvents = allEventService.getAllEvents();
-        eventListDTO.setEvents(allEvents);
+        eventListDTO.setActiveEvents(allEventService.getAllActiveEventsId());
+        eventListDTO.setPassedEvents(allEventService.getAllPassedEventsId());
 
         return eventListDTO;
     }

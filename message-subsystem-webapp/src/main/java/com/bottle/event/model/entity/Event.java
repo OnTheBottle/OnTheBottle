@@ -39,6 +39,6 @@ public class Event {
     @JoinColumn(name="place_id")
     private Place place;
 
-    @Column(name = "isDelete", nullable = false)
-    private Boolean isDelete = false;
+    @Column(name = "isActive", nullable = false)
+    private Boolean isActive;
 }

@@ -1,4 +1,13 @@
-$("select").change(function () {
+$("#active-events").change(function () {
+    if($(this).val() == 0) {
+        clearInfo();
+        return false;
+    }
+
+    loadInfoEvent($(this).val());
+});
+
+$("#passed-events").change(function () {
     if($(this).val() == 0) {
         clearInfo();
         return false;

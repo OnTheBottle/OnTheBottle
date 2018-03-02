@@ -1,11 +1,11 @@
 function deleteEvent() {
-    var id = $("select").val();
+    var id = $("#active-events").val();
 
     if (id == 0) return false;
 
     $.ajax({
         type: "POST",
-        url: "/deleteEvent",
+        url: "/closeEvent",
         dataType: "json",
         data: {id: id},
         success: function (data) {
