@@ -3,9 +3,8 @@ package com.bottle.event.controller;
 import com.bottle.event.model.DTO.EventDTO;
 import com.bottle.event.model.DTO.request.IdRequestDTO;
 import com.bottle.event.model.DTO.response.EventsResponseDTO;
-import com.bottle.event.model.DTO.response.PlacesResponseDTO;
 import com.bottle.event.model.DTO.response.ResultResponseDTO;
-import com.bottle.event.model.DTO.response.UsersResponseDTO;
+import com.bottle.event.model.DTO.response.ListResponseDTO;
 import com.bottle.event.model.entity.Event;
 import com.bottle.event.service.event.AllEventService;
 import com.bottle.event.service.place.AllPlaceService;
@@ -14,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.UUID;
 
 @Controller
 public class EventController {
@@ -56,9 +57,9 @@ public class EventController {
 
     @PostMapping(path = "/showAllPlaces")
     @ResponseBody
-    public PlacesResponseDTO showAllPlaces() { //TODO
-        PlacesResponseDTO placesResponseDTO = new PlacesResponseDTO();
-        placesResponseDTO.setPlaces(allPlaceService.getAllPlaces());
+    public ListResponseDTO showAllPlaces() { //TODO
+        ListResponseDTO<UUID> placesResponseDTO = new ListResponseDTO<>();
+        placesResponseDTO.setList(allPlaceService.getAllPlaces());
 
         return placesResponseDTO;
     }
@@ -88,10 +89,10 @@ public class EventController {
 
     @PostMapping(path = "/showAllUsers")
     @ResponseBody
-    public UsersResponseDTO showAllUsers() { //TODO
-        UsersResponseDTO usersResponseDTO = new UsersResponseDTO();
-        usersResponseDTO.setUsers(allUserService.getAllUsers());
+    public ListResponseDTO showAllUsers() { //TODO
+        ListResponseDTO<UUID> listResponseDTO = new ListResponseDTO<>();
+        listResponseDTO.setList(allUserService.getAllUsers());
 
-        return usersResponseDTO;
+        return listResponseDTO;
     }
 }

@@ -23,7 +23,7 @@ $(document).ready(function () {
         dataType: "json",
         data: {},
         success: function (data) {
-            var activeEvents = data.places;
+            var activeEvents = data.list;
             var selectActiveEvents = document.getElementById('places');
             loadPlaces(activeEvents, selectActiveEvents);
         }
@@ -37,7 +37,7 @@ $(document).ready(function () {
         dataType: "json",
         data: {},
         success: function (data) {
-            var activeEvents = data.users;
+            var activeEvents = data.list;
             var selectActiveEvents = document.getElementById('users');
             loadUsers(activeEvents, selectActiveEvents);
         }
