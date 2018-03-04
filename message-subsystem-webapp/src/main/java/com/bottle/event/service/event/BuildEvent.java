@@ -12,8 +12,6 @@ import java.util.UUID;
 
 @Service
 public class BuildEvent {
-    private boolean active;
-
     public Event build(EventDTO eventDTO) { //TODO
         UUID id = eventDTO.getId().equals("0") ?
                 UUID.randomUUID() : UUID.fromString(eventDTO.getId());
@@ -30,6 +28,7 @@ public class BuildEvent {
         event.setText(text);
         event.setStartTime(startTime);
         event.setEndTime(endTime);
+        event.setIsActive(true);
 
         return event;
     }

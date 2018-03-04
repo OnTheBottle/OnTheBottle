@@ -16,6 +16,31 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $.ajax({
+        type: "POST",
+        url: "/showAllPlaces",
+        dataType: "json",
+        data: {},
+        success: function (data) {
+            var activeEvents = data.places;
+            var selectActiveEvents = document.getElementById('places');
+            loadPlaces(activeEvents, selectActiveEvents);
+        }
+    });
+});
+
+function loadPlaces(places, select) {
+    var choiceEvent;
+
+    choiceEvent = "Выберите место";
+    addOption(select, 0, choiceEvent);
+    for (var key in places) {
+        addOption(select, places[key], places[key]);
+    }
+
+}
+
 function loadEvents(events, select) {
     var choiceEvent;
 

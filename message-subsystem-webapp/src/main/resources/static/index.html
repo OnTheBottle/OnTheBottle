@@ -6,11 +6,11 @@
 </head>
 <body>
 <p>
-    <label>Активные ивенты</label>
+    <label for="active-events">Активные ивенты</label>
     <select name="select" id="active-events"></select>
 </p>
 <p>
-    <label>Пройденные ивенты</label>
+    <label for="passed-events">Пройденные ивенты</label>
     <select name="select" id="passed-events"></select>
 </p>
 <p>
@@ -30,8 +30,8 @@
     <input type="datetime-local" id="endTime"/>
 </p>
 <p>
-    <label for="place">Место</label>
-    <input type="text" id="place" value="0" disabled/>
+    <label for="places">Места</label>
+    <select name="select" id="places"></select>
 </p>
 
 <p>
@@ -43,7 +43,7 @@
 
 <script src="js/lib/jquery-1.11.1.js"></script>
 <script src="js/saveEvent.js"></script>
-<script src="js/loadAllEvents.js"></script>
+<script src="js/loadAllEventsAndPlaces.js"></script>
 <script src="js/loadInfoEvent.js"></script>
 <script src="js/closeEvent.js"></script>
 </body>

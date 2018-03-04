@@ -4,7 +4,7 @@ function saveEvent() {
     var text = document.getElementById("text").value;
     var startTime = document.getElementById("startTime").value;
     var endTime = document.getElementById("endTime").value;
-    var place = document.getElementById("place").value;
+    var place = $("#places").val();
 
     $.ajax({
         type: "POST",

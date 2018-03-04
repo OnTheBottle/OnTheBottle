@@ -4,6 +4,7 @@ $("#active-events").change(function () {
         return false;
     }
 
+    $("#passed-events").val(0);
     loadInfoEvent($(this).val());
 });
 
@@ -13,6 +14,7 @@ $("#passed-events").change(function () {
         return false;
     }
 
+    $("#active-events").val(0);
     loadInfoEvent($(this).val());
 });
 
@@ -33,7 +35,7 @@ function clearInfo() {
     document.getElementById('text').value = '';
     document.getElementById('startTime').value = '';
     document.getElementById('endTime').value = '';
-    document.getElementById('place').value = '0';
+    $("#places").val(0);
 }
 
 function addText(data) {
@@ -41,5 +43,5 @@ function addText(data) {
     document.getElementById('text').value = data.text;
     document.getElementById('startTime').value = data.startTime;
     document.getElementById('endTime').value = data.endTime;
-    document.getElementById('place').value = data.place;
+    $("#places").val(data.place);
 }
