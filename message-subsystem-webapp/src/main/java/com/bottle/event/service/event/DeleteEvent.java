@@ -1,6 +1,6 @@
 package com.bottle.event.service.event;
 
-import com.bottle.event.model.DTO.EventDTO;
+import com.bottle.event.model.DTO.request.IdRequestDTO;
 import com.bottle.event.model.entity.Event;
 import com.bottle.event.model.repository.EventStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ public class DeleteEvent {
         this.eventStore = eventStore;
     }
 
-    public String deleteEvent(EventDTO eventDTO) {
-        Event event = getterEvent.getEvent(eventDTO.getId());
+    public String closeEvent(IdRequestDTO idRequestDTO) {
+        Event event = getterEvent.getEvent(idRequestDTO.getId());
         event.setIsActive(false);
 
         try {

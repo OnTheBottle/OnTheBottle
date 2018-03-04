@@ -32,7 +32,7 @@ public class Event {
     @Column(name = "End_time", nullable = false)
     private Date endTime;
 
-    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<User> users = new HashSet<>();
 
     @ManyToOne(fetch=FetchType.LAZY)

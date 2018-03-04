@@ -9,3 +9,18 @@ function createUser() {
         }
     });
 }
+
+function addUserToEvent() {
+    var idEvent = $("#active-events").val();
+    var idUser = $("#users").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/addUserToEvent",
+        dataType: "json",
+        data: {idEvent: idEvent, idUser: idUser},
+        success: function (data) {
+            document.getElementById("result").innerText = data.result;
+        }
+    });
+}

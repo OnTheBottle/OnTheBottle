@@ -1,10 +1,11 @@
 package com.bottle.event.controller;
 
 import com.bottle.event.model.DTO.EventDTO;
+import com.bottle.event.model.DTO.request.IdEventAndUserRequestDTO;
 import com.bottle.event.model.DTO.request.IdRequestDTO;
 import com.bottle.event.model.DTO.response.EventsResponseDTO;
-import com.bottle.event.model.DTO.response.ResultResponseDTO;
 import com.bottle.event.model.DTO.response.ListResponseDTO;
+import com.bottle.event.model.DTO.response.ResultResponseDTO;
 import com.bottle.event.model.entity.Event;
 import com.bottle.event.service.event.AllEventService;
 import com.bottle.event.service.place.AllPlaceService;
@@ -39,9 +40,9 @@ public class EventController {
 
     @PostMapping(path = "/closeEvent")
     @ResponseBody
-    public ResultResponseDTO deleteEvent(EventDTO eventDTO) { //TODO
+    public ResultResponseDTO deleteEvent(IdRequestDTO idRequestDTO) { //TODO
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(allEventService.deleteEvent(eventDTO));
+        resultResponseDTO.setResult(allEventService.closeEvent(idRequestDTO));
         return resultResponseDTO;
     }
 
@@ -94,5 +95,14 @@ public class EventController {
         listResponseDTO.setList(allUserService.getAllUsers());
 
         return listResponseDTO;
+    }
+
+    @PostMapping(path = "/addUserToEvent")
+    @ResponseBody
+    public ResultResponseDTO addUserToEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) { //TODO
+        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
+        resultResponseDTO.setResult(allEventService.addUser(idEventAndUserRequestDTO));
+
+        return resultResponseDTO;
     }
 }
