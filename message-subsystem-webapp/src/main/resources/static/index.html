@@ -10,6 +10,10 @@
     <select name="select" id="active-events"></select>
 </p>
 <p>
+    <label for="users">Пользователи</label>
+    <select name="select" id="users"></select>
+</p>
+<p>
     <label for="passed-events">Пройденные ивенты</label>
     <select name="select" id="passed-events"></select>
 </p>
@@ -33,18 +37,20 @@
     <label for="places">Места</label>
     <select name="select" id="places"></select>
 </p>
-
 <p>
     <label for="result">Результат последней операции</label>
     <label id="result">-</label>
 </p>
 <input type="button" onclick="saveEvent()" value="Создать/Обновить!">
 <input type="button" onclick="deleteEvent()" value="Завершить евент!">
+<p></p>
+<input type="button" onclick="createUser()" value="Создать нового пользователя">
 
 <script src="js/lib/jquery-1.11.1.js"></script>
 <script src="js/saveEvent.js"></script>
-<script src="js/loadAllEventsAndPlaces.js"></script>
+<script src="js/loadAllInfo.js"></script>
 <script src="js/loadInfoEvent.js"></script>
 <script src="js/closeEvent.js"></script>
+<script src="js/createUser.js"></script>
 </body>
 </html>

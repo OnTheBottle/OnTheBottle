@@ -5,9 +5,11 @@ import com.bottle.event.model.DTO.request.IdRequestDTO;
 import com.bottle.event.model.DTO.response.EventsResponseDTO;
 import com.bottle.event.model.DTO.response.PlacesResponseDTO;
 import com.bottle.event.model.DTO.response.ResultResponseDTO;
+import com.bottle.event.model.DTO.response.UsersResponseDTO;
 import com.bottle.event.model.entity.Event;
 import com.bottle.event.service.event.AllEventService;
 import com.bottle.event.service.place.AllPlaceService;
+import com.bottle.event.service.user.AllUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class EventController {
     private AllEventService allEventService;
     private AllPlaceService allPlaceService;
+    private AllUserService allUserService;
 
     @Autowired
-    public EventController(AllEventService allEventService, AllPlaceService allPlaceService) {
+    public EventController(AllEventService allEventService, AllPlaceService allPlaceService, AllUserService allUserService) {
         this.allEventService = allEventService;
         this.allPlaceService = allPlaceService;
+        this.allUserService = allUserService;
     }
 
     @PostMapping(path = "/saveEvent")
@@ -72,5 +76,22 @@ public class EventController {
         eventDTO.setPlace(String.valueOf(event.getPlace().getId()));
 
         return eventDTO;
+    }
+
+    @PostMapping(path = "/createUser")
+    @ResponseBody
+    public ResultResponseDTO createUser() { //TODO
+        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
+        resultResponseDTO.setResult(allUserService.registrationUser());
+        return resultResponseDTO;
+    }
+
+    @PostMapping(path = "/showAllUsers")
+    @ResponseBody
+    public UsersResponseDTO showAllUsers() { //TODO
+        UsersResponseDTO usersResponseDTO = new UsersResponseDTO();
+        usersResponseDTO.setUsers(allUserService.getAllUsers());
+
+        return usersResponseDTO;
     }
 }

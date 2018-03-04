@@ -30,15 +30,34 @@ $(document).ready(function () {
     });
 });
 
-function loadPlaces(places, select) {
-    var choiceEvent;
+$(document).ready(function () {
+    $.ajax({
+        type: "POST",
+        url: "/showAllUsers",
+        dataType: "json",
+        data: {},
+        success: function (data) {
+            var activeEvents = data.users;
+            var selectActiveEvents = document.getElementById('users');
+            loadUsers(activeEvents, selectActiveEvents);
+        }
+    });
+});
 
-    choiceEvent = "Выберите место";
+function loadUsers(places, select) {
+    var choiceEvent = "Выберите пользователя";
     addOption(select, 0, choiceEvent);
     for (var key in places) {
         addOption(select, places[key], places[key]);
     }
+}
 
+function loadPlaces(places, select) {
+    var choiceEvent = "Выберите место";
+    addOption(select, 0, choiceEvent);
+    for (var key in places) {
+        addOption(select, places[key], places[key]);
+    }
 }
 
 function loadEvents(events, select) {
