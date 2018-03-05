@@ -79,4 +79,10 @@ function addText(data) {
     document.getElementById('startTime').value = data.startTime;
     document.getElementById('endTime').value = data.endTime;
     $("#places").val(data.place);
+
+    var usersList = data.users;
+    var selectUser = document.getElementById('users-event')
+    for (var key in usersList) {
+        addOption(selectUser, usersList[key], usersList[key]);
+    }
 }

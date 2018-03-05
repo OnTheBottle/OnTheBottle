@@ -7,6 +7,7 @@ import com.bottle.event.model.DTO.response.EventsResponseDTO;
 import com.bottle.event.model.DTO.response.ListResponseDTO;
 import com.bottle.event.model.DTO.response.ResultResponseDTO;
 import com.bottle.event.model.entity.Event;
+import com.bottle.event.model.entity.User;
 import com.bottle.event.service.event.AllEventService;
 import com.bottle.event.service.place.AllPlaceService;
 import com.bottle.event.service.user.AllUserService;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -76,6 +79,12 @@ public class EventController {
         eventDTO.setStartTime(String.valueOf(event.getStartTime()).replace(' ', 'T'));
         eventDTO.setEndTime(String.valueOf(event.getEndTime()).replace(' ', 'T'));
         eventDTO.setPlace(String.valueOf(event.getPlace().getId()));
+
+        List<UUID> uuids = new ArrayList<>();
+        for (User user : event.getUsers()) {
+            uuids.add(user.getId());
+        }
+        eventDTO.setUsers(uuids);
 
         return eventDTO;
     }
