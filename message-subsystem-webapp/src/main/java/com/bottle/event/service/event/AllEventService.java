@@ -4,7 +4,6 @@ import com.bottle.event.model.DTO.EventDTO;
 import com.bottle.event.model.DTO.request.IdEventAndUserRequestDTO;
 import com.bottle.event.model.DTO.request.IdRequestDTO;
 import com.bottle.event.model.entity.Event;
-import com.bottle.event.service.EntityBinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +47,9 @@ public class AllEventService {
 
     public String addUser(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
         return entityBinder.addUserToEvent(idEventAndUserRequestDTO);
+    }
+
+    public String deleteUser(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
+        return entityBinder.deleteUserFromEvent(idEventAndUserRequestDTO);
     }
 }

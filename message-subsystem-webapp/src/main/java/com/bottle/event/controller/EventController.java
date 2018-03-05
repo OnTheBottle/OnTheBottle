@@ -114,4 +114,13 @@ public class EventController {
 
         return resultResponseDTO;
     }
+
+    @PostMapping(path = "/deleteUserFromEvent")
+    @ResponseBody
+    public ResultResponseDTO deleteUserFromEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) { //TODO
+        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
+        resultResponseDTO.setResult(allEventService.deleteUser(idEventAndUserRequestDTO));
+
+        return resultResponseDTO;
+    }
 }

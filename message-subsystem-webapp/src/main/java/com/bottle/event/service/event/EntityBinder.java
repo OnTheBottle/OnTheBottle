@@ -1,4 +1,4 @@
-package com.bottle.event.service;
+package com.bottle.event.service.event;
 
 import com.bottle.event.model.DTO.request.IdEventAndUserRequestDTO;
 import com.bottle.event.model.entity.Event;
@@ -30,7 +30,23 @@ public class EntityBinder {
             event.getUsers().add(user);
             user.getEvents().add(event);
             eventStore.createOrUpdate(event);
-            userStore.createOrUpdate(user);
+
+            return "complete";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
+    public String deleteUserFromEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
+        try {
+            Event event = eventStore.getById(UUID.fromString(idEventAndUserRequestDTO.getIdEvent()));
+            User user = userStore.getById(UUID.fromString(idEventAndUserRequestDTO.getIdUser()));
+
+            event.getUsers().remove(user);
+            user.getEvents().remove(event);
+            eventStore.createOrUpdate(event);
+
             return "complete";
         } catch (SQLException e) {
             e.printStackTrace();

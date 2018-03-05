@@ -24,3 +24,18 @@ function addUserToEvent() {
         }
     });
 }
+
+function deleteUserFromEvent() {
+    var idEvent = $("#active-events").val();
+    var idUser = $("#users-event").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/deleteUserFromEvent",
+        dataType: "json",
+        data: {idEvent: idEvent, idUser: idUser},
+        success: function (data) {
+            document.getElementById("result").innerText = data.result;
+        }
+    });
+}

@@ -25,13 +25,12 @@ public class RegistrationEvent {
     }
 
     public String createAndSave(EventDTO eventDTO) {
-        Event event = buildEvent.build(eventDTO);
-        Place place = placeService.createOrGet(eventDTO);
-        event.setPlace(place);
-
         try {
+            Event event = buildEvent.build(eventDTO);
+            Place place = placeService.createOrGet(eventDTO);
+            event.setPlace(place);
+
             eventStore.createOrUpdate(event);
-            placeService.createOrUpdate(place);
             return "complete";
         } catch (SQLException e) {
             e.printStackTrace();
