@@ -23,9 +23,9 @@ $(document).ready(function () {
         dataType: "json",
         data: {},
         success: function (data) {
-            var activeEvents = data.list;
-            var selectActiveEvents = document.getElementById('places');
-            loadPlaces(activeEvents, selectActiveEvents);
+            var list = data.list;
+            var selectPlaces = document.getElementById('places');
+            loadPlaces(list, selectPlaces);
         }
     });
 });
@@ -37,18 +37,20 @@ $(document).ready(function () {
         dataType: "json",
         data: {},
         success: function (data) {
-            var activeEvents = data.list;
-            var selectActiveEvents = document.getElementById('users');
-            loadUsers(activeEvents, selectActiveEvents);
+            var list = data.list;
+            var selectUsers = document.getElementById('users');
+            loadUsers(list, selectUsers);
+            selectUsers = document.getElementById('user');
+            loadUsers(list, selectUsers);
         }
     });
 });
 
-function loadUsers(places, select) {
+function loadUsers(users, select) {
     var choiceEvent = "Выберите пользователя";
     addOption(select, 0, choiceEvent);
-    for (var key in places) {
-        addOption(select, places[key], places[key]);
+    for (var key in users) {
+        addOption(select, users[key], users[key]);
     }
 }
 

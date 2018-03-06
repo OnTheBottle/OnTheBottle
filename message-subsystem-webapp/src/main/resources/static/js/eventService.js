@@ -5,12 +5,13 @@ function saveEvent() {
     var startTime = document.getElementById("startTime").value;
     var endTime = document.getElementById("endTime").value;
     var place = $("#places").val();
+    var owner = $("#user").val();
 
     $.ajax({
         type: "POST",
         url: "/saveEvent",
         dataType: "json",
-        data: {id: id, title: title, text: text, startTime: startTime, endTime: endTime, place: place},
+        data: {id: id, title: title, text: text, startTime: startTime, endTime: endTime, place: place, owner: owner},
         success: function (data) {
             document.getElementById("result").innerText = data.result;
         }
@@ -70,6 +71,7 @@ function clearInfo() {
     document.getElementById('text').value = '';
     document.getElementById('startTime').value = '';
     document.getElementById('endTime').value = '';
+    document.getElementById('owner').innerText = '';
     $("#places").val(0);
 }
 
@@ -78,6 +80,7 @@ function addText(data) {
     document.getElementById('text').value = data.text;
     document.getElementById('startTime').value = data.startTime;
     document.getElementById('endTime').value = data.endTime;
+    document.getElementById('owner').innerText = data.owner;
     $("#places").val(data.place);
 
     var usersList = data.users;

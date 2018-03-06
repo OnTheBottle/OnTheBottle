@@ -10,23 +10,17 @@ import java.util.UUID;
 
 @Service
 public class AllPlaceService {
-    private RegistrationPlace registrationPlace;
     private GetterPlace getterPlace;
 
     @Autowired
-    public AllPlaceService(RegistrationPlace registrationPlace, GetterPlace getterPlace) {
-        this.registrationPlace = registrationPlace;
+    public AllPlaceService(GetterPlace getterPlace) {
         this.getterPlace = getterPlace;
-    }
-
-    public void createOrUpdate(Place place) {
-        registrationPlace.save(place);
     }
 
     public Place createOrGet(EventDTO eventDTO) { // TODO
         UUID id = eventDTO.getPlace().equals("0") ?
                 UUID.randomUUID() : UUID.fromString(eventDTO.getPlace());
-        return registrationPlace.createOrGet(id);
+        return getterPlace.createOrGet(id);
     }
 
     public List<UUID> getAllPlaces() {

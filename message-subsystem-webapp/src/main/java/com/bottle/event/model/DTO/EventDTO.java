@@ -14,4 +14,5 @@ public class EventDTO {
     private String endTime;
     private String place;
     private List<UUID> users;
+    private String owner;
 }

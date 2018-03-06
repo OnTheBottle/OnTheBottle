@@ -34,4 +34,20 @@ public class GetterPlace {
             return null;
         }
     }
+
+    public Place createOrGet(UUID id) {
+        try {
+            if (placeStore.exists(id)) {
+                return placeStore.getById(id);
+            } else {
+                Place place = new Place();
+                place.setId(id);
+                placeStore.createOrUpdate(place);
+                return place;
+            }
+        } catch (SQLException e) { //TODO
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

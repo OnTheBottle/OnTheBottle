@@ -6,18 +6,19 @@
 </head>
 <body>
 <p>
-    <label for="active-events">Активные ивенты</label>
-    <select name="select" id="active-events"></select>
+    <label for="user">Вы зашли под юзером</label>
+    <select name="select" id="user"></select>
 </p>
 <p>
-    <label for="users">Пользователи</label>
-    <select name="select" id="users"></select>
+    <label for="active-events">Активные ивенты</label>
+    <select name="select" id="active-events"></select>
 </p>
 <p>
     <label for="passed-events">Пройденные ивенты</label>
     <select name="select" id="passed-events"></select>
 </p>
 <p>
+    <label for="owner">Создатель ивента:</label> <label id="owner"></label> <br>
     <label for="title">Заголовок</label>
     <input type="text" id="title"/>
 </p>
@@ -50,7 +51,10 @@
 <input type="button" onclick="deleteEvent()" value="Завершить евент!">
 <p></p>
 <input type="button" onclick="createUser()" value="Создать нового пользователя">
-<p></p>
+<p>
+    <label for="users">Пользователи</label>
+    <select name="select" id="users"></select>
+</p>
 <input type="button" onclick="addUserToEvent()" value="Добавить пользователя к ивенту">
 <input type="button" onclick="deleteUserFromEvent()" value="Удалить пользователя из ивента">
 

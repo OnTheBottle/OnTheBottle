@@ -79,6 +79,7 @@ public class EventController {
         eventDTO.setStartTime(String.valueOf(event.getStartTime()).replace(' ', 'T'));
         eventDTO.setEndTime(String.valueOf(event.getEndTime()).replace(' ', 'T'));
         eventDTO.setPlace(String.valueOf(event.getPlace().getId()));
+        eventDTO.setOwner(String.valueOf(event.getOwner().getId()));
 
         List<UUID> uuids = new ArrayList<>();
         for (User user : event.getUsers()) {
@@ -93,7 +94,7 @@ public class EventController {
     @ResponseBody
     public ResultResponseDTO createUser() { //TODO
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(allUserService.registrationUser());
+        resultResponseDTO.setResult(String.valueOf(allUserService.createOrGet().getId()));
         return resultResponseDTO;
     }
 

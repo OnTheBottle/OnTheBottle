@@ -38,6 +38,11 @@ public class EntityBinder {
         }
     }
 
+    public void addUserToEvent(User user, Event event) {
+        event.getUsers().add(user);
+        user.getEvents().add(event);
+    }
+
     public String deleteUserFromEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
         try {
             Event event = eventStore.getById(UUID.fromString(idEventAndUserRequestDTO.getIdEvent()));

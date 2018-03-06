@@ -11,8 +11,8 @@ import java.util.UUID;
 
 @Entity
 @Data
-@EqualsAndHashCode(exclude = "events")
-@ToString(exclude = "events")
+@EqualsAndHashCode(exclude = {"events", "ownerEvents"})
+@ToString(exclude = {"events", "ownerEvents"})
 public class User {
     @Id
     @Column(columnDefinition = "BINARY(16)", name = "user_id")
@@ -25,4 +25,7 @@ public class User {
             inverseJoinColumns={@JoinColumn(name="event_id")}
     )
     private Set<Event> events = new HashSet<>();
+
+    @OneToMany(mappedBy="owner")
+    private Set<Event> ownerEvents = new HashSet<>();
 }

@@ -21,7 +21,6 @@ public class BuildEvent {
         Date startTime = formatDate(eventDTO.getStartTime());
         Date endTime = formatDate(eventDTO.getEndTime());
 
-
         Event event = new Event();
         event.setId(id);
         event.setTitle(title);

@@ -34,4 +34,20 @@ public class GetterUser {
             return null;
         }
     }
+
+    public User createOrGet(UUID id) {
+        try {
+            if (userStore.exists(id)) {
+                return userStore.getById(id);
+            } else {
+                User place = new User();
+                place.setId(id);
+                userStore.createOrUpdate(place);
+                return place;
+            }
+        } catch (SQLException e) { //TODO
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
