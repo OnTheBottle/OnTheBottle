@@ -1,11 +1,15 @@
 package com.bottle.event.service.user;
 
 import com.bottle.event.model.DTO.EventDTO;
+import com.bottle.event.model.DTO.request.IdRequestDTO;
+import com.bottle.event.model.entity.Event;
 import com.bottle.event.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -30,5 +34,17 @@ public class AllUserService {
 
     public List<UUID> getAllUsers() {
         return getterUser.getAllId();
+    }
+
+    public Map<UUID, String> getAllActiveEventsId(IdRequestDTO idRequestDTO) {
+        Map<UUID, String> allActiveEvents = new HashMap<>();
+        UUID id = UUID.fromString(idRequestDTO.getId());
+        User user = getterUser.createOrGet(id);
+
+        for (Event event : user.getEvents()) {
+            allActiveEvents.put(event.getId(), event.getTitle());
+        }
+
+        return allActiveEvents;
     }
 }

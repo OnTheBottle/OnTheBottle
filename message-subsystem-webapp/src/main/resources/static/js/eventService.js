@@ -89,3 +89,26 @@ function addText(data) {
         addOption(selectUser, usersList[key], usersList[key]);
     }
 }
+
+$("#user").change(function () {
+    $("#user-events").find('option').remove();
+    if($(this).val() == 0) {
+        return false;
+    }
+
+    var id = $(this).val();
+
+    $.ajax({
+        type: "POST",
+        url: "/showEventsFromUser",
+        dataType: "json",
+        data: {id: id},
+        success: function (data) {
+            var events = data.activeEvents;
+            var selectUserEvents = document.getElementById('user-events');
+
+            for (var key in events)
+            addOption(selectUserEvents, key, events[key]);
+        }
+    });
+});

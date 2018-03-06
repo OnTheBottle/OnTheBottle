@@ -124,4 +124,13 @@ public class EventController {
 
         return resultResponseDTO;
     }
+
+    @PostMapping(path = "/showEventsFromUser")
+    @ResponseBody
+    public EventsResponseDTO showEventsFromUser(IdRequestDTO idRequestDTO) { //TODO
+        EventsResponseDTO eventListDTO = new EventsResponseDTO();
+        eventListDTO.setActiveEvents(allUserService.getAllActiveEventsId(idRequestDTO));
+
+        return eventListDTO;
+    }
 }
