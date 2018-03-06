@@ -48,6 +48,10 @@ public class EntityBinder {
             Event event = eventStore.getById(UUID.fromString(idEventAndUserRequestDTO.getIdEvent()));
             User user = userStore.getById(UUID.fromString(idEventAndUserRequestDTO.getIdUser()));
 
+            if (user.equals(event.getOwner())) {
+                return "Can't delete owner";
+            }
+
             event.getUsers().remove(user);
             user.getEvents().remove(event);
             eventStore.createOrUpdate(event);
