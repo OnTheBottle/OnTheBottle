@@ -19,29 +19,33 @@
     <label for="passed-events">Пройденные ивенты</label>
     <select name="select" id="passed-events"></select>
 </p>
-<p>
-    <label for="owner">Создатель ивента:</label> <label id="owner"></label> <br>
-    <label for="title">Заголовок</label>
-    <input type="text" id="title"/>
-</p>
-<p>
-    <label for="text">Текст</label>
-    <input type="text" id="text"/>
-</p>
-<p>
-    <label for="startTime">Время старта</label>
-    <input type="datetime-local" id="startTime"/>
-</p>
-<p>
-    <label for="endTime">Время завершения</label>
-    <input type="datetime-local" id="endTime"/>
-</p>
-<p>
-    <label for="places">Места</label>
-    <select name="select" id="places"></select>
-    <label for="place-events">Эвенты проходящие в этом месте</label>
-    <select name="select" id="place-events"></select>
-</p>
+<form onsubmit="saveEvent()">
+    <p>
+        <label for="owner">Создатель ивента:</label> <label id="owner"></label> <br>
+        <label for="title">Заголовок</label>
+        <input type="text" id="title" required/>
+    </p>
+    <p>
+        <label for="text">Текст</label>
+        <input type="text" id="text"/>
+    </p>
+    <p>
+        <label for="startTime">Время старта</label>
+        <input type="datetime-local" id="startTime" required/>
+    </p>
+    <p>
+        <label for="endTime">Время завершения</label>
+        <input type="datetime-local" id="endTime" required/>
+    </p>
+    <p>
+        <label for="places">Места</label>
+        <select name="select" id="places"></select>
+        <label for="place-events">Эвенты проходящие в этом месте</label>
+        <select name="select" id="place-events"></select>
+    </p>
+    <input type="submit" value="Создать/Обновить!">
+    <input type="button" onclick="deleteEvent()" value="Завершить евент!">
+</form>
 <p>
     <label for="users-event">Пользователи в ивенте</label>
     <select name="select" id="users-event">
@@ -51,9 +55,6 @@
     <label for="result">Результат последней операции</label>
     <label id="result">-</label>
 </p>
-<input type="button" onclick="saveEvent()" value="Создать/Обновить!">
-<input type="button" onclick="deleteEvent()" value="Завершить евент!">
-<p></p>
 <input type="button" onclick="createUser()" value="Создать нового пользователя">
 <p>
     <label for="users">Пользователи</label>
