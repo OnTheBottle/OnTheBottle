@@ -129,7 +129,16 @@ public class EventController {
     @ResponseBody
     public EventsResponseDTO showEventsFromUser(IdRequestDTO idRequestDTO) { //TODO
         EventsResponseDTO eventListDTO = new EventsResponseDTO();
-        eventListDTO.setActiveEvents(allUserService.getAllActiveEventsId(idRequestDTO));
+        eventListDTO.setActiveEvents(allUserService.getAllEventsId(idRequestDTO));
+
+        return eventListDTO;
+    }
+
+    @PostMapping(path = "/showEventsFromPlace")
+    @ResponseBody
+    public EventsResponseDTO showEventsFromPlace(IdRequestDTO idRequestDTO) { //TODO
+        EventsResponseDTO eventListDTO = new EventsResponseDTO();
+        eventListDTO.setActiveEvents(allPlaceService.getAllEventsId(idRequestDTO));
 
         return eventListDTO;
     }

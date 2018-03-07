@@ -73,6 +73,8 @@ function clearInfo() {
     document.getElementById('endTime').value = '';
     document.getElementById('owner').innerText = '';
     $("#places").val(0);
+    $("#users-event").find('option').remove();
+
 }
 
 function addText(data) {
@@ -109,6 +111,29 @@ $("#user").change(function () {
 
             for (var key in events)
             addOption(selectUserEvents, key, events[key]);
+        }
+    });
+});
+
+$("#places").change(function () {
+    $("#place-events").find('option').remove();
+    if($(this).val() == 0) {
+        return false;
+    }
+
+    var id = $(this).val();
+
+    $.ajax({
+        type: "POST",
+        url: "/showEventsFromPlace",
+        dataType: "json",
+        data: {id: id},
+        success: function (data) {
+            var events = data.activeEvents;
+            var selectPlaceEvents = document.getElementById('place-events');
+
+            for (var key in events)
+                addOption(selectPlaceEvents, key, events[key]);
         }
     });
 });

@@ -36,15 +36,15 @@ public class AllUserService {
         return getterUser.getAllId();
     }
 
-    public Map<UUID, String> getAllActiveEventsId(IdRequestDTO idRequestDTO) {
-        Map<UUID, String> allActiveEvents = new HashMap<>();
+    public Map<UUID, String> getAllEventsId(IdRequestDTO idRequestDTO) {
+        Map<UUID, String> allEvents = new HashMap<>();
         UUID id = UUID.fromString(idRequestDTO.getId());
         User user = getterUser.createOrGet(id);
 
         for (Event event : user.getEvents()) {
-            allActiveEvents.put(event.getId(), event.getTitle());
+            allEvents.put(event.getId(), event.getTitle());
         }
 
-        return allActiveEvents;
+        return allEvents;
     }
 }
