@@ -20,19 +20,19 @@ public class Event {
     @Column(columnDefinition = "BINARY(16)", name = "event_id")
     private UUID id;
 
-    @Column(name = "Title", nullable = false)
+    @Column(name = "Title")
     private String title;
 
     @Column(name = "Text")
     private String text;
 
-    @Column(name = "Start_time", nullable = false)
+    @Column(name = "Start_time")
     private Date startTime;
 
-    @Column(name = "End_time", nullable = false)
+    @Column(name = "End_time")
     private Date endTime;
 
-    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<User> users = new HashSet<>();
 
     @ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -43,6 +43,6 @@ public class Event {
     @JoinColumn(name="user_id")
     private User owner;
 
-    @Column(name = "isActive", nullable = false)
+    @Column(name = "isActive")
     private Boolean isActive;
 }

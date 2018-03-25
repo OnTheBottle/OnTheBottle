@@ -18,7 +18,7 @@ public class User {
     @Column(columnDefinition = "BINARY(16)", name = "user_id")
     private UUID id;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name="Event_Users",
             joinColumns={@JoinColumn(name="user_id")},

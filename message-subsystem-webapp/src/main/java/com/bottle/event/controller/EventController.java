@@ -12,10 +12,14 @@ import com.bottle.event.service.event.AllEventService;
 import com.bottle.event.service.place.AllPlaceService;
 import com.bottle.event.service.user.AllUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -35,10 +39,18 @@ public class EventController {
 
     @PostMapping(path = "/saveEvent")
     @ResponseBody
-    public ResultResponseDTO createEvent(EventDTO eventDTO) { //TODO
-        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(allEventService.registrationEvent(eventDTO));
-        return resultResponseDTO;
+    public ResponseEntity createEvent(@RequestBody @Valid EventDTO eventDTO, BindingResult bindingResult ) { //TODO
+        ResponseEntity responseEntity;
+
+        if (bindingResult.hasErrors()) {
+            responseEntity = ResponseEntity.badRequest().body("LoL");
+            System.out.println("bindingResult");
+        } else {
+            responseEntity = ResponseEntity.ok(allEventService.registrationEvent(eventDTO));
+            System.out.println("!bindingResult");
+        }
+
+        return responseEntity;
     }
 
     @PostMapping(path = "/closeEvent")
@@ -61,7 +73,7 @@ public class EventController {
 
     @PostMapping(path = "/showAllPlaces")
     @ResponseBody
-    public ListResponseDTO showAllPlaces() { //TODO
+    public ListResponseDTO<UUID> showAllPlaces() { //TODO
         ListResponseDTO<UUID> placesResponseDTO = new ListResponseDTO<>();
         placesResponseDTO.setList(allPlaceService.getAllPlaces());
 
@@ -100,7 +112,7 @@ public class EventController {
 
     @PostMapping(path = "/showAllUsers")
     @ResponseBody
-    public ListResponseDTO showAllUsers() { //TODO
+    public ListResponseDTO<UUID> showAllUsers() { //TODO
         ListResponseDTO<UUID> listResponseDTO = new ListResponseDTO<>();
         listResponseDTO.setList(allUserService.getAllUsers());
 

@@ -10,10 +10,9 @@ function saveEvent() {
     $.ajax({
         type: "POST",
         url: "/saveEvent",
-        dataType: "json",
         data: {id: id, title: title, text: text, startTime: startTime, endTime: endTime, place: place, owner: owner},
         success: function (data) {
-            document.getElementById("result").innerText = data.result;
+            document.getElementById("result").innerHTML = data;
         }
     });
 }
