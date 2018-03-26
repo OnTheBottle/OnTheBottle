@@ -16,4 +16,18 @@
     <mapping class="dao.Posts"/>
  </session-factory>
 
+<<<<<<< 8ba838dd8cd9a7f598ba87e8c26090040c6ab1e1
+=======
+        <mapping class="com.bottle.messenger.entity.Conversation"/>
+        <mapping class="com.bottle.messenger.entity.Message"/>
+        <mapping class="com.bottle.messenger.entity.PersonToConversation"/>
+        <mapping class="com.bottle.news.dao.entity.Post" />
+        <mapping class="com.bottle.news.dao.entity.Security" />
+        <mapping class="com.bottle.news.dao.entity.User" />
+        <mapping class="com.bottle.userWall.dao.Posts"/>
+        <mapping class="com.bottle.event.model.entity.Event"/>
+        <mapping class="com.bottle.event.model.entity.User"/>
+        <mapping class="com.bottle.event.model.entity.Place"/>
+    </session-factory>
+>>>>>>> Refactor code and change servlets to controller
 </hibernate-configuration>

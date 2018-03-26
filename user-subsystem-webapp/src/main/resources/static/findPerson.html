@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FindPerson</title>
+    <script src="jquery-1.11.1.js"></script>
+    <script src="doPersonSearch.js"></script>
+</head>
+<body>
+<p>Поиск<Br>
+    <textarea name="search" cols="40" rows="1"></textarea></p>
+
+</form>
+<p><b>Поиск по:</b><Br>
+    <input type="radio" name="searchType" value="name"> Имя<Br>
+    <input type="radio" name="searchType" value="surname"> Фамилия<Br>
+    <input type="radio" name="searchType" value="city"> Город<Br>
+    <input type="radio" name="searchType" value="country"> Страна<Br>
+    <input type="radio" name="searchType" value="age"> Возраст<Br>
+    <input type="submit" value="Поиск" onclick="doSearch()">
+</p>
+</p>
+<div class="users"></div>
+
+</body>
+</html>
