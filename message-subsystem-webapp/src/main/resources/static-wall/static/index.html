@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css" />
+
+</head>
+<body  onload="getSelect(),getUsers()">
+<div class="user">
+    <h2>Add User</h2>
+    <h6>Add user name</h6>
+    <input id="name" type="text" placeholder="add name User">
+    <h6>Add user status</h6>
+    <input id="status" type="text" placeholder="add status User">
+
+    <p id="message1"></p>
+
+    <button id="button1" onclick="addUser()">AddUser</button>
+
+</div>
+<div class="post">
+        <h2>Add Post</h2>
+        <span>Title</span><br>
+        <input id="title" type="text" size="100" placeholder="input title"><br>
+        <span>Post text </span><br>
+        <textarea id="post" cols="30" rows="10" placeholder="input text your post"></textarea><br>
+        <span>Vision</span><br>
+        <div id="sel"  style="width: 100px;height: 20px">
+        </div><br>
+    <p>Choose your name</p>
+    <div id="user">
+    </div><br>
+    <div id="img">
+    </div><br>
+
+    <span>Post image</span><br>
+
+    <form id="upload-file-form">
+        <label for="upload-file-input">Load your image:</label>
+        <input id="upload-file-input" type="file" name="file" accept="*" />
+        <br />
+        <span id="upload-file-message"></span>
+    </form>
+
+    <button id="button" onclick="doPost();uploadFile()" style="margin-top: 10px">Add post</button>
+    <label id="message"></label>
+    </div>
+<div id="userPosts">
+    </div>
+
+</body>
+
+<script src="js/jquery-1.11.1.js"></script>
+<script src="js/doPost.js"></script>
+<script src="js/addUser.js"></script>
+<script src="js/getSelect.js"></script>
+<script src="js/getUsers.js"></script>
+<script src="js/getPosts.js"></script>
+<script src="js/loadImage.js"></script>
+<script src="js/imgUser.js"></script>
+<script src="js/addComment.js"></script>
+<script src="js/showComments.js"></script>
+<script src="js/addLike.js"></script>
+</html>

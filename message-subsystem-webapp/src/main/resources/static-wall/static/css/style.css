@@ -1,0 +1,130 @@
+
+.info {
+    display: table;
+    width: 100%;
+    border-spacing: 10px 10px;
+    border-color: black;
+}
+
+.userImage {
+    width: 100px;
+    height: 70px;
+    display: table-cell;
+    padding: 5px;
+}
+
+.dateTitle {
+    height: 70px;
+    width: 200px;
+    font-size: 12px;
+    display: table-cell;
+    padding: 5px;
+    vertical-align: top;
+}
+
+.posting {
+    background-color: whitesmoke;
+    border-style: solid;
+    border-color: gray;
+    padding: 5px;
+    margin: 10px;
+}
+
+.text {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.menuPost {
+    width: 130px;
+    height: 40px;
+    display: table-cell;
+    padding: 5px;
+    vertical-align: top;
+    horiz-align: left;
+}
+
+.deletePost {
+    width: 32px;
+    height: 32px;
+    background: url("/images/ico/delete.png") no-repeat center;
+    padding: 0 0;
+    margin: 3px;
+}
+
+.editPost {
+    width: 32px;
+    height: 32px;
+    background: url("/images/ico/edit.png") no-repeat center;
+    padding: 0 0;
+    margin: 3px;
+}
+
+.showComments {
+    width: 32px;
+    height: 32px;
+    background: url("/images/ico/show.png") no-repeat center;
+    padding: 0 0;
+    margin: 3px;
+}
+
+.addComment {
+    width: 32px;
+    height: 32px;
+    background: url("/images/ico/add.png") no-repeat center;
+    padding: 0 0;
+    margin: 3px;
+}
+
+.comments {
+    background-color: whitesmoke;
+    border-spacing: 10px 10px;
+    border-color: gainsboro;
+    padding: 5px;
+}
+
+.comment {
+    width: 560px;
+    padding: 10px;
+    height: 50px;
+    font-family: Sans-serif;
+    font-size: 12px;
+    horiz-align: center;
+}
+
+#textComment{
+    width: 520px;
+    horiz-align: center;
+}
+
+.commentModul{
+    margin:10px;
+
+}
+
+.deleteComment {
+    width: 32px;
+    height: 32px;
+    background: url("/images/ico/deleteComment.png") no-repeat center;
+    padding: 0 0;
+    margin: 3px;
+}
+
+.image img { width:30%; transition:width 0.5s ease; }
+.image:hover img { width:500px; }
+
+.like {
+    width: 32px;
+    height: 32px;
+    background: url("/images/ico/like.png") no-repeat center;
+    padding: 0 0;
+    margin: 3px;
+}
+
+.dislike {
+    width: 32px;
+    height: 32px;
+    background: url("/images/ico/dislike.png") no-repeat center;
+    padding: 0 0;
+    margin: 3px;
+}
