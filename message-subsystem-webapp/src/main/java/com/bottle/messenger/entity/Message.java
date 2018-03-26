@@ -18,8 +18,8 @@ public class Message {
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
-    @Column(name = "id")
-    private UUID id;
+    @Column(name = "message_id")
+    private UUID messageId;
     @Column(name = "author_id")
     private UUID authorId;
     @Column(name = "create_date")
@@ -28,4 +28,7 @@ public class Message {
     private Instant updateDate;
     @Column(name = "text")
     private String text;
+    @ManyToOne
+    @JoinTable(name="message_to_conversation", joinColumns = @JoinColumn(name = "conversation_id"), inverseJoinColumns = @JoinColumn(name = "message_id"))
+    private Conversation conversation;
 }

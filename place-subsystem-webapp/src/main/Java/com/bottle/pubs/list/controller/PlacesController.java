@@ -2,26 +2,25 @@ package com.bottle.pubs.list.controller;
 
 import com.bottle.pubs.list.logic.FindPlace;
 import com.bottle.pubs.list.repository.PubsRepository;
-import com.bottle.pubs.list.request.Request;
-import com.bottle.pubs.list.response.Response;
+import com.bottle.pubs.list.request.PubSearchQueryDTO;
+import com.bottle.pubs.list.response.PlacesListDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class PlacesController {
 
     private PubsRepository pubsRepository;
 
     @Autowired
-    public PlacesController(PubsRepository pubsRepository){
+    public PlacesController(PubsRepository pubsRepository) {
         this.pubsRepository = pubsRepository;
     }
 
-    @GetMapping(path = "/getPubs")
-    @ResponseBody
-    public Response getPubs(Request request) {
+    @PostMapping(path = "/getPubs")
+    public PlacesListDTO getPubs(PubSearchQueryDTO request) {
         return new FindPlace().doSearch(pubsRepository, request);
     }
+
 }

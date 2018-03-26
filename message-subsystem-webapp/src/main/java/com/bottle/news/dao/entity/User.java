@@ -1,14 +1,9 @@
 package com.bottle.news.dao.entity;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "Users")

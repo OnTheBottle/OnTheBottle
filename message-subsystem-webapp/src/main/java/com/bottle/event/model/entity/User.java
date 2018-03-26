@@ -11,14 +11,14 @@ import java.util.UUID;
 
 @Entity
 @Data
-@EqualsAndHashCode(exclude = "events")
-@ToString(exclude = "events")
+@EqualsAndHashCode(exclude = {"events", "ownerEvents"})
+@ToString(exclude = {"events", "ownerEvents"})
 public class User {
     @Id
     @Column(columnDefinition = "BINARY(16)", name = "user_id")
     private UUID id;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name="Event_Users",
             joinColumns={@JoinColumn(name="user_id")},
@@ -26,7 +26,6 @@ public class User {
     )
     private Set<Event> events = new HashSet<>();
 
-    public void addUserToAllEvents() {
-        events.forEach(event -> event.getUsers().add(this));
-    }
+    @OneToMany(mappedBy="owner")
+    private Set<Event> ownerEvents = new HashSet<>();
 }

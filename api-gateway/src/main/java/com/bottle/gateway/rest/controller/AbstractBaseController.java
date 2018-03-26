@@ -44,7 +44,7 @@ public abstract class AbstractBaseController {
     }
 
     /**
-     * Send Interaction to the event bus and create the numessage from appropriate vertical
+     * Send Interaction to the com.bottle.event bus and create the numessage from appropriate vertical
      */
     private void doSend(RoutingContext rc, String eventBusQueueName, ReportsWrapper reportsWrapper,
                         ResponseExceptionFunction<JsonObject, JsonObject> function) {

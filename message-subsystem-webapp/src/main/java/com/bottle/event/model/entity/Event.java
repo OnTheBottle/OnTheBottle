@@ -5,11 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
-<<<<<<< 8ba838dd8cd9a7f598ba87e8c26090040c6ab1e1
-import java.util.Calendar;
-=======
-import java.time.Instant;
->>>>>>> Refactor code and change servlets to controller
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,8 +12,8 @@ import java.util.UUID;
 
 @Entity
 @Data
-@EqualsAndHashCode(exclude = {"users", "places"})
-@ToString(exclude = {"users", "places"})
+@EqualsAndHashCode(exclude = "users")
+@ToString(exclude = "users")
 public class Event {
 
     @Id @GeneratedValue
@@ -31,15 +26,23 @@ public class Event {
     @Column(name = "Text")
     private String text;
 
-    @Column(name = "Start_time", nullable = false)
-    private Instant startTime;
+    @Column(name = "Start_time")
+    private Date startTime;
 
-    @Column(name = "End_time", nullable = false)
-    private Instant endTime;
+    @Column(name = "End_time")
+    private Date endTime;
 
-    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<User> users = new HashSet<>();
 
-    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
-    private Set<Place> places = new HashSet<>();
+    @ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="place_id")
+    private Place place;
+
+    @ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="user_id")
+    private User owner;
+
+    @Column(name = "isActive")
+    private Boolean isActive;
 }

@@ -3,7 +3,6 @@ package com.bottle.news.dao;
 import com.bottle.news.FirstStart;
 import com.bottle.news.dao.entity.User;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class UserDAO {

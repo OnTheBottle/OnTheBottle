@@ -1,7 +1,5 @@
 package com.bottle.news.dao.entity;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

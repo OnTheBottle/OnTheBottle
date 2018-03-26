@@ -1,10 +1,8 @@
 package com.bottle.news.dao;
 
-import com.bottle.news.FirstStart;
 import com.bottle.news.dao.entity.Post;
 import com.bottle.news.dao.entity.Security;
 import com.bottle.news.dao.entity.User;
-import javafx.geometry.Pos;
 import org.hibernate.Session;
 
 import javax.persistence.Query;
