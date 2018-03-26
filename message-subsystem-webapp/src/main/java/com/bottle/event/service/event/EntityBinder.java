@@ -24,8 +24,8 @@ public class EntityBinder {
 
     public String addUserToEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
         try {
-            Event event = eventStore.getById(UUID.fromString(idEventAndUserRequestDTO.getIdEvent()));
-            User user = userStore.getById(UUID.fromString(idEventAndUserRequestDTO.getIdUser()));
+            Event event = eventStore.getById(idEventAndUserRequestDTO.getIdEvent());
+            User user = userStore.getById(idEventAndUserRequestDTO.getIdUser());
 
             event.getUsers().add(user);
             user.getEvents().add(event);
@@ -45,8 +45,8 @@ public class EntityBinder {
 
     public String deleteUserFromEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
         try {
-            Event event = eventStore.getById(UUID.fromString(idEventAndUserRequestDTO.getIdEvent()));
-            User user = userStore.getById(UUID.fromString(idEventAndUserRequestDTO.getIdUser()));
+            Event event = eventStore.getById(idEventAndUserRequestDTO.getIdEvent());
+            User user = userStore.getById(idEventAndUserRequestDTO.getIdUser());
 
             if (user.equals(event.getOwner())) {
                 return "Can't delete owner";

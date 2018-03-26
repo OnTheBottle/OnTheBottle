@@ -7,12 +7,12 @@ import java.util.UUID;
 
 @Data
 public class EventDTO {
-    private String id;
+    private UUID id;
     private String title;
     private String text;
     private String startTime;
     private String endTime;
-    private String place;
+    private UUID place;
     private List<UUID> users;
-    private String owner;
+    private UUID owner;
 }

@@ -94,8 +94,8 @@ public class EventController {
         eventDTO.setText(event.getText());
         eventDTO.setStartTime(String.valueOf(event.getStartTime()).replace(' ', 'T'));
         eventDTO.setEndTime(String.valueOf(event.getEndTime()).replace(' ', 'T'));
-        eventDTO.setPlace(String.valueOf(event.getPlace().getId()));
-        eventDTO.setOwner(String.valueOf(event.getOwner().getId()));
+        eventDTO.setPlace(event.getPlace().getId());
+        eventDTO.setOwner(event.getOwner().getId());
 
         List<UUID> uuids = new ArrayList<>();
         for (User user : event.getUsers()) {
