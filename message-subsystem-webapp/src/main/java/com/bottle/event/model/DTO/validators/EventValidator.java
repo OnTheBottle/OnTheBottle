@@ -30,7 +30,9 @@ public class EventValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startTime", "time.empty", "Start time must not be empty.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endTime", "time.empty", "End time must not be empty.");
-        checkTime(eventDTO.getStartTime(), eventDTO.getEndTime(), errors);
+        if (!eventDTO.getStartTime().isEmpty() && !eventDTO.getEndTime().isEmpty()) {
+            checkTime(eventDTO.getStartTime(), eventDTO.getEndTime(), errors);
+        }
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "place", "place.empty", "Place must not be empty.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "owner", "owner.empty", "Owner must not be empty.");
     }
