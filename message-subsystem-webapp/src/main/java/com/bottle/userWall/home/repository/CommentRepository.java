@@ -1,6 +1,6 @@
 package com.bottle.userWall.home.repository;
 
-import com.home.entity.Comment;
+import com.bottle.userWall.home.entity.Comment;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

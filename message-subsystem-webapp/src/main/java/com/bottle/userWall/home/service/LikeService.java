@@ -1,7 +1,7 @@
 package com.bottle.userWall.home.service;
 
-import com.home.entity.Like;
-import com.home.repository.LikeRepository;
+import com.bottle.userWall.home.entity.Like;
+import com.bottle.userWall.home.repository.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

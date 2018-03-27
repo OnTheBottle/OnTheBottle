@@ -16,7 +16,7 @@ import java.io.FileOutputStream;
 @Controller
     public class DownloadController {
 
-    private static String UPLOADED_FOLDER = "F://spring_tool//spring_projects//home1//task_probe1//src//main//resources//static//images//postsFiles//";
+    private final static String UPLOADED_FOLDER = "src/main/resources/static/com/bottle/wall/images/postsFiles";
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
            @ResponseBody

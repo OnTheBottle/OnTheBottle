@@ -1,8 +1,8 @@
 package com.bottle.userWall.home.service;
 
 
-import com.home.entity.ImageUser;
-import com.home.repository.ImageUserRepository;
+import com.bottle.userWall.home.entity.ImageUser;
+import com.bottle.userWall.home.repository.ImageUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

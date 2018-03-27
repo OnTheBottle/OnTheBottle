@@ -1,7 +1,7 @@
 package com.bottle.userWall.home.repository;
 
 
-import com.home.entity.Security;
+import com.bottle.userWall.home.entity.Security;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -47,7 +47,7 @@
 .deletePost {
     width: 32px;
     height: 32px;
-    background: url("/images/ico/delete.png") no-repeat center;
+    background: url("../images/ico/delete.png") no-repeat center;
     padding: 0 0;
     margin: 3px;
 }
@@ -55,7 +55,7 @@
 .editPost {
     width: 32px;
     height: 32px;
-    background: url("/images/ico/edit.png") no-repeat center;
+    background: url("../images/ico/edit.png") no-repeat center;
     padding: 0 0;
     margin: 3px;
 }
@@ -63,7 +63,7 @@
 .showComments {
     width: 32px;
     height: 32px;
-    background: url("/images/ico/show.png") no-repeat center;
+    background: url("../images/ico/show.png") no-repeat center;
     padding: 0 0;
     margin: 3px;
 }
@@ -71,7 +71,7 @@
 .addComment {
     width: 32px;
     height: 32px;
-    background: url("/images/ico/add.png") no-repeat center;
+    background: url("../images/ico/add.png") no-repeat center;
     padding: 0 0;
     margin: 3px;
 }
@@ -87,7 +87,7 @@
     width: 560px;
     padding: 10px;
     height: 50px;
-    font-family: Sans-serif;
+    font-family: Sans-serif, serif;
     font-size: 12px;
     horiz-align: center;
 }
@@ -105,7 +105,7 @@
 .deleteComment {
     width: 32px;
     height: 32px;
-    background: url("/images/ico/deleteComment.png") no-repeat center;
+    background: url("../images/ico/deleteComment.png") no-repeat center;
     padding: 0 0;
     margin: 3px;
 }
@@ -116,7 +116,7 @@
 .like {
     width: 32px;
     height: 32px;
-    background: url("/images/ico/like.png") no-repeat center;
+    background: url("../images/ico/like.png") no-repeat center;
     padding: 0 0;
     margin: 3px;
 }
@@ -124,7 +124,7 @@
 .dislike {
     width: 32px;
     height: 32px;
-    background: url("/images/ico/dislike.png") no-repeat center;
+    background: url("../images/ico/dislike.png") no-repeat center;
     padding: 0 0;
     margin: 3px;
 }

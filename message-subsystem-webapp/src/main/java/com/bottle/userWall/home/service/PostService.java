@@ -1,8 +1,8 @@
 package com.bottle.userWall.home.service;
 
 
-import com.home.entity.Post;
-import com.home.repository.PostRepository;
+import com.bottle.userWall.home.entity.Post;
+import com.bottle.userWall.home.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

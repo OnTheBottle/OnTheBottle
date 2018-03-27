@@ -1,15 +1,15 @@
 package com.bottle.userWall.home.controller;
 
+import com.bottle.userWall.home.dto.ResponseDto;
+import com.bottle.userWall.home.entity.*;
+import com.bottle.userWall.home.model.CommentModel;
+import com.bottle.userWall.home.model.ImageModel;
+import com.bottle.userWall.home.model.LikeModel;
+import com.bottle.userWall.home.model.PostModel;
+import com.bottle.userWall.home.repository.LikeRepository;
+import com.bottle.userWall.home.repository.PostRepository;
+import com.bottle.userWall.home.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.home.dto.ResponseDto;
-import com.home.entity.*;
-import com.home.model.CommentModel;
-import com.home.model.ImageModel;
-import com.home.model.LikeModel;
-import com.home.model.PostModel;
-import com.home.repository.LikeRepository;
-import com.home.repository.PostRepository;
-import com.home.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,24 +26,28 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/")
 public class PostController {
+    private PostService postService;
+    private PostRepository postRepository;
+    private UserService userService;
+    private SecurityService securityService;
+    private ImageUserService imageUserService;
+    private ImageService imageService;
+    private CommentService commentService;
+    private LikeService likeService;
+    private LikeRepository likeRepository;
+
     @Autowired
-    PostService postService;
-    @Autowired
-    PostRepository postRepository;
-    @Autowired
-    UserService userService;
-    @Autowired
-    SecurityService securityService;
-    @Autowired
-    ImageUserService imageUserService;
-    @Autowired
-    ImageService imageService;
-    @Autowired
-    CommentService commentService;
-    @Autowired
-    LikeService likeService;
-    @Autowired
-    LikeRepository likeRepository;
+    public PostController(PostService postService, PostRepository postRepository, UserService userService, SecurityService securityService, ImageUserService imageUserService, ImageService imageService, CommentService commentService, LikeService likeService, LikeRepository likeRepository) {
+        this.postService = postService;
+        this.postRepository = postRepository;
+        this.userService = userService;
+        this.securityService = securityService;
+        this.imageUserService = imageUserService;
+        this.imageService = imageService;
+        this.commentService = commentService;
+        this.likeService = likeService;
+        this.likeRepository = likeRepository;
+    }
 
     @RequestMapping(value = {"/doPost"}, method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody

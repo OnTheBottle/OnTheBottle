@@ -1,6 +1,6 @@
 package com.bottle.userWall.home.service;
-import com.home.entity.Comment;
-import com.home.repository.CommentRepository;
+import com.bottle.userWall.home.entity.Comment;
+import com.bottle.userWall.home.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.bottle.userWall.home.repository;
 
-import com.home.entity.Like;
+import com.bottle.userWall.home.entity.Like;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
 package com.bottle.userWall.home.service;
 
 
-import com.home.entity.Security;
-import com.home.repository.SecurityRepository;
+import com.bottle.userWall.home.entity.Security;
+import com.bottle.userWall.home.repository.SecurityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
