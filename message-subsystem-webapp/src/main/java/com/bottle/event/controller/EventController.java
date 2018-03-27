@@ -6,6 +6,7 @@ import com.bottle.event.model.DTO.request.IdRequestDTO;
 import com.bottle.event.model.DTO.response.EventsResponseDTO;
 import com.bottle.event.model.DTO.response.ListResponseDTO;
 import com.bottle.event.model.DTO.response.ResultResponseDTO;
+import com.bottle.event.model.DTO.validators.EventValidator;
 import com.bottle.event.model.entity.Event;
 import com.bottle.event.model.entity.User;
 import com.bottle.event.service.event.AllEventService;
@@ -15,11 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,25 +29,29 @@ public class EventController {
     private AllEventService allEventService;
     private AllPlaceService allPlaceService;
     private AllUserService allUserService;
+    private EventValidator eventValidator;
 
     @Autowired
-    public EventController(AllEventService allEventService, AllPlaceService allPlaceService, AllUserService allUserService) {
+    public EventController(AllEventService allEventService, AllPlaceService allPlaceService, AllUserService allUserService, EventValidator eventValidator) {
         this.allEventService = allEventService;
         this.allPlaceService = allPlaceService;
         this.allUserService = allUserService;
+        this.eventValidator = eventValidator;
     }
 
     @PostMapping(path = "/saveEvent")
     @ResponseBody
-    public ResponseEntity createEvent(@RequestBody @Valid EventDTO eventDTO, BindingResult bindingResult ) { //TODO
+    public ResponseEntity createEvent(EventDTO eventDTO, BindingResult bindingResult ) { //TODO
         ResponseEntity responseEntity;
+        eventValidator.validate(eventDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
+            for (ObjectError objectError : bindingResult.getAllErrors()) { //TODO
+                System.out.println(objectError.getDefaultMessage());
+            }
             responseEntity = ResponseEntity.badRequest().body("LoL");
-            System.out.println("bindingResult");
         } else {
             responseEntity = ResponseEntity.ok(allEventService.registrationEvent(eventDTO));
-            System.out.println("!bindingResult");
         }
 
         return responseEntity;
@@ -90,8 +94,8 @@ public class EventController {
         eventDTO.setText(event.getText());
         eventDTO.setStartTime(String.valueOf(event.getStartTime()).replace(' ', 'T'));
         eventDTO.setEndTime(String.valueOf(event.getEndTime()).replace(' ', 'T'));
-        eventDTO.setPlace(String.valueOf(event.getPlace().getId()));
-        eventDTO.setOwner(String.valueOf(event.getOwner().getId()));
+        eventDTO.setPlace(event.getPlace().getId());
+        eventDTO.setOwner(event.getOwner().getId());
 
         List<UUID> uuids = new ArrayList<>();
         for (User user : event.getUsers()) {

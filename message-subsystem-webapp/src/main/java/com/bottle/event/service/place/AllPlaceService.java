@@ -4,6 +4,7 @@ import com.bottle.event.model.DTO.EventDTO;
 import com.bottle.event.model.DTO.request.IdRequestDTO;
 import com.bottle.event.model.entity.Event;
 import com.bottle.event.model.entity.Place;
+import com.bottle.event.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,7 @@ public class AllPlaceService {
     }
 
     public Place createOrGet(EventDTO eventDTO) { // TODO
-        UUID id = eventDTO.getPlace().equals("0") ?
-                UUID.randomUUID() : UUID.fromString(eventDTO.getPlace());
-        return getterPlace.createOrGet(id);
+        return getterPlace.createOrGet(eventDTO.getPlace());
     }
 
     public List<UUID> getAllPlaces() {
@@ -33,8 +32,7 @@ public class AllPlaceService {
 
     public Map<UUID, String> getAllEventsId(IdRequestDTO idRequestDTO) {
         Map<UUID, String> allEvents = new HashMap<>();
-        UUID id = UUID.fromString(idRequestDTO.getId());
-        Place place = getterPlace.createOrGet(id);
+        Place place = getterPlace.createOrGet(idRequestDTO.getId());
 
         for (Event event : place.getEvents()) {
             allEvents.put(event.getId(), event.getTitle());

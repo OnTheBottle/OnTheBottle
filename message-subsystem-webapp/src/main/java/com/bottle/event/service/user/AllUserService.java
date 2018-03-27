@@ -22,14 +22,11 @@ public class AllUserService {
     }
 
     public User createOrGet(EventDTO eventDTO) { //TODO
-        UUID id = eventDTO.getOwner().equals("0") ?
-                UUID.randomUUID() : UUID.fromString(eventDTO.getOwner());
-        return getterUser.createOrGet(id);
+        return getterUser.createOrGet(eventDTO.getOwner());
     }
 
     public User createOrGet() { //TODO test method
-        UUID id = UUID.randomUUID();
-        return getterUser.createOrGet(id);
+        return getterUser.createOrGet(UUID.randomUUID());
     }
 
     public List<UUID> getAllUsers() {
@@ -38,8 +35,7 @@ public class AllUserService {
 
     public Map<UUID, String> getAllEventsId(IdRequestDTO idRequestDTO) {
         Map<UUID, String> allEvents = new HashMap<>();
-        UUID id = UUID.fromString(idRequestDTO.getId());
-        User user = getterUser.createOrGet(id);
+        User user = getterUser.createOrGet(idRequestDTO.getId());
 
         for (Event event : user.getEvents()) {
             allEvents.put(event.getId(), event.getTitle());

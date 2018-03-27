@@ -41,7 +41,7 @@ public class AllEventService {
         return getterEvent.getAllPassedIdAndTitle();
     }
 
-    public Event getEvent(String id) {
+    public Event getEvent(UUID id) {
         return getterEvent.getEvent(id);
     }
 

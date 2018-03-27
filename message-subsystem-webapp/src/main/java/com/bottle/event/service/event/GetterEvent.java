@@ -55,9 +55,9 @@ public class GetterEvent {
         }
     }
 
-    public Event getEvent(String id) {
+    public Event getEvent(UUID id) {
         try {
-            return eventStore.getById(UUID.fromString(id));
+            return eventStore.getById(id);
         } catch (SQLException e) { //TODO
             e.printStackTrace();
             return null;

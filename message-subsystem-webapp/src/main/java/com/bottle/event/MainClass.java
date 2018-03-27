@@ -7,9 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("com.bottle.com.bottle.event.model.repository")
-@EntityScan("com.bottle.com.bottle.event.model.entity")
-@ComponentScan("com.bottle.com.bottle.event")
+@EnableJpaRepositories("com.bottle.event.model.repository")
+@EntityScan("com.bottle.event.model.entity")
+@ComponentScan("com.bottle.event")
 public class MainClass {
     public static void main(String[] args) {
         SpringApplication.run(MainClass.class, args);
@@ -18,3 +18,6 @@ public class MainClass {
 
 //TODO
 //Проверка данных при записи в бд (RnD)
+//Обработка исключений
+//Отмена завершенного евента
+//Запрет на изменение евента не владельцем
