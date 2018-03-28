@@ -26,6 +26,10 @@ public class AllPlaceService {
         return getterPlace.createOrGet(eventDTO.getPlace());
     }
 
+    public Place createOrGet() { //TODO test method
+        return getterPlace.createOrGet(UUID.randomUUID());
+    }
+
     public List<UUID> getAllPlaces() {
         return getterPlace.getAllId();
     }

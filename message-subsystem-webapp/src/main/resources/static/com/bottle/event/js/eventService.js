@@ -1,5 +1,4 @@
 function saveEvent() {
-    var id = $("#active-events").val();
     var title = document.getElementById("title").value;
     var text = document.getElementById("text").value;
     var startTime = document.getElementById("startTime").value;
@@ -10,11 +9,22 @@ function saveEvent() {
     $.ajax({
         type: "POST",
         url: "/saveEvent",
-        data: {id: id, title: title, text: text, startTime: startTime, endTime: endTime, place: place, owner: owner},
+        data: {title: title, text: text, startTime: startTime, endTime: endTime, place: place, owner: owner},
         success: function (data) {
             document.getElementById("result").innerHTML = data;
         }
     });
+}
+
+function guid() {
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+}
+
+function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
 }
 
 function deleteEvent() {
@@ -89,6 +99,18 @@ function addText(data) {
     for (var key in usersList) {
         addOption(selectUser, usersList[key], usersList[key]);
     }
+}
+
+function createPlace() {
+    $.ajax({
+        type: "POST",
+        url: "/createPlace",
+        dataType: "json",
+        data: {},
+        success: function (data) {
+            document.getElementById("result").innerText = data.result;
+        }
+    });
 }
 
 $("#user").change(function () {

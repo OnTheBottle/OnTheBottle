@@ -114,6 +114,14 @@ public class EventController {
         return resultResponseDTO;
     }
 
+    @PostMapping(path = "/createPlace")
+    @ResponseBody
+    public ResultResponseDTO createPlace() { //TODO
+        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
+        resultResponseDTO.setResult(String.valueOf(allPlaceService.createOrGet().getId()));
+        return resultResponseDTO;
+    }
+
     @PostMapping(path = "/showAllUsers")
     @ResponseBody
     public ListResponseDTO<UUID> showAllUsers() { //TODO
