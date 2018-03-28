@@ -6,6 +6,9 @@
 </head>
 <body>
 <a href="../../../index.html"><input type="button" value="Main"></a><br>
+<input type="button" onclick="createUser()" value="Создать нового пользователя"><br>
+<input type="button" onclick="createPlace()" value="Создать новое место"><br>
+
 <p>
     <label for="user">Вы зашли под юзером</label>
     <select name="select" id="user"></select>
@@ -44,7 +47,7 @@
         <label for="place-events">Эвенты проходящие в этом месте</label>
         <select name="select" id="place-events"></select>
     </p>
-    <input type="button" onclick="saveEvent()" value="Создать/Обновить!">
+    <input type="button" onclick="saveEvent()" value="Создать!">
     <input type="button" onclick="deleteEvent()" value="Завершить евент!">
 </form>
 <p>
@@ -56,7 +59,6 @@
     <label for="result">Результат последней операции</label>
     <label id="result">-</label>
 </p>
-<input type="button" onclick="createUser()" value="Создать нового пользователя">
 <p>
     <label for="users">Пользователи</label>
     <select name="select" id="users"></select>
