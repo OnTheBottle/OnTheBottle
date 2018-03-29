@@ -5,15 +5,17 @@
     <title>Add comment</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/style.css  "/>
     <script src="js/jquery-1.11.1.js"></script>
     <script src="js/onload.js"></script>
     <script src="js/addComment.js"></script>
     <script src="js/showComments.js"></script>
 
 
+
 </head>
 <body onload="onload()">
+
 <div class="post">
     <div class="posting">
         <div class="info">
@@ -39,7 +41,31 @@
                 <script type="text/javascript">
                    function commenting(){ var text=document.getElementById("textComment").value;
                     var comment={text:text};
-                    localStorage.setItem("TextComment",JSON.stringify(comment));}
+                    localStorage.setItem("TextComment",JSON.stringify(comment));
+                    }
+                   function deletepostfromwindow() {
+
+                       var data = JSON.parse(localStorage.getItem("Post data"));
+                       var userId = data.userId;
+                       var postId=data.postId;
+
+
+                       $.ajax({
+                           method: "POST",
+                           url: "/deletePost",
+                           dataType: 'json',
+                           contentType: 'application/json',
+                           data: JSON.stringify(postId),
+                           success: function (message) {
+                               if (message.status == "Done") {
+                                   window.close()
+                               }
+                           },
+                           error: function (xhr, status, error) {
+                               alert(error);
+                           }
+                       });
+                   }
                 </script>
                 <button class="addComment" title="comment" onclick="comment()"></button>
                 <div class="likes">

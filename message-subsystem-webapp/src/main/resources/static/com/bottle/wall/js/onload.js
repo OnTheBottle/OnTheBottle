@@ -15,21 +15,22 @@ function  onload() {
                 var author = onePost.user;
                 var images = onePost.images;
                 var id = author.id;
-                var name = author.username;
+                var name = author.name;
+                if(author.imageUser){
                 var imageUser = author.imageUser;
                 var userImage = imageUser.path;
-                $('.posting').attr("id",postId);
-
                 var img = $('<img />', {
                     src: userImage,
                 });
                 $('.userImage').append(img);
+            }
 
+                $('.posting').attr("id",postId);
                 var text = "post by " + name + "<br>" + onePost.date + "<br>" + onePost.title;
                 $('.dateTitle').html(text);
 
                 if (id == userId) {
-                    $('.menuPost').append('<button class="deletePost" title="delete post" onclick="deletePost(this),window.close(),getposts()"/>');
+                    $('.menuPost').append('<button class="deletePost" title="delete post" onclick="deletepostfromwindow()"/>');
                 }
 
                 var textPost = onePost.text;
@@ -44,12 +45,6 @@ function  onload() {
                     $('.image').append(myImage);
 
                 });
-
-
-
-
-
-
 
                 var script = document.createElement('script');
                 script.src = "js/jquery-1.11.1.js";

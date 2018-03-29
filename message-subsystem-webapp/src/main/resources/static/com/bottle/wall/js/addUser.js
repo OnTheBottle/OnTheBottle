@@ -1,7 +1,7 @@
 function addUser() {
     var name = document.getElementById("name").value;
     var status = document.getElementById("status").value;
-    var user = {"username":name,"userstatus":status};
+    var user = {"name":name,"surname":status};
     var url = "/addUser";
 
     $.ajax({

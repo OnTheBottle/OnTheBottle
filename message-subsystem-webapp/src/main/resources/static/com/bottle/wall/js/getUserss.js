@@ -14,8 +14,8 @@ var i=0;
                 var selectlist = $('<select id="user1" onchange="imgUser(),getPosts()"/>');
                 selectoptions.forEach(function (value) {
 
-                    $('<option/>', {text: value.username}).appendTo(selectlist);
-                    const user = { name: value.username, id: value.id };
+                    $('<option/>', {text: value.name}).appendTo(selectlist);
+                    const user = { name: value.name, id: value.id };
                     var item = user.name;
                     localStorage.setItem(item, JSON.stringify(user));
                 });

@@ -6,9 +6,10 @@ function getPosts() {
     var author = user.name;
 
     function uuidv4() {
-        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-        )
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 
        $.ajax({
@@ -28,17 +29,23 @@ function getPosts() {
                     var creator = value.user;
                     var images = value.images;
                     var id = creator.id;
-                    var name = creator.username;
-                    var imageUser = creator.imageUser;
-                    var userImage = imageUser.path;
+                    var name = creator.name;
+
+
+
                     var likes = value.likes;
                     var post = $('<div />', {id: postId, class: "posting"});
                     var info = $('<div class="info"/>').appendTo(post);
                     var user = $('<div class="userImage"/>').appendTo(info);
+                    if(creator.imageUser){
+
+                        var imageUser = creator.imageUser;
+                        var userImage = imageUser.path;
                     var img = $('<img />', {
-                        src: userImage,
+                        src: userImage
                     });
-                    img.appendTo(user);
+                    img.appendTo(user);}
+
                     var title = value.title;
                     var text = "post by " + name + "<br>" + value.date + "<br>" + value.title;
                     $('<div class="dateTitle"/>').html(text).appendTo(info);
@@ -99,8 +106,8 @@ function getPosts() {
             alert(error);
         }
     });
-};
-
+}
+var windowopen;
 function getLink(post) {
     var creator = document.getElementById("user1").value;
     var user = JSON.parse(localStorage.getItem(creator));
@@ -112,10 +119,16 @@ function getLink(post) {
     localStorage.setItem("postOnBoard", JSON.stringify(workPost));
     var postData = {userId: userId, postId: postId};
     localStorage.setItem("Post data", JSON.stringify(postData));
-    window.open('/post.html', 'Add Comment', 'width=600,height=400');
-    window.focus();
-}
+   windowopen= window.open('post.html', 'Add Comment', 'width=600,height=400');
+    var winClosed = setInterval(function () {
 
+        if (windowopen.closed) {
+            clearInterval(winClosed);
+            getPosts(); //Call your function here
+        }
+
+    }, 250);
+}
 
 function deletePost(a) {
     var id = a.parentNode.parentNode.parentNode.id;
@@ -128,12 +141,14 @@ function deletePost(a) {
         success: function (message) {
             if (message.status == "Done") {
                 $('#' + id).remove();
-            }
+
+                }
         },
         error: function (xhr, status, error) {
             alert(error);
         }
     });
+
 }
 
 
