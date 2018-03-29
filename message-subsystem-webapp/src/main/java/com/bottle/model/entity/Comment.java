@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name="comments")
 @Getter
 @Setter
 @NoArgsConstructor

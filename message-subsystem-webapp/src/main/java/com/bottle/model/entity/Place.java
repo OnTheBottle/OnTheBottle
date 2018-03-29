@@ -1,8 +1,7 @@
 package com.bottle.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,12 +9,16 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = "events")
 @ToString(exclude = "events")
 public class Place {
     @Id
-    @Column(columnDefinition = "BINARY(16)", name = "place_id")
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid-gen")
+    @Column(name = "place_id")
     private UUID id;
 
     @OneToMany(mappedBy="place")

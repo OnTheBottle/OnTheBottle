@@ -11,15 +11,18 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = {"events", "ownerEvents","likes","posts","comments","imageUser"})
 @ToString(exclude = {"events", "ownerEvents","likes","posts","comments","imageUser"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "users")
 public class User {
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
-    @Column(columnDefinition = "BINARY(16)", name = "user_id")
+    @Column(name = "user_id")
     private UUID id;
 
     @Column(name = "name")

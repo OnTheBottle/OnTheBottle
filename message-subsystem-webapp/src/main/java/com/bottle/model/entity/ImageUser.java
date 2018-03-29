@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name="imageusers")
 @Getter
 @Setter
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

@@ -11,11 +11,11 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "likes")
 @Getter
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "likes")
 public class Like {
     @Id
     @GenericGenerator( name="uuid-gen", strategy="uuid2" )

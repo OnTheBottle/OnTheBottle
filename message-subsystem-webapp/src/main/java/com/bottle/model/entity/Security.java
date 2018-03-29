@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "security")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -20,7 +20,6 @@
         <junit.version>3.8.1</junit.version>
         <mysql-connector.version>6.0.6</mysql-connector.version>
         <hibernate-entitymanager.version>5.2.3.Final</hibernate-entitymanager.version>
-        <postgresql.version>9.1-901-1.jdbc4</postgresql.version>
     </properties>
 
     <dependencies>
@@ -58,14 +57,9 @@
 
         <!-- Other -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
+            <version>9.4-1206-jdbc42</version>
         </dependency>
 
         <dependency>
