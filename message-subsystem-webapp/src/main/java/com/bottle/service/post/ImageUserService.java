@@ -23,7 +23,5 @@ public class ImageUserService {
     public ImageUser getImageByUserId(UUID user_id) {
         return imageUserRepository.findByUserId( user_id );
     }
-
-
 }
 

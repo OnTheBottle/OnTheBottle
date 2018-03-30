@@ -21,7 +21,7 @@ public class PostService {
 
     @Transactional
     public void addPost(Post post) {
-        postRepository.save( post );
+        postRepository.save(post);
     }
 
     @Transactional
@@ -36,27 +36,26 @@ public class PostService {
 
     @Transactional
     public Iterable<Post> getPostsByUserId(UUID user_id) {
-        return postRepository.findAllByUserId( user_id );
+        return postRepository.findAllByUserId(user_id);
     }
 
     @Transactional
     public void updatePost(Post post) {
-        postRepository.save( post );
+        postRepository.save(post);
     }
 
     @Transactional
     public void deletePostById(UUID post_id) {
-        postRepository.delete( post_id );
+        postRepository.delete(post_id);
     }
 
     @Transactional
     public Post getPost(UUID post_id) {
-        return postRepository.findById( post_id );
+        return postRepository.findById(post_id);
     }
 
     @Transactional
     public Iterable<Post> getFirst10Post(UUID user_id) {
-        return postRepository.findFirst10ByUserIdOrderByDateDesc( user_id );
+        return postRepository.findFirst10ByUserIdOrderByDateDesc(user_id);
     }
-
 }

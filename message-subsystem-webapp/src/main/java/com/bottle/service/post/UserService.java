@@ -21,7 +21,7 @@ public class UserService {
 
     @Transactional
     public void addUser(User user) {
-        userRepository.save( user );
+        userRepository.save(user);
     }
 
     @Transactional
@@ -31,17 +31,16 @@ public class UserService {
 
     @Transactional
     public User getUser(UUID user_id) {
-        return userRepository.findById( user_id );
+        return userRepository.getOne(user_id);
     }
 
     @Transactional
     public User getUserByName(String name) {
-        return userRepository.findByName( name );
+        return userRepository.findByName(name);
     }
 
     @Transactional
     public Iterable<User> findAll() {
         return userRepository.findAll();
     }
-
 }

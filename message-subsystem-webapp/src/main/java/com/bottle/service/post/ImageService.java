@@ -11,22 +11,20 @@ import java.util.UUID;
 @Service
 public class ImageService {
 
-   private ImageRepository imageRepository;
+    private ImageRepository imageRepository;
 
-   @Autowired
+    @Autowired
     public ImageService(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
     }
 
     @Transactional
     public Image getImageByPostId(UUID post_id) {
-        return imageRepository.findByPostId( post_id );
+        return imageRepository.findByPostId(post_id);
     }
 
     @Transactional
     public void addImage(Image image) {
-        imageRepository.save( image );
+        imageRepository.save(image);
     }
-
-
 }

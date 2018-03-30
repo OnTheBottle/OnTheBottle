@@ -9,9 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @EqualsAndHashCode(exclude = "events")
 @ToString(exclude = "events")
 public class Place {
@@ -21,6 +19,6 @@ public class Place {
     @Column(name = "place_id")
     private UUID id;
 
-    @OneToMany(mappedBy="place")
+    @OneToMany(mappedBy = "place")
     private Set<Event> events = new HashSet<>();
 }

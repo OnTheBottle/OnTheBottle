@@ -21,16 +21,16 @@ public class CommentService {
 
     @Transactional
     public Iterable<Comment> getComments(UUID post_id) {
-        return commentRepository.findByPostId( post_id );
+        return commentRepository.findByPostId(post_id);
     }
 
     @Transactional
     public void addComment(Comment comment) {
-        commentRepository.save( comment );
+        commentRepository.save(comment);
     }
 
     @Transactional
     public void deleteCommentById(UUID comment_id) {
-        commentRepository.delete( comment_id );
+        commentRepository.delete(comment_id);
     }
 }

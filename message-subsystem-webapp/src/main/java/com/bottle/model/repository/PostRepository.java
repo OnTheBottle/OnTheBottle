@@ -13,5 +13,4 @@ public interface PostRepository extends CrudRepository<Post, UUID> {
     Iterable<Post> findAllByUserId(UUID user_id);
 
     Iterable<Post> findFirst10ByUserIdOrderByDateDesc(UUID user_id);
-
 }

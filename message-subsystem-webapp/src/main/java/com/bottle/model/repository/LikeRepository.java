@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Repository
 public interface LikeRepository extends CrudRepository<Like, UUID> {
-
     @Transactional
     HashSet<Like> findByPost_Id(UUID post_id);
 

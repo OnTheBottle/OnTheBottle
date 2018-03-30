@@ -3,9 +3,7 @@ package com.bottle.model.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,18 +11,16 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Comment {
     @Id
-    @GenericGenerator( name="uuid-gen", strategy="uuid2" )
-    @GeneratedValue(generator="uuid-gen")
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
+    @GeneratedValue(generator = "uuid-gen")
     @Column(name = "comment_id")
     private UUID id;
 
-    @Column(name="comment",columnDefinition = "TEXT")
+    @Column(name = "comment", columnDefinition = "TEXT")
     private String Text;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,18 +33,7 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post;
 
- //   @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", Text='" + Text + '\'' +
-                ", date=" + date +
-                ", user=" + user +
-                '}';
-    }
 }

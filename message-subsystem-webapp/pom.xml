@@ -18,7 +18,7 @@
         <hibernate.version>5.2.2.Final</hibernate.version>
         <lombok.version>1.16.10</lombok.version>
         <junit.version>3.8.1</junit.version>
-        <mysql-connector.version>6.0.6</mysql-connector.version>
+        <postgresql.version>9.4-1206-jdbc42</postgresql.version>
         <hibernate-entitymanager.version>5.2.3.Final</hibernate-entitymanager.version>
     </properties>
 
@@ -59,9 +59,8 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4-1206-jdbc42</version>
+            <version>${postgresql.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

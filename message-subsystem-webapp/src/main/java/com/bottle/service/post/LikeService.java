@@ -20,8 +20,6 @@ public class LikeService {
 
     @Transactional
     public void save(Like like) {
-        likeRepository.save( like );
+        likeRepository.save(like);
     }
-
-
 }

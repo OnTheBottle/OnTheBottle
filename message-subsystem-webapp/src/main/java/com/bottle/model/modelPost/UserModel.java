@@ -1,12 +1,12 @@
 package com.bottle.model.modelPost;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 public class UserModel {
         private UUID user_id;
         private String name;

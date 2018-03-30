@@ -41,7 +41,7 @@ public class EventController {
 
     @PostMapping(path = "/saveEvent")
     @ResponseBody
-    public ResponseEntity createEvent(EventDTO eventDTO, BindingResult bindingResult ) { //TODO
+    public ResponseEntity createEvent(EventDTO eventDTO, BindingResult bindingResult) { //TODO
         ResponseEntity responseEntity;
         eventValidator.validate(eventDTO, bindingResult);
 

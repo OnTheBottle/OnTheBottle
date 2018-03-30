@@ -2,6 +2,7 @@ package com.bottle.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,9 +15,7 @@ import java.util.UUID;
 
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post {
     @Id
@@ -61,16 +60,4 @@ public class Post {
             fetch = FetchType.LAZY,
             mappedBy = "post")
     private Set<Like> likes;
-
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id='" + id +
-                ", title='" + title + '\'' +
-                ", post='" + Text + '\'' +
-                ", author='" + user + '\'' +
-                ", date='" + date + '\'' +
-                "'}";
-    }
 }

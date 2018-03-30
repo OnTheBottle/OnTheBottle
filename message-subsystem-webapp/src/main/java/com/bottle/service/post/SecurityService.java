@@ -26,11 +26,11 @@ public class SecurityService {
 
     @Transactional
     public Security getSecurity(Integer security_id) {
-        return securityRepository.findOne( security_id );
+        return securityRepository.findOne(security_id);
     }
 
     @Transactional
     public Security getSecurityByName(String name) {
-        return securityRepository.findByName( name );
+        return securityRepository.findByName(name);
     }
 }
