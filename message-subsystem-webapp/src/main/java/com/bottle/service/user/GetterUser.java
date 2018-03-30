@@ -48,6 +48,15 @@ public class GetterUser {
         }
     }
 
+    public List<User> getAll() {
+        try {
+            return userStore.getAll();
+        } catch (SQLException e) { //TODO
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public User createUser(UUID id) {
         try {
             if (userStore.exists(id)) {

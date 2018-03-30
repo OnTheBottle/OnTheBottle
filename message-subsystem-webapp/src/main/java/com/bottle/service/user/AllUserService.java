@@ -33,6 +33,10 @@ public class AllUserService {
         return getterUser.getAllId();
     }
 
+    public List<User> getAllUsers() {
+        return getterUser.getAll();
+    }
+
     public Map<UUID, String> getAllEventsIdFromUser(UUID id) {
         Map<UUID, String> allEvents = new HashMap<>();
         User user = getterUser.getUser(id);

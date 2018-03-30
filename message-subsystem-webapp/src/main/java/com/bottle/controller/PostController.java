@@ -40,7 +40,7 @@ public class PostController {
         this.postService = postService;
         this.postRepository = postRepository;
         this.allUserService = allUserService;
-        this.userService = userService; //TODO
+        this.userService = userService;
         this.securityService = securityService;
         this.imageUserService = imageUserService;
         this.imageService = imageService;
@@ -64,7 +64,7 @@ public class PostController {
         if (post.getDate() == null)
             post.setDate(new Date());
 
-        User user = userService.getUser(user_id);
+        User user = allUserService.getUser(user_id);
         Security security = securityService.getSecurity(security_id);
 
         post.setSecurity(security);
@@ -122,7 +122,7 @@ public class PostController {
     @ResponseBody
     public ResponseDto getUsers() {
         Iterable<User> users;
-        users = userService.findAll();
+        users = allUserService.getAllUsers();
         ResponseDto res = new ResponseDto();
         res.setStatus("Done");
         res.setData(users);
@@ -132,7 +132,7 @@ public class PostController {
     @RequestMapping(value = {"/addUser"}, method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public ResponseDto addUser(@RequestBody User user) {
-        userService.addUser(user);
+        userService.addUser(user); //TODO принимать надо через ДТО, а не Ентити
         ResponseDto res = new ResponseDto();
         res.setStatus("Done");
         return res;
@@ -189,7 +189,7 @@ public class PostController {
         comment.setText(commentModel.getComment());
         if (comment.getDate() == null)
             comment.setDate(new Date());
-        User user = userService.getUser(user_id);
+        User user = allUserService.getUser(user_id);
         Post post = postService.getPost(post_id);
         comment.setPost(post);
         comment.setUser(user);
@@ -228,7 +228,7 @@ public class PostController {
         UUID post_id = likeModel.getPost_id();
         UUID user_id = likeModel.getUser_id();
         Post post = postRepository.findOne(post_id);
-        User user = userService.getUser(user_id);
+        User user = allUserService.getUser(user_id);
         Set<Like> likes;
         likes = likeRepository.findByPost_Id(post_id);
         boolean a = false;
