@@ -35,7 +35,20 @@ public class GetterPlace {
         }
     }
 
-    public Place createOrGet(UUID id) {
+    public Place getPlace(UUID id) {
+        try {
+            if (placeStore.exists(id)) {
+                return placeStore.getById(id);
+            } else {
+                return createPlace(id);
+            }
+        } catch (SQLException e) { //TODO
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Place createPlace(UUID id) {
         try {
             if (placeStore.exists(id)) {
                 return placeStore.getById(id);

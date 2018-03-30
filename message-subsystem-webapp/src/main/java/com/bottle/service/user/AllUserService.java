@@ -21,21 +21,21 @@ public class AllUserService {
         this.getterUser = getterUser;
     }
 
-    public User createOrGet(EventDTO eventDTO) { //TODO
-        return getterUser.createOrGet(eventDTO.getOwner());
+    public User getUser(UUID id) {
+        return getterUser.getUser(id);
     }
 
-    public User createOrGet() { //TODO test method
-        return getterUser.createOrGet(UUID.randomUUID());
+    public User createUser() {
+        return getterUser.createUser(UUID.randomUUID());
     }
 
-    public List<UUID> getAllUsers() {
+    public List<UUID> getAllUsersId() {
         return getterUser.getAllId();
     }
 
-    public Map<UUID, String> getAllEventsId(IdRequestDTO idRequestDTO) {
+    public Map<UUID, String> getAllEventsIdFromUser(UUID id) {
         Map<UUID, String> allEvents = new HashMap<>();
-        User user = getterUser.createOrGet(idRequestDTO.getId());
+        User user = getterUser.getUser(id);
 
         for (Event event : user.getEvents()) {
             allEvents.put(event.getId(), event.getTitle());

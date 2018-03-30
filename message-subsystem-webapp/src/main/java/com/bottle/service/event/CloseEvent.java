@@ -7,20 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 @Service
-public class DeleteEvent {
+public class CloseEvent {
     private GetterEvent getterEvent;
     private EventStore eventStore;
 
     @Autowired
-    public DeleteEvent(GetterEvent getterEvent, EventStore eventStore) {
+    public CloseEvent(GetterEvent getterEvent, EventStore eventStore) {
         this.getterEvent = getterEvent;
         this.eventStore = eventStore;
     }
 
-    public String closeEvent(IdRequestDTO idRequestDTO) {
-        Event event = getterEvent.getEvent(idRequestDTO.getId());
+    public String closeEvent(UUID id) {
+        Event event = getterEvent.getEvent(id);
         event.setIsActive(false);
 
         try {

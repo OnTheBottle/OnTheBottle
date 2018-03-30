@@ -15,37 +15,28 @@ import java.sql.SQLException;
 @Service
 public class RegistrationEvent {
     private BuildEvent buildEvent;
-    private EventStore eventStore;
     private AllPlaceService placeService;
     private AllUserService userService;
     private EntityBinder entityBinder;
 
     @Autowired
     public RegistrationEvent(
-            BuildEvent buildEvent, EventStore eventStore, AllPlaceService placeService, AllUserService userService, EntityBinder entityBinder) {
+            BuildEvent buildEvent, AllPlaceService placeService, AllUserService userService, EntityBinder entityBinder) {
         this.buildEvent = buildEvent;
-        this.eventStore = eventStore;
         this.placeService = placeService;
         this.userService = userService;
         this.entityBinder = entityBinder;
     }
 
-    public String createAndSave(EventDTO eventDTO) {
-        try {
-            Event event = buildEvent.build(eventDTO);
-            Place place = placeService.createOrGet(eventDTO);
-            User user = userService.createOrGet(eventDTO);
+    public String createEvent(EventDTO eventDTO) {
+        Event event = buildEvent.build(eventDTO);
+        Place place = placeService.getPlace(eventDTO.getPlace());
+        User owner = userService.getUser(eventDTO.getOwner());
 
-            event.setPlace(place);
-            event.setOwner(user);
-            entityBinder.addUserToEvent(user, event);
+        event.setPlace(place);
+        event.setOwner(owner);
 
-            eventStore.createOrUpdate(event);
-            return "complete";
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return "error";
-        }
+        return entityBinder.addUserToEvent(event, owner);
     }
 }
 

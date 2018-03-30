@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 @Service
 public class EntityBinder {
@@ -21,10 +22,10 @@ public class EntityBinder {
         this.userStore = userStore;
     }
 
-    public String addUserToEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
+    public String addUserToEvent(UUID idEvent, UUID idUser) {
         try {
-            Event event = eventStore.getById(idEventAndUserRequestDTO.getIdEvent());
-            User user = userStore.getById(idEventAndUserRequestDTO.getIdUser());
+            Event event = eventStore.getById(idEvent);
+            User user = userStore.getById(idUser);
 
             event.getUsers().add(user);
             user.getEvents().add(event);
@@ -37,15 +38,22 @@ public class EntityBinder {
         }
     }
 
-    public void addUserToEvent(User user, Event event) {
-        event.getUsers().add(user);
-        user.getEvents().add(event);
+    public String addUserToEvent(Event event, User user) {
+        try {
+            event.getUsers().add(user);
+            user.getEvents().add(event);
+            eventStore.createOrUpdate(event);
+            return "complete";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "error";
+        }
     }
 
-    public String deleteUserFromEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
+    public String deleteUserFromEvent(UUID idEvent, UUID idUser) {
         try {
-            Event event = eventStore.getById(idEventAndUserRequestDTO.getIdEvent());
-            User user = userStore.getById(idEventAndUserRequestDTO.getIdUser());
+            Event event = eventStore.getById(idEvent);
+            User user = userStore.getById(idUser);
 
             if (user.equals(event.getOwner())) {
                 return "Can't delete owner";

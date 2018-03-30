@@ -21,21 +21,21 @@ public class AllPlaceService {
         this.getterPlace = getterPlace;
     }
 
-    public Place createOrGet(EventDTO eventDTO) { // TODO
-        return getterPlace.createOrGet(eventDTO.getPlace());
+    public Place getPlace(UUID id) {
+        return getterPlace.getPlace(id);
     }
 
-    public Place createOrGet() { //TODO test method
-        return getterPlace.createOrGet(UUID.randomUUID());
+    public Place createPlace() {
+        return getterPlace.createPlace(UUID.randomUUID());
     }
 
     public List<UUID> getAllPlaces() {
         return getterPlace.getAllId();
     }
 
-    public Map<UUID, String> getAllEventsId(IdRequestDTO idRequestDTO) {
+    public Map<UUID, String> getAllEventsIdInPlace(UUID id) {
         Map<UUID, String> allEvents = new HashMap<>();
-        Place place = getterPlace.createOrGet(idRequestDTO.getId());
+        Place place = getterPlace.getPlace(id);
 
         for (Event event : place.getEvents()) {
             allEvents.put(event.getId(), event.getTitle());

@@ -35,15 +35,28 @@ public class GetterUser {
         }
     }
 
-    public User createOrGet(UUID id) {
+    public User getUser(UUID id) {
         try {
             if (userStore.exists(id)) {
                 return userStore.getById(id);
             } else {
-                User place = new User();
-                place.setId(id);
-                userStore.createOrUpdate(place);
-                return place;
+                return createUser(id);
+            }
+        } catch (SQLException e) { //TODO
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public User createUser(UUID id) {
+        try {
+            if (userStore.exists(id)) {
+                return userStore.getById(id);
+            } else {
+                User user = new User();
+                user.setId(id);
+                userStore.createOrUpdate(user);
+                return user;
             }
         } catch (SQLException e) { //TODO
             e.printStackTrace();

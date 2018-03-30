@@ -61,7 +61,7 @@ public class EventController {
     @ResponseBody
     public ResultResponseDTO deleteEvent(IdRequestDTO idRequestDTO) { //TODO
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(allEventService.closeEvent(idRequestDTO));
+        resultResponseDTO.setResult(allEventService.closeEvent(idRequestDTO.getId()));
         return resultResponseDTO;
     }
 
@@ -110,7 +110,7 @@ public class EventController {
     @ResponseBody
     public ResultResponseDTO createUser() { //TODO
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(String.valueOf(allUserService.createOrGet().getId()));
+        resultResponseDTO.setResult(String.valueOf(allUserService.createUser().getId()));
         return resultResponseDTO;
     }
 
@@ -118,7 +118,7 @@ public class EventController {
     @ResponseBody
     public ResultResponseDTO createPlace() { //TODO
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(String.valueOf(allPlaceService.createOrGet().getId()));
+        resultResponseDTO.setResult(String.valueOf(allPlaceService.createPlace().getId()));
         return resultResponseDTO;
     }
 
@@ -126,7 +126,7 @@ public class EventController {
     @ResponseBody
     public ListResponseDTO<UUID> showAllUsers() { //TODO
         ListResponseDTO<UUID> listResponseDTO = new ListResponseDTO<>();
-        listResponseDTO.setList(allUserService.getAllUsers());
+        listResponseDTO.setList(allUserService.getAllUsersId());
 
         return listResponseDTO;
     }
@@ -135,7 +135,9 @@ public class EventController {
     @ResponseBody
     public ResultResponseDTO addUserToEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) { //TODO
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(allEventService.addUser(idEventAndUserRequestDTO));
+        UUID idUser = idEventAndUserRequestDTO.getIdUser();
+        UUID idEvent = idEventAndUserRequestDTO.getIdEvent();
+        resultResponseDTO.setResult(allEventService.addUser(idEvent, idUser));
 
         return resultResponseDTO;
     }
@@ -144,7 +146,9 @@ public class EventController {
     @ResponseBody
     public ResultResponseDTO deleteUserFromEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) { //TODO
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(allEventService.deleteUser(idEventAndUserRequestDTO));
+        UUID idUser = idEventAndUserRequestDTO.getIdUser();
+        UUID idEvent = idEventAndUserRequestDTO.getIdEvent();
+        resultResponseDTO.setResult(allEventService.deleteUser(idEvent, idUser));
 
         return resultResponseDTO;
     }
@@ -153,7 +157,7 @@ public class EventController {
     @ResponseBody
     public EventsResponseDTO showEventsFromUser(IdRequestDTO idRequestDTO) { //TODO
         EventsResponseDTO eventListDTO = new EventsResponseDTO();
-        eventListDTO.setActiveEvents(allUserService.getAllEventsId(idRequestDTO));
+        eventListDTO.setActiveEvents(allUserService.getAllEventsIdFromUser(idRequestDTO.getId()));
 
         return eventListDTO;
     }
@@ -162,7 +166,7 @@ public class EventController {
     @ResponseBody
     public EventsResponseDTO showEventsFromPlace(IdRequestDTO idRequestDTO) { //TODO
         EventsResponseDTO eventListDTO = new EventsResponseDTO();
-        eventListDTO.setActiveEvents(allPlaceService.getAllEventsId(idRequestDTO));
+        eventListDTO.setActiveEvents(allPlaceService.getAllEventsIdInPlace(idRequestDTO.getId()));
 
         return eventListDTO;
     }
