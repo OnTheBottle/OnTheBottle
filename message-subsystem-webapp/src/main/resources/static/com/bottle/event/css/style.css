@@ -1,0 +1,64 @@
+html {
+    font-size: 10px
+}
+
+body {
+    background-color: #eeeeee;
+    font-size: 1.4rem;
+    font-family: Arial, Tahoma, sans-serif;
+}
+
+.header-container {
+    background: #d8d7d3;
+}
+
+header a img {
+    max-width: 6rem;
+    padding: 1rem;
+}
+
+.search-form {
+    padding: 1.8rem 0 0 0;
+    margin: 0;
+}
+
+.search-form input.search-input {
+    border: 1px solid #4c4c4c;
+    box-shadow: none;
+    height: 2.7rem;
+    color: #eeeeee;
+    padding: 0 6px;
+    width: 20rem;
+}
+
+.search-form button {
+    border: 1px solid #4c4c4c;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 0 1.2rem;
+    height: 2.7rem;
+    vertical-align: top;
+    box-shadow: none;
+    color: #eeeeee;
+    background-color: black;
+}
+
+.header-container .col-sm {
+    padding: 0 7rem;
+}
+
+.header-container .col-sm,
+.header-container .col-sm-4{
+    border-right: 1px solid #4c4c4c;
+}
+
+.header-container .col-sm p {
+    padding-top: 1.4rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.main-content {
+    margin-top: 2rem;
+    background-color: #d8d7d3;
+}
