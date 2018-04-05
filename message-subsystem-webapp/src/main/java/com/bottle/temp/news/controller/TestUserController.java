@@ -1,10 +1,7 @@
 package com.bottle.temp.news.controller;
 
 import com.bottle.temp.news.dto.FriendDTO;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +11,7 @@ import java.util.UUID;
 @RequestMapping(value = "/user")
 public class TestUserController {
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @RequestMapping(value = "/getfriends")
     public List<FriendDTO> getFriends(@RequestParam(value = "id") UUID id) {
         //System.out.println("UUID from news to user subsystem: " + id);

@@ -17,8 +17,10 @@ public class NewsController {
     @Autowired
     PostRepository postRepository;
 
+    @CrossOrigin(origins = "http://localhost:63342")
     @RequestMapping(path = "/getnews", method = RequestMethod.POST)
     public List<Post> getFriends(@RequestParam(name = "id") String id){
+        System.out.println("request id: " + id);
         UUID uuid = UUID.fromString(id);
         List<Map> friends = client.getFriends(uuid);
         List<Post> posts = new ArrayList<>();
