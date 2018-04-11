@@ -5,6 +5,7 @@
     <title>news</title>
     <script src="../common/angularjs/angular.min.js"></script>
     <script src="../common/angularjs/angular-route.min.js"></script>
+    <script src="components/news/news.component.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="css/styles.css" type="text/css">
@@ -31,10 +32,7 @@
             Left Menu
         </div>
         <div ng-app="newsApp" ng-controller="newsCtrl" class="col-10 m-0 pl-1 pl-3 pr-0">
-            <!--<ng-include src="'components/friends/friends.html'"></ng-include>-->
-            <div ng-controller="postCtrl">
-                <news-post post="post" ng-repeat="post in posts"></news-post>
-            </div>
+            <app-news></app-news>
         </div>
     </div>
 </main>
@@ -47,6 +45,5 @@
 </footer>
 </div>
 
-<script src="js/newsApp.js"></script>
 </body>
 </html>

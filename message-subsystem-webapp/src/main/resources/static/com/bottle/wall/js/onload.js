@@ -47,16 +47,16 @@ function  onload() {
                 });
 
                 var script = document.createElement('script');
-                script.src = "js/jquery-1.11.1.js";
+                script.src = "temp/jquery-1.11.1.temp";
                 document.documentElement.appendChild(script);
                 var script = document.createElement('script');
-                script.src = "js/getPosts.js";
+                script.src = "temp/getPosts.temp";
                 document.documentElement.appendChild(script);
                 var script = document.createElement('script');
-                script.src = "js/addComment.js";
+                script.src = "temp/addComment.temp";
                 document.documentElement.appendChild(script);
                 var script = document.createElement('script');
-                script.src = "js/showComments.js";
+                script.src = "temp/showComments.temp";
                 document.documentElement.appendChild(script);
                 showComments();
             }

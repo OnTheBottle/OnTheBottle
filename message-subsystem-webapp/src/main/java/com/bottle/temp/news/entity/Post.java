@@ -22,6 +22,7 @@ public class Post {
     //private Security securityId;
     private Set<Image> images;
     private Set<Comment> comments;
+    private Set<FavoritePost> favorites;
 
 
     @Id
@@ -69,9 +70,17 @@ public class Post {
         return images;
     }
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    //@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinColumn(name = "POST_ID")
     public Set<Comment> getComments() {
         return comments;
+    }
+
+    @OneToMany
+    @JoinColumn(name = "POST_ID")
+    public Set<FavoritePost> getFavorites() {
+        return favorites;
     }
 
     @Override

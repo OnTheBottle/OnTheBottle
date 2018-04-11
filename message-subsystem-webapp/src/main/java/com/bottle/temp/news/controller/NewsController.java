@@ -18,17 +18,22 @@ public class NewsController {
     PostRepository postRepository;
 
     @CrossOrigin(origins = "http://localhost:63342")
-    @RequestMapping(path = "/getnews", method = RequestMethod.POST)
-    public List<Post> getFriends(@RequestParam(name = "id") String id){
+    @RequestMapping(path = "/getfriendsposts", method = RequestMethod.POST)
+    public List<List> getFriendsPosts(@RequestParam(name = "id") String id) {
         System.out.println("request id: " + id);
         UUID uuid = UUID.fromString(id);
         List<Map> friends = client.getFriends(uuid);
         List<Post> posts = new ArrayList<>();
-        for (Map<String,String> friend: friends){
+        for (Map<String, String> friend : friends) {
             UUID friendId = UUID.fromString(friend.get("id"));
             posts.addAll(postRepository.getPostByAuthorId(friendId));
         }
-        return posts;
+        //System.out.println(posts);
+        List<List> resp = new ArrayList<List>() {{
+            add(friends);
+            add(posts);
+        }};
+        return resp;
     }
 
 

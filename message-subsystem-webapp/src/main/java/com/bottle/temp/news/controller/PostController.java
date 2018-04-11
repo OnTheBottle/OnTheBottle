@@ -38,8 +38,9 @@ public class PostController {
         post.setPost("I add new post from Terminal console");
 
         Comment comment = new Comment();
+        comment.setPostId(postId);
         comment.setAuthorId(authorId);
-        comment.setPost(post);
+        comment.setDate(new Date());
         comment.setComment("Very good job!!!!!!");
 
         return post;

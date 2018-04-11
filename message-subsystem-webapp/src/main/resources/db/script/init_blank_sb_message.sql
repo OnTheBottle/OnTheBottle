@@ -23,6 +23,7 @@ CREATE TABLE posts
   title       VARCHAR(255),
   post        TEXT,
   security_id INTEGER NOT NULL ,
+  deleted     BOOLEAN NOT NULL DEFAULT 'false',
   PRIMARY KEY (post_id),
   FOREIGN KEY (security_id) REFERENCES security (security_id)
 );
@@ -34,6 +35,7 @@ CREATE TABLE comments
   author_id  UUID NOT NULL ,
   date       TIMESTAMP ,
   comment    TEXT,
+  deleted    BOOLEAN NOT NULL DEFAULT 'false',
   PRIMARY KEY (comment_id),
   FOREIGN KEY (post_id) REFERENCES posts (post_id)
 );

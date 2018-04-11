@@ -15,17 +15,18 @@ import java.util.UUID;
 
 @Controller
 public class NewsClient {
+    private String userSystemPath = "http://127.0.0.1:8080/user/";
+
+    public List getFriends(UUID id) {
+        String url = userSystemPath + "getfriends?id=" + id;
+        //POST request
+        return new RestTemplate().postForObject(url, null, ArrayList.class);
+    }
 
     public void getFriendsTest(UUID id) {
         String remoteHost = "http://127.0.0.1:8080/news/printrequest?id=" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(remoteHost, String.class);
         System.out.println(response);
-    }
-
-    public List getFriends(UUID id) {
-        String url = "http://127.0.0.1:8080/user/getfriends?id=" + id;
-        //POST request
-        return new RestTemplate().postForObject(url, null, ArrayList.class);
     }
 }

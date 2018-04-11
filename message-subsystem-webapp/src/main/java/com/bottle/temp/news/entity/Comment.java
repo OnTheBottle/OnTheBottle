@@ -15,10 +15,13 @@ import java.util.UUID;
 public class Comment {
 
     private UUID commentId;
+    private UUID postId;
     private UUID authorId;
     private Date date;
     private String comment;
-    private Post post;
+    private Boolean isDeleted;
+
+    //private Post post;
 
     @Id
     @Column(name = "COMMENT_ID")
@@ -33,15 +36,27 @@ public class Comment {
         return authorId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "POST_ID")
-    public Post getPost() {
-        return post;
-    }
+    //@ManyToOne
+    //@JoinColumn(name = "POST_ID")
+    //@ManyToOne
+    //@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    //public Post getPost() {
+    //    return post;
+    //}
 
     @Column(name = "DATE")
     public Date getDate() {
         return date;
+    }
+
+    @Column(name = "POST_ID")
+    public UUID getPostId() {
+        return postId;
+    }
+
+    @Column(name = "DELETED")
+    public Boolean getIsDeleted() {
+        return isDeleted;
     }
 
     @Column(name = "COMMENT", columnDefinition = "TEXT")
