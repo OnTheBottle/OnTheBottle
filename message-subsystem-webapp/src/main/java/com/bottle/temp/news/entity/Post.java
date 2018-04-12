@@ -22,6 +22,7 @@ public class Post {
     //private Security securityId;
     private Set<Image> images;
     private Set<Comment> comments;
+    private Set<LikePost> likes;
     private Set<FavoritePost> favorites;
 
 
@@ -81,6 +82,12 @@ public class Post {
     @JoinColumn(name = "POST_ID")
     public Set<FavoritePost> getFavorites() {
         return favorites;
+    }
+
+    @OneToMany
+    @JoinColumn(name = "POST_ID")
+    public Set<LikePost> getLikes() {
+        return likes;
     }
 
     @Override

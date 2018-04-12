@@ -2,6 +2,7 @@ package com.bottle.temp.news.entity;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.apachecommons.CommonsLog;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,29 +12,19 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@NoArgsConstructor
 @Setter
-@Table(name = "FAVORITE_POSTS")
-public class FavoritePost {
-    private UUID favoriteId;
+@NoArgsConstructor
+@Table(name ="LIKE_POSTS")
+public class LikePost {
+    private UUID likeId;
     private UUID postId;
     private UUID userId;
     private Date date;
 
     @Id
-    @Column(name = "FAVORITE_ID")
-    public UUID getFavoriteId() {
-        return favoriteId;
-    }
-
-    @Column(name = "DATE")
-    public Date getDate() {
-        return date;
-    }
-
-    @Column(name = "USER_ID")
-    public UUID getUserId() {
-        return userId;
+    @Column(name = "LIKE_ID")
+    public UUID getLikeId() {
+        return likeId;
     }
 
     @Column(name = "POST_ID")
@@ -41,10 +32,20 @@ public class FavoritePost {
         return postId;
     }
 
+    @Column(name = "USER_ID")
+    public UUID getUserId() {
+        return userId;
+    }
+
+    @Column(name = "DATE")
+    public Date getDate() {
+        return date;
+    }
+
     @Override
     public String toString() {
-        return "FavoritePost{" +
-                "favoriteId=" + favoriteId +
+        return "LikePost{" +
+                "likeId=" + likeId +
                 ", postId=" + postId +
                 ", userId=" + userId +
                 ", date=" + date +

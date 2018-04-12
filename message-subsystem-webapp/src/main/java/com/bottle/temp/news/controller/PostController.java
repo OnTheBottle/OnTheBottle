@@ -16,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/post")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostController {
     @Autowired
     private PostService postService;

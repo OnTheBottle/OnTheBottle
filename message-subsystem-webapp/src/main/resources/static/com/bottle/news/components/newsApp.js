@@ -1,10 +1,8 @@
-'use strict';
-
 var posts = [
     {
         postId: '58947654678957468',
         postOwner: 'owner 1',
-        postTitle: 'Topic 1',
+        postTopic: 'Topic 1',
         postDate: '22.02.2018 13:23',
         postText: 'Go all to drinking party! part 1',
         postComment: [
@@ -23,7 +21,7 @@ var posts = [
     {
         postId: '22947654678957468',
         postOwner: 'owner 2',
-        postTitle: 'Topic 2',
+        postTopic: 'Topic 2',
         postDate: '23.02.2018 13:23',
         postText: 'Go all to drinking party! part 2',
         postComment: [
@@ -41,7 +39,7 @@ var posts = [
     {
         postId: '33347654678957468',
         postOwner: 'owner 3',
-        postTitle: 'Topic 3',
+        postTopic: 'Topic 3',
         postDate: '24.02.2018 13:23',
         postText: 'Go all to drinking party! part 3',
         postComment: [
@@ -95,7 +93,7 @@ function toViewAllPosts(posts) {
 
         newPost.setAttribute('id', post.postId);
         newPost.getElementsByClassName('postOwner')[0].textContent = post.postOwner;
-        newPost.getElementsByClassName('postTitle')[0].textContent = post.postTitle;
+        newPost.getElementsByClassName('postTopic')[0].textContent = post.postTopic;
         newPost.getElementsByClassName('postDate')[0].textContent = post.postDate;
         newPost.getElementsByClassName('postText')[0].textContent = post.postText;
         newPost.getElementsByClassName('postComment')[0].textContent = post.postComment.length;

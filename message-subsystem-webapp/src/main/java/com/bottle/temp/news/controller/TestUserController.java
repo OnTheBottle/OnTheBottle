@@ -1,5 +1,6 @@
 package com.bottle.temp.news.controller;
 
+import com.bottle.Properties;
 import com.bottle.temp.news.dto.FriendDTO;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,13 +10,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TestUserController {
 
-    @CrossOrigin(origins = "http://localhost:63342")
     @RequestMapping(value = "/getfriends")
     public List<FriendDTO> getFriends(@RequestParam(value = "id") UUID id) {
-        //System.out.println("UUID from news to user subsystem: " + id);
-        String avatarPath = "http://127.0.0.1:8080/images/";
+        System.out.println("UUID from news to user subsystem: " + id);
+        String avatarPath = Properties.SUBMESSAGEPATH + "/images/";
         List<FriendDTO> friends = new ArrayList<>();
         friends.add(new FriendDTO(UUID.fromString("c4f63463-beb9-42c7-8921-7d3184845689"), "Vasja", avatarPath + "11.jpg"));
         friends.add(new FriendDTO(UUID.fromString("36fe8f70-3287-4521-b00f-807682ab8204"), "Dima", avatarPath + "16.jpg"));

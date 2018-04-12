@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Controller
 public class NewsClient {
-    private String userSystemPath = "http://127.0.0.1:8080/user/";
+    private String userSystemPath = "http://127.0.0.1:8083/user/";
 
     public List getFriends(UUID id) {
         String url = userSystemPath + "getfriends?id=" + id;
@@ -24,7 +24,7 @@ public class NewsClient {
     }
 
     public void getFriendsTest(UUID id) {
-        String remoteHost = "http://127.0.0.1:8080/news/printrequest?id=" + id;
+        String remoteHost = "http://127.0.0.1:8083/news/printrequest?id=" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(remoteHost, String.class);
         System.out.println(response);
