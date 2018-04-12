@@ -4,16 +4,15 @@ import com.bottle.pubs.list.entity.Place;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface PubsRepository extends CrudRepository {
-    List<Place> getAll();
+public interface PubsRepository extends CrudRepository<Place, UUID> {
 
     List<Place> getByName(String name);
 
-    List<Place> getByTime(String time);
+    List<Place> getByWorkTime(String workTime);
 
     List<Place> getByType(String type);
 
-    List<Place> getAllSortByRating();
 
 }

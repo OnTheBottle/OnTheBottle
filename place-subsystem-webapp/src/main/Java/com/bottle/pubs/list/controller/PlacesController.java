@@ -18,7 +18,7 @@ public class PlacesController {
         this.pubsRepository = pubsRepository;
     }
 
-    @PostMapping(path = "/getPubs")
+    @PostMapping(path = "/pubList")
     public PlacesListDTO getPubs(PubSearchQueryDTO request) {
         return new FindPlace().doSearch(pubsRepository, request);
     }
