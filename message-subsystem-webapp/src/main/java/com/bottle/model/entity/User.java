@@ -10,10 +10,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
-@EqualsAndHashCode(exclude = {"events", "ownerEvents", "likes", "posts", "comments", "imageUser"})
-@ToString(exclude = {"events", "ownerEvents", "likes", "posts", "comments", "imageUser"})
+@EqualsAndHashCode(exclude = {"events", "ownerEvents", "likes", "posts", "comments"})
+@ToString(exclude = {"events", "ownerEvents", "likes", "posts", "comments"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "users")
 public class User {
@@ -29,6 +32,9 @@ public class User {
     @Column(name = "surname")
     private String surname;
 
+    @Column(name = "avatarUrl")
+    private String avatarUrl;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -40,10 +46,6 @@ public class User {
             fetch = FetchType.LAZY,
             mappedBy = "user")
     private Set<Post> posts;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "imageuser_id")
-    private ImageUser imageUser;
 
 
     @JsonIgnore

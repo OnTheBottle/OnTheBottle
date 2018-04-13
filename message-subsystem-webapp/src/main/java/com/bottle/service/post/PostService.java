@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,41 +22,32 @@ public class PostService {
 
     @Transactional
     public void addPost(Post post) {
-        postRepository.save(post);
-    }
-
-    @Transactional
-    public void deleteAll() {
-        postRepository.deleteAll();
-    }
-
-    @Transactional
-    public Iterable<Post> getPosts() {
-        return postRepository.findAll();
-    }
-
-    @Transactional
-    public Iterable<Post> getPostsByUserId(UUID user_id) {
-        return postRepository.findAllByUserId(user_id);
+        postRepository.save( post );
     }
 
     @Transactional
     public void updatePost(Post post) {
-        postRepository.save(post);
-    }
-
-    @Transactional
-    public void deletePostById(UUID post_id) {
-        postRepository.delete(post_id);
+        postRepository.save( post );
     }
 
     @Transactional
     public Post getPost(UUID post_id) {
-        return postRepository.findById(post_id);
+        return postRepository.findById( post_id );
     }
 
     @Transactional
-    public Iterable<Post> getFirst10Post(UUID user_id) {
-        return postRepository.findFirst10ByUserIdOrderByDateDesc(user_id);
+    public void deletePostById(UUID post_id) {
+        postRepository.delete( post_id );
     }
+
+    @Transactional
+    public List<Post> getPosts(UUID user_id) {
+        return postRepository.findAllByUserId( user_id );
+    }
+
+    @Transactional
+    public List<Post> getFirst10Post(UUID user_id) {
+        return postRepository.findFirst10ByUserIdOrderByDateDesc( user_id );
+    }
+
 }
