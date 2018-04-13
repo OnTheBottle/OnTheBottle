@@ -24,8 +24,8 @@ public class GetterUser {
             List<UUID> uuids = new ArrayList<>();
             List<User> users = userStore.getAll();
 
-            for (User place : users) {
-                uuids.add(place.getId());
+            for (User user : users) {
+                uuids.add(user.getId());
             }
 
             return uuids;
