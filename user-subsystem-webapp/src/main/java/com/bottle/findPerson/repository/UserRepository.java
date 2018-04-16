@@ -1,10 +1,12 @@
 package com.bottle.findPerson.repository;
 
 import com.bottle.findPerson.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface UserRepository extends CrudRepository {
+public interface UserRepository extends JpaRepository<User, UUID> {
     List<User> getByName(String name);
     List<User> getBySurname(String surname);
     List<User> getByCity(String city);
