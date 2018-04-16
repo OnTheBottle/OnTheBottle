@@ -1,18 +1,18 @@
-package com.bottle.findPerson.logic;
+package com.bottle.logic;
 
-import com.bottle.findPerson.entity.User;
-import com.bottle.findPerson.entity.UserDTO;
-import com.bottle.findPerson.repository.UserRepository;
-import com.bottle.findPerson.request.Request;
-import com.bottle.findPerson.response.Response;
+import com.bottle.entity.User;
+import com.bottle.entity.UserDTO;
+import com.bottle.repository.UserRepository;
+import com.bottle.request.FindPersonRequest;
+import com.bottle.response.FindPersonResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FindPerson {
 
-    public Response findFromDB(UserRepository repository, Request request) {
-        Response response = new Response();
+    public FindPersonResponse findFromDB(UserRepository repository, FindPersonRequest request) {
+        FindPersonResponse response = new FindPersonResponse();
         String searchQuery = request.getSearchQuery();
         String type = request.getSearchType();
         List<User> userList = new ArrayList<>();

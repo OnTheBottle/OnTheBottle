@@ -1,6 +1,6 @@
-package com.bottle.authorisation.repository;
+package com.bottle.repository;
 
-import com.bottle.authorisation.entity.User;
+import com.bottle.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

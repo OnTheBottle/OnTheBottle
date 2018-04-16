@@ -1,9 +1,9 @@
-package com.bottle.findPerson.controller;
+package com.bottle.controller;
 
-import com.bottle.findPerson.logic.FindPerson;
-import com.bottle.findPerson.repository.UserRepository;
-import com.bottle.findPerson.request.Request;
-import com.bottle.findPerson.response.Response;
+import com.bottle.logic.FindPerson;
+import com.bottle.repository.UserRepository;
+import com.bottle.request.FindPersonRequest;
+import com.bottle.response.FindPersonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class FindPersonController {
     }
     @GetMapping("/person_search")
     @ResponseBody
-    public Response getListOfPersons(Request request) {
+    public FindPersonResponse getListOfPersons(FindPersonRequest request) {
 
         return new FindPerson().findFromDB(userRepository, request);
     }

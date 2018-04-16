@@ -1,6 +1,6 @@
-package com.bottle.findPerson.repository;
+package com.bottle.repository;
 
-import com.bottle.findPerson.entity.User;
+import com.bottle.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.bottle.findPerson.entity;
+package com.bottle.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,6 +22,12 @@ public class User {
 
     public User() {
 
+    }
+
+    public User(String login, String password, String email) {
+        this.login = login;
+        this.password = password;
+        this.email = email;
     }
 
     public User(User user) {

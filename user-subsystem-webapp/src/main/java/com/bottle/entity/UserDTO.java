@@ -1,4 +1,4 @@
-package com.bottle.findPerson.entity;
+package com.bottle.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.bottle.authorisation.response;
+package com.bottle.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class RegistrationResponse {
-    private boolean isSuccessful;
+public class LoginResponse {
+    private UUID uuid;
 }
