@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 
 @Service
@@ -20,7 +21,7 @@ public class SecurityService {
     }
 
     @Transactional
-    public Iterable<Security> getSecurities() {
+    public List<Security> getSecurities() {
         return securityRepository.findAll();
     }
 
@@ -29,8 +30,5 @@ public class SecurityService {
         return securityRepository.findOne(security_id);
     }
 
-    @Transactional
-    public Security getSecurityByName(String name) {
-        return securityRepository.findByName(name);
-    }
+
 }

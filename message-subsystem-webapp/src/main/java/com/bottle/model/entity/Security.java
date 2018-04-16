@@ -1,16 +1,22 @@
 package com.bottle.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
+@EqualsAndHashCode(exclude = {"posts"})
+@ToString(exclude = {"posts"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "securites")
 public class Security {
     @Id
     @Column(name = "security_id")

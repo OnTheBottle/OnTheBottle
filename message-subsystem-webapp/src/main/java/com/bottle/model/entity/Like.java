@@ -2,19 +2,22 @@ package com.bottle.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "likes")
+@EqualsAndHashCode
+@ToString
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Like {
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
@@ -30,6 +33,7 @@ public class Like {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

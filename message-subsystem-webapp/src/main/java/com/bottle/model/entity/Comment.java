@@ -3,15 +3,21 @@ package com.bottle.model.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
+@Table(name = "comments")
+@EqualsAndHashCode
+@ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Comment {
     @Id

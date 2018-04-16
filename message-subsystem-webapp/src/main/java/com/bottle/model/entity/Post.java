@@ -2,10 +2,7 @@ package com.bottle.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,9 +11,15 @@ import java.util.Set;
 import java.util.UUID;
 
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
+@EqualsAndHashCode(exclude = {"likes","comments","images"})
+@ToString(exclude = {"likes","comments","images"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "posts")
 public class Post {
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
@@ -54,7 +57,6 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
