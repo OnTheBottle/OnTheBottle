@@ -1,10 +1,10 @@
 package com.bottle.controller;
 import com.bottle.entity.User;
 import com.bottle.repository.AuthorisationRepository;
-import com.bottle.request.LoginRequest;
-import com.bottle.request.RegistrationRequest;
-import com.bottle.response.LoginResponse;
-import com.bottle.response.RegistrationResponse;
+import com.bottle.model.dto.request.LoginRequest;
+import com.bottle.model.dto.request.RegistrationRequest;
+import com.bottle.model.dto.responce.LoginResponse;
+import com.bottle.model.dto.responce.RegistrationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;

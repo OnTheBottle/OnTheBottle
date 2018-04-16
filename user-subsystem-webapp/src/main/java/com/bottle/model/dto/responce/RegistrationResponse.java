@@ -1,4 +1,4 @@
-package com.bottle.response;
+package com.bottle.model.dto.responce;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

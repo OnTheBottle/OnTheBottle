@@ -1,10 +1,10 @@
 package com.bottle.logic;
 
 import com.bottle.entity.User;
-import com.bottle.entity.UserDTO;
+import com.bottle.model.dto.UserDTO;
 import com.bottle.repository.UserRepository;
-import com.bottle.request.FindPersonRequest;
-import com.bottle.response.FindPersonResponse;
+import com.bottle.model.dto.request.FindPersonRequest;
+import com.bottle.model.dto.responce.FindPersonResponse;
 
 import java.util.ArrayList;
 import java.util.List;

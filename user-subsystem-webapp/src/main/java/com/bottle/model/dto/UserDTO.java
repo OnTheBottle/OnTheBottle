@@ -1,4 +1,4 @@
-package com.bottle.entity;
+package com.bottle.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

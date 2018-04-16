@@ -1,6 +1,6 @@
-package com.bottle.response;
+package com.bottle.model.dto.responce;
 
-import com.bottle.entity.UserDTO;
+import com.bottle.model.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

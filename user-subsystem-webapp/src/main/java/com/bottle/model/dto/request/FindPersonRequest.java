@@ -1,4 +1,4 @@
-package com.bottle.request;
+package com.bottle.model.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

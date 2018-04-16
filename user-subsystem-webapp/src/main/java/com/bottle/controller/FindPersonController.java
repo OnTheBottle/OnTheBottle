@@ -2,8 +2,8 @@ package com.bottle.controller;
 
 import com.bottle.logic.FindPerson;
 import com.bottle.repository.UserRepository;
-import com.bottle.request.FindPersonRequest;
-import com.bottle.response.FindPersonResponse;
+import com.bottle.model.dto.request.FindPersonRequest;
+import com.bottle.model.dto.responce.FindPersonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

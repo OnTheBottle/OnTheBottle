@@ -1,15 +1,17 @@
-package com.bottle.request;
+package com.bottle.model.dto.responce;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationRequest {
-    private String login;
-    private String password;
-    private String email;
+
+public class LoginResponse {
+    private UUID uuid;
 }
