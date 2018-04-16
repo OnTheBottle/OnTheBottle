@@ -2,17 +2,19 @@ package com.bottle.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "images")
 @Entity
-@Data
+@EqualsAndHashCode
+@ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Image {
     @Id
