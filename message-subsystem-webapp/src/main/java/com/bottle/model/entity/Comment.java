@@ -42,4 +42,7 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "deleted")
+    private Boolean isDeleted;
 }
