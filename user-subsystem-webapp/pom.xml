@@ -11,15 +11,16 @@
     <name>user-subsystem-webapp Maven Webapp</name>
 
     <url>http://maven.apache.org</url>
+
     <properties>
         <java.version>1.8</java.version>
         <!-- Library versions -->
         <springframework.web>1.5.9.RELEASE</springframework.web>
-        <springframework.data>2.0.2.RELEASE</springframework.data>
+        <springframework.data>1.11.4.RELEASE</springframework.data>
         <hibernate.version>5.2.2.Final</hibernate.version>
         <lombok.version>1.16.20</lombok.version>
         <junit.version>3.8.1</junit.version>
-        <mysql-connector.version>6.0.6</mysql-connector.version>
+        <postgresql.version>9.4.1211</postgresql.version>
     </properties>
 
     <dependencies>
@@ -30,11 +31,14 @@
             <version>${springframework.web}</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>${springframework.data}</version>
         </dependency>
-
         <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -43,16 +47,17 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate.version}</version>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.2.3.Final</version>
         </dependency>
 
-        <!-- Other -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector.version}</version>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
         </dependency>
+
+        <!-- Other-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -64,12 +69,14 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+    </dependencies>
     <build>
         <finalName>user-subsystem-webapp</finalName>
         <plugins>
