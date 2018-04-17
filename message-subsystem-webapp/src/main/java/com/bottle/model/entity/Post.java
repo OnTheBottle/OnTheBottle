@@ -62,4 +62,8 @@ public class Post {
             fetch = FetchType.LAZY,
             mappedBy = "post")
     private Set<Like> likes;
+
+    @OneToMany
+    @JoinColumn(name = "POST_ID")
+    private Set<FavoritePost> favorites;
 }

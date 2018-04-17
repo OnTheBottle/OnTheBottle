@@ -1,0 +1,2 @@
+1) likeRepository
+2) testController (getUser, getFriends, getPlaces)
