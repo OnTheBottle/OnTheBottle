@@ -18,7 +18,7 @@ function doSearch() {
                     "<div class='user_surname'>" + userList[user].surname + "</div>" +
                     "<div class='user_age'>" + userList[user].age + "</div>"+
                     "<div class='user_country'>" + userList[user].country + " </div>" +
-                    "<div class='user_city'>" + userList[user].city + "</div>"
+                    "<div class='user_city'>" + userList[user].city + "</div>";
                     users.parentNode.appendChild(div);
             }
         }
