@@ -21,9 +21,7 @@ public class FindPersonController {
     @GetMapping("/person_search")
     @ResponseBody
     public FindPersonResponse getListOfPersons(FindPersonRequest request) {
-
+        System.out.println("request contents: "+ request.getSearch()+ " "+ request.getSearchType());
         return new FindPerson().findFromDB(userRepository, request);
     }
-
-
 }

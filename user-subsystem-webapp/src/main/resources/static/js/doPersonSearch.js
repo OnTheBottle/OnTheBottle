@@ -3,17 +3,17 @@ function doSearch() {
         type: "GET",
         url: "/person_search",
         dataType: "json",
-        data: {requestType: "user",
+        data: {//requestType: "user",
         search:document.getElementById("search").value,
-        searchType:document.getElementById("searchType").value},
+        searchType:$("input:radio[name='searchType']:checked").val()},
         success: function (data) {
-            var userList = data.users;
+            var userList = data.listOfPersons;
             var users = document.getElementById("users");
             for (var user in userList) {
                 var div = document.createElement("div");
                 div.setAttribute("class", "users");
                 div.innerHTML =
-                    "<div class='user_avatar'>" + userList[user].avatar_url + " </div>" +
+                    "<div class='user_avatar'>" + userList[user].avatarUrl + " </div>" +
                     "<div class='user_name'>" + userList[user].name + " </div>" +
                     "<div class='user_surname'>" + userList[user].surname + "</div>" +
                     "<div class='user_age'>" + userList[user].age + "</div>"+
@@ -23,4 +23,9 @@ function doSearch() {
             }
         }
     });
+}
+
+function buildSearchObject(){
+
+
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.UUID;
+
 @Controller
 
 public class InfoPageController {
@@ -22,7 +24,7 @@ public class InfoPageController {
     @ResponseBody
     public InfoPageResponce getUserInfo(InfoPageRequest request) {
 
-        User user = userRepository.findOne(request.getId());
+        User user = userRepository.findOne(UUID.fromString("90eae3ce-acee-4d03-80f3-23f925f581d1"));
         System.out.println("TestController: A name of the user is " + user.getName());
         return new InfoPageResponce(user);
     }

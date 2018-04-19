@@ -6,7 +6,8 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user")
+//@Table(name = "user")
+@Table(name="user", schema = "public")
 public class User {
 
     private UUID id;
@@ -35,8 +36,8 @@ public class User {
     }
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(generator = "uuid-gen")
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @Column(name = "id")
     public UUID getId() {
         return id;
