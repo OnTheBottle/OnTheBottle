@@ -51,11 +51,15 @@ public class TestController {
 
     @PostMapping(path = "/getUsers")
     public ListResponseDTO<User> getUsers() {
-        return new ListResponseDTO<>();
+        ListResponseDTO<User> users = new ListResponseDTO<>();
+        users.setList(allUserService.getAllUsers());
+        return users;
     }
 
     @PostMapping(path = "/addFriend")
     public void addFriend() {
-        /*allUserService*/
+        UUID userIdOne = UUID.fromString("c4f63463-beb9-42c7-8921-7d3184845689"); //TODO брать значения с фронта
+        UUID userIdTwo = UUID.fromString("36fe8f70-3287-4521-b00f-807682ab8204");
+        allUserService.addFriend(userIdOne, userIdTwo);
     }
 }
