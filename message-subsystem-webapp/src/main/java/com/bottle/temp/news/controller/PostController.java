@@ -3,13 +3,9 @@ package com.bottle.temp.news.controller;
 import com.bottle.temp.news.entity.Comment;
 import com.bottle.temp.news.entity.Post;
 import com.bottle.temp.news.repository.PostRepository;
-import com.bottle.temp.news.repository.PostService;
-import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -19,12 +15,12 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostController {
     @Autowired
-    private PostService postService;
+    private PostRepository repository;
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     public void add(@RequestParam Map request) {
         System.out.println("ADD POST.");
-        postService.add(createPost());
+        repository.save(createPost());
     }
 
     private Post createPost() {
