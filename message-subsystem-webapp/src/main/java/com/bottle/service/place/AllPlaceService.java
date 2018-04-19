@@ -7,10 +7,7 @@ import com.bottle.model.entity.Place;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AllPlaceService {
@@ -26,7 +23,11 @@ public class AllPlaceService {
     }
 
     public Place createPlace() {
-        return getterPlace.createPlace(UUID.randomUUID());
+        Random random = new Random();
+        UUID id = UUID.randomUUID();
+        String title = "testTitle" + random.nextInt(100);
+        String avatar = "";
+        return getterPlace.createPlace(id, title, avatar);
     }
 
     public List<UUID> getAllPlaces() {

@@ -12,4 +12,10 @@ public class RegistrationRequest {
     private String login;
     private String password;
     private String email;
+    private String name;
+    private String city;
+    private int age;
+    private String surname;
+    private String avatarUrl;
+    private String country;
 }
