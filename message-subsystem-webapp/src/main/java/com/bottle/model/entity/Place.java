@@ -19,6 +19,12 @@ public class Place {
     @Column(name = "place_id")
     private UUID id;
 
+    @Column(name = "Title")
+    private String title;
+
+    @Column(name = "Avatar")
+    private String avatar;
+
     @OneToMany(mappedBy = "place")
     private Set<Event> events = new HashSet<>();
 }
