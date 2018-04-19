@@ -42,7 +42,7 @@ public class AuthorisationController {
         User userByLogin = authorisationRepository.findByLogin(request.getLogin());
         if(userByEmail == null && userByLogin == null){
             User newUser = new User(request.getLogin(), request.getPassword(), request.getEmail());
-            authorisationRepository.addUser(newUser);
+            authorisationRepository.save(newUser);
             response.setSuccessful(true);
         } else {
             response.setSuccessful(false);
