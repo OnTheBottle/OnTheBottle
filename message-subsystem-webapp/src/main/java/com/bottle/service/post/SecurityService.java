@@ -27,8 +27,12 @@ public class SecurityService {
 
     @Transactional
     public Security getSecurity(Integer security_id) {
-        return securityRepository.findOne(security_id);
+        return securityRepository.findOne( security_id );
     }
 
+    @Transactional
+    public Security getSecurityByDescription(String description) {
+        return securityRepository.getSecurityByDescription( description );
+    }
 
 }

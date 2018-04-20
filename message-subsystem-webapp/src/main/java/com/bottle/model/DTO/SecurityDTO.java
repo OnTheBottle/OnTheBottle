@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Data
 public class SecurityDTO {
-    private UUID security_id;
+    private int security_id;
     private String name;
     private String description;
 }

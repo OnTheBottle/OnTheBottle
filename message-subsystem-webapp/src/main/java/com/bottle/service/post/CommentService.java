@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -20,17 +21,23 @@ public class CommentService {
     }
 
     @Transactional
-    public Iterable<Comment> getComments(UUID post_id) {
-        return commentRepository.findByPostId(post_id);
+    public List<Comment> getComments(UUID post_id) {
+        return commentRepository.findAllByIsDeletedIsFalseAndPostId( post_id );
     }
 
     @Transactional
     public void addComment(Comment comment) {
-        commentRepository.save(comment);
+        commentRepository.save( comment );
     }
 
     @Transactional
     public void deleteCommentById(UUID comment_id) {
-        commentRepository.delete(comment_id);
+        commentRepository.delete( comment_id );
     }
+
+    @Transactional
+    public Comment getCommentById(UUID comment_id) {
+        return commentRepository.findOne( comment_id );
+    }
+
 }

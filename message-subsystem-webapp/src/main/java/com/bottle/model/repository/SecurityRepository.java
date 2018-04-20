@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SecurityRepository extends JpaRepository<Security, Integer> {
-    Security findByName(String securityname);
+    Security getSecurityByDescription(String description);
 }
