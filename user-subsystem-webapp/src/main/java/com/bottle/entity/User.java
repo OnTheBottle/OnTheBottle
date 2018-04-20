@@ -1,5 +1,6 @@
 package com.bottle.entity;
 
+import com.bottle.model.dto.request.RegistrationRequest;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class User {
     private String email;
     private String name;
     private String surname;
-    private String avatar_url;
+    private String avatarUrl;
     private String country;
     private String city;
 
@@ -29,6 +30,18 @@ public class User {
         this.login = login;
         this.password = password;
         this.email = email;
+    }
+    public User(RegistrationRequest request) {
+        this.id = UUID.randomUUID();
+        this.login = request.getLogin();
+        this.password = request.getPassword();
+        this.email = request.getEmail();
+        this.age = request.getAge();
+        this.name = request.getName();
+        this.surname = request.getSurname();
+        this.avatarUrl = request.getAvatarUrl();
+        this.country = request.getCountry();
+        this.city = request.getCity();
     }
 
     public User(User user) {
@@ -102,12 +115,12 @@ public class User {
     }
 
     @Column(name = "avatar_url")
-    public String getAvatar_url() {
-        return avatar_url;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvatar_url(String avatar_url) {
-        this.avatar_url = avatar_url;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     @Column(name = "country")

@@ -14,14 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class FindPersonController {
 
     private final UserRepository userRepository;
-@Autowired
+
+    @Autowired
     public FindPersonController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @GetMapping("/person_search")
     @ResponseBody
     public FindPersonResponse getListOfPersons(FindPersonRequest request) {
-        System.out.println("request contents: "+ request.getSearch()+ " "+ request.getSearchType());
+        System.out.println("request contents: " + request.getSearch() + " " + request.getSearchType());
         return new FindPerson().findFromDB(userRepository, request);
     }
 }

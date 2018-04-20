@@ -42,7 +42,7 @@ public class FindPerson {
             UserDTO dto = new UserDTO();
             dto.setId(user.getId());
             dto.setAge(user.getAge());
-            dto.setAvatarUrl(user.getAvatar_url());
+            dto.setAvatarUrl(user.getAvatarUrl());
             dto.setCity(user.getCity());
             dto.setCountry(user.getCountry());
             dto.setName(user.getName());
