@@ -12,5 +12,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     List<User> getByCity(String city);
     List<User> getByCountry(String country);
     List<User> getByAge(int age);
-
+    User findByEmail(String email);
+    User findByLogin(String login);
 }

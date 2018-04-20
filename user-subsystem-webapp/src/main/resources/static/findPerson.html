@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>FindPerson</title>
-    <script src="jquery-1.11.1.js"></script>
-    <script src="doPersonSearch.js"></script>
+    <script src="js/lib/jquery-1.11.1.js"></script>
+    <script src="js/doPersonSearch.js"></script>
 </head>
 <body>
 <p>Поиск<Br>
-    <textarea name="search" cols="40" rows="1"></textarea></p>
+    <textarea id="search" cols="40" rows="1">John</textarea></p>
 
-</form>
+<!--</form>-->
 <p><b>Поиск по:</b><Br>
     <input type="radio" name="searchType" value="name"> Имя<Br>
     <input type="radio" name="searchType" value="surname"> Фамилия<Br>
@@ -21,7 +21,7 @@
     <input type="submit" value="Поиск" onclick="doSearch()">
 </p>
 </p>
-<div class="users"></div>
+<div id="users"></div>
 
 </body>
 </html>

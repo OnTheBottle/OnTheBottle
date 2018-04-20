@@ -13,7 +13,7 @@ public class FindPerson {
 
     public FindPersonResponse findFromDB(UserRepository repository, FindPersonRequest request) {
         FindPersonResponse response = new FindPersonResponse();
-        String searchQuery = request.getSearchQuery();
+        String searchQuery = request.getSearch();
         String type = request.getSearchType();
         List<User> userList = new ArrayList<>();
         List<UserDTO> dtoList = new ArrayList<>();
@@ -35,17 +35,21 @@ public class FindPerson {
                 break;
 
         }
+
+        System.out.println("User's name from response is " + userList.get(0).getName());
+
         for (User user : userList){
             UserDTO dto = new UserDTO();
             dto.setId(user.getId());
             dto.setAge(user.getAge());
-            dto.setAvatarUrl(user.getAvatar_url());
+            dto.setAvatarUrl(user.getAvatarUrl());
             dto.setCity(user.getCity());
             dto.setCountry(user.getCountry());
             dto.setName(user.getName());
             dto.setSurname(user.getSurname());
             dtoList.add(dto);
         }
+        System.out.println("DtoUser's name from response is " + dtoList.get(0).getName());
         response.setListOfPersons(dtoList);
         return response;
     }

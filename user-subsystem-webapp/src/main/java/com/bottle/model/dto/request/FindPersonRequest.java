@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FindPersonRequest {
-    private String searchQuery;
+    private String search;
     private String searchType;
 }

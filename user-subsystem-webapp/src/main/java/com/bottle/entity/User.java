@@ -1,12 +1,15 @@
 package com.bottle.entity;
 
+import com.bottle.model.dto.request.RegistrationRequest;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user")
+//@Table(name = "user")
+@Table(name = "user", schema = "public")
 public class User {
 
     private UUID id;
@@ -16,12 +19,12 @@ public class User {
     private String email;
     private String name;
     private String surname;
-    private String avatar_url;
+    private String avatarUrl;
     private String country;
     private String city;
+    private Set<User> friends;
 
     public User() {
-
     }
 
     public User(String login, String password, String email) {
@@ -30,13 +33,26 @@ public class User {
         this.email = email;
     }
 
+    public User(RegistrationRequest request) {
+        this.id = UUID.randomUUID();
+        this.login = request.getLogin();
+        this.password = request.getPassword();
+        this.email = request.getEmail();
+        this.age = request.getAge();
+        this.name = request.getName();
+        this.surname = request.getSurname();
+        this.avatarUrl = request.getAvatarUrl();
+        this.country = request.getCountry();
+        this.city = request.getCity();
+    }
+
     public User(User user) {
         this.name = user.getName();
     }
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(generator = "uuid-gen")
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @Column(name = "id")
     public UUID getId() {
         return id;
@@ -101,12 +117,12 @@ public class User {
     }
 
     @Column(name = "avatar_url")
-    public String getAvatar_url() {
-        return avatar_url;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvatar_url(String avatar_url) {
-        this.avatar_url = avatar_url;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     @Column(name = "country")
@@ -127,5 +143,13 @@ public class User {
         this.city = city;
     }
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "RelationShip", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id", referencedColumnName = "id"))
+    public Set<User> getFriends() {
+        return friends;
+    }
 
+    public void setFriends(Set<User> friends) {
+        this.friends = friends;
+    }
 }

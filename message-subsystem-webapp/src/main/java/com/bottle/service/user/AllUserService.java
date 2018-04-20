@@ -1,5 +1,6 @@
 package com.bottle.service.user;
 
+import com.bottle.Properties;
 import com.bottle.model.DTO.EventDTO;
 import com.bottle.model.DTO.request.IdRequestDTO;
 import com.bottle.model.entity.Event;
@@ -7,10 +8,7 @@ import com.bottle.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AllUserService {
@@ -26,7 +24,12 @@ public class AllUserService {
     }
 
     public User createUser() {
-        return getterUser.createUser(UUID.randomUUID());
+        Random random = new Random();
+        UUID id = UUID.randomUUID();
+        String name = "TestName" + random.nextInt(100);
+        String surname = "TestSurname" + random.nextInt(100);
+        String avatar = Properties.SUBMESSAGEPATH + "/images/68572.jpeg";
+        return getterUser.createUser(id, name, surname, avatar);
     }
 
     public List<UUID> getAllUsersId() {
@@ -46,5 +49,13 @@ public class AllUserService {
         }
 
         return allEvents;
+    }
+
+    public void addFriend(UUID userIdOne, UUID userIdTwo) {
+        User userOne = getUser(userIdOne);
+        User userTwo = getUser(userIdTwo);
+        userOne.getFriends().add(userTwo);
+        userTwo.getFriends().add(userOne);
+        getterUser.saveUser(userOne);
     }
 }

@@ -40,7 +40,7 @@ public class GetterUser {
             if (userStore.exists(id)) {
                 return userStore.getById(id);
             } else {
-                return createUser(id);
+                return createUser(id,"","","");
             }
         } catch (SQLException e) { //TODO
             e.printStackTrace();
@@ -57,19 +57,26 @@ public class GetterUser {
         }
     }
 
-    public User createUser(UUID id) {
+    public User createUser(UUID id, String name, String surname, String avatar) {
         try {
-            if (userStore.exists(id)) {
-                return userStore.getById(id);
-            } else {
-                User user = new User();
-                user.setId(id);
-                userStore.createOrUpdate(user);
-                return user;
-            }
-        } catch (SQLException e) { //TODO
+            User user = new User();
+            user.setId(id);
+            user.setName(name);
+            user.setSurname(surname);
+            user.setAvatarUrl(avatar);
+            userStore.createOrUpdate(user);
+            return user;
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void saveUser(User user) {
+        try {
+            userStore.createOrUpdate(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

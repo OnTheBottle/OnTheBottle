@@ -40,7 +40,7 @@ public class GetterPlace {
             if (placeStore.exists(id)) {
                 return placeStore.getById(id);
             } else {
-                return createPlace(id);
+                return createPlace(id, "", "");
             }
         } catch (SQLException e) { //TODO
             e.printStackTrace();
@@ -48,16 +48,14 @@ public class GetterPlace {
         }
     }
 
-    public Place createPlace(UUID id) {
+    public Place createPlace(UUID id, String title, String avatar) {
         try {
-            if (placeStore.exists(id)) {
-                return placeStore.getById(id);
-            } else {
-                Place place = new Place();
-                place.setId(id);
-                placeStore.createOrUpdate(place);
-                return place;
-            }
+            Place place = new Place();
+            place.setId(id);
+            place.setTitle(title);
+            place.setAvatar(avatar);
+            placeStore.createOrUpdate(place);
+            return place;
         } catch (SQLException e) { //TODO
             e.printStackTrace();
             return null;
