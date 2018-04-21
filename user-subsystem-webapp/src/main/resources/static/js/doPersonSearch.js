@@ -1,6 +1,6 @@
 function doSearch() {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/person_search",
         dataType: "json",
         data: {//requestType: "user",
