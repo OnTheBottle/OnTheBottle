@@ -1,14 +1,11 @@
 package com.bottle.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
@@ -19,4 +16,5 @@ public class UserDTO {
     private String avatarUrl;
     private String city;
     private String country;
+    private List<UUID> friendsId;
 }
