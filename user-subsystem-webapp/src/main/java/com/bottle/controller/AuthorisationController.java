@@ -26,14 +26,16 @@ public class AuthorisationController {
 
     @PostMapping("/authorize")
     @ResponseBody
-    public LoginResponse login(LoginRequest request) {
-        System.out.println("request is "+request.getLogin()+ request.getPassword());
+    public LoginResponse userLogin(LoginRequest request) {
+        System.out.println("LoginRequest is " + request.getLogin() + request.getPassword());
         LoginResponse response = new LoginResponse();
         User userByLogin = userRepository.findByLogin(request.getLogin());
-        System.out.println("login controller: "+ userByLogin.getName());
         if (userByLogin != null) {
-            if (userByLogin.getPassword() == request.getPassword()) {
-                response.setUuid(userByLogin.getId());
+            if (userByLogin.getPassword().equals(request.getPassword())) {
+//                response.setUuid(userByLogin.getId().toString());
+                response.setMessage("complete");
+            } else {
+                response.setMessage("not exist");
             }
         }
         return response;
@@ -42,9 +44,6 @@ public class AuthorisationController {
     @PostMapping("/registration")
     @ResponseBody
     public RegistrationResponse registration(RegistrationRequest request) {
-        System.out.println(request);
-        System.out.println("email: " + request.getEmail());
-        System.out.println("login: " + request.getLogin());
         RegistrationResponse response = new RegistrationResponse();
         User userByEmail = userRepository.findByEmail(request.getEmail());
         User userByLogin = userRepository.findByLogin(request.getLogin());
@@ -59,3 +58,4 @@ public class AuthorisationController {
         return response;
     }
 }
+
