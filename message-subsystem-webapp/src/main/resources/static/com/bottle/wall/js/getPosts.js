@@ -57,7 +57,7 @@ function getPosts() {
                         menuPost.append('<button class="editPost" title="edit post " onclick="editPost(this)"/>');
 
                     }
-                    menuPost.append('<button class="addComment" title="comments" onclick="getLink(this)"/>');
+                    menuPost.append('<button class="addComment" title="places" onclick="getLink(this)"/>');
                     var textPost = value.text;
                     $('<div class="text"/>').html(textPost).appendTo(post);
 

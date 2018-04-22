@@ -57,7 +57,7 @@ ALTER TABLE posts ALTER COLUMN post_id SET DEFAULT uuid_generate_v4();
 ALTER TABLE posts ALTER COLUMN date SET DEFAULT now();
 ALTER TABLE posts ALTER COLUMN security_id SET DEFAULT '1';
 ALTER TABLE images ALTER COLUMN image_id SET DEFAULT uuid_generate_v4();
-ALTER TABLE comments ALTER COLUMN comment_id SET DEFAULT uuid_generate_v4();
+ALTER TABLE comment ALTER COLUMN comment_id SET DEFAULT uuid_generate_v4();
 
 INSERT INTO posts (author_id, date, title, post, security_id)
 VALUES (uuid_generate_v4(), now(), 'My 34 post','Hello, friend! I like to see you!', 1);
