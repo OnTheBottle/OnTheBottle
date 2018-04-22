@@ -24,11 +24,13 @@ public class AuthorisationController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping(path = "/login")
+    @PostMapping("/authorize")
     @ResponseBody
-    public LoginResponse login(@RequestBody LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
+        System.out.println("request is "+request.getLogin()+ request.getPassword());
         LoginResponse response = new LoginResponse();
         User userByLogin = userRepository.findByLogin(request.getLogin());
+        System.out.println("login controller: "+ userByLogin.getName());
         if (userByLogin != null) {
             if (userByLogin.getPassword() == request.getPassword()) {
                 response.setUuid(userByLogin.getId());
@@ -37,7 +39,7 @@ public class AuthorisationController {
         return response;
     }
 
-    @PostMapping(path = "/registration")
+    @PostMapping("/registration")
     @ResponseBody
     public RegistrationResponse registration(RegistrationRequest request) {
         System.out.println(request);
@@ -52,6 +54,7 @@ public class AuthorisationController {
             response.setSuccessful(true);
         } else {
             response.setSuccessful(false);
+            System.out.println("The user already exists!");
         }
         return response;
     }
