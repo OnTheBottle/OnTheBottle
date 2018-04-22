@@ -1,64 +1,48 @@
 package com.bottle.service.place;
 
 import com.bottle.model.entity.Place;
-import com.bottle.model.repository.PlaceStore;
+import com.bottle.model.repository.PlaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class GetterPlace {
-    private PlaceStore placeStore;
+    private PlaceRepository placeRepository;
 
     @Autowired
-    public GetterPlace(PlaceStore placeStore) {
-        this.placeStore = placeStore;
+    public GetterPlace(PlaceRepository placeRepository) {
+        this.placeRepository = placeRepository;
     }
 
     public List<UUID> getAllId() {
-        try {
-            List<UUID> uuids = new ArrayList<>();
-            List<Place> places = placeStore.getAll();
+        List<UUID> uuids = new ArrayList<>();
+        List<Place> places = placeRepository.findAll();
 
-            for (Place place : places) {
-                uuids.add(place.getId());
-            }
-
-            return uuids;
-        } catch (SQLException e) { // TODO
-            e.printStackTrace();
-            return null;
+        for (Place place : places) {
+            uuids.add(place.getId());
         }
+
+        return uuids;
     }
 
     public Place getPlace(UUID id) {
-        try {
-            if (placeStore.exists(id)) {
-                return placeStore.getById(id);
-            } else {
-                return createPlace(id, "", "");
-            }
-        } catch (SQLException e) { //TODO
-            e.printStackTrace();
-            return null;
+        if (placeRepository.exists(id)) {
+            return placeRepository.getOne(id);
+        } else {
+            return createPlace(id, "", "");
         }
     }
 
     public Place createPlace(UUID id, String title, String avatar) {
-        try {
-            Place place = new Place();
-            place.setId(id);
-            place.setTitle(title);
-            place.setAvatar(avatar);
-            placeStore.createOrUpdate(place);
-            return place;
-        } catch (SQLException e) { //TODO
-            e.printStackTrace();
-            return null;
-        }
+        Place place = new Place();
+        place.setId(id);
+        place.setTitle(title);
+        place.setAvatar(avatar);
+        placeRepository.save(place);
+        return place;
     }
 }

@@ -2,10 +2,12 @@ package com.bottle.service.event;
 
 import com.bottle.model.DTO.EventDTO;
 import com.bottle.model.entity.Event;
+import com.bottle.model.entity.User;
+import com.bottle.service.user.GetterUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -14,13 +16,15 @@ public class AllEventService {
     private GetterEvent getterEvent;
     private CloseEvent closeEvent;
     private EntityBinder entityBinder;
+    private GetterUser getterUser;
 
     @Autowired
-    public AllEventService(RegistrationEvent registrationEvent, GetterEvent getterEvent, CloseEvent closeEvent, EntityBinder entityBinder) {
+    public AllEventService(RegistrationEvent registrationEvent, GetterEvent getterEvent, CloseEvent closeEvent, EntityBinder entityBinder, GetterUser getterUser) {
         this.registrationEvent = registrationEvent;
         this.getterEvent = getterEvent;
         this.closeEvent = closeEvent;
         this.entityBinder = entityBinder;
+        this.getterUser = getterUser;
     }
 
     public String registrationEvent(EventDTO eventDTO) {
@@ -31,12 +35,9 @@ public class AllEventService {
         return closeEvent.closeEvent(id);
     }
 
-    public Map<UUID, String> getAllActiveEventsId() {
-        return getterEvent.getAllActiveIdAndTitle();
-    }
-
-    public Map<UUID, String> getAllPassedEventsId() {
-        return getterEvent.getAllPassedIdAndTitle();
+    public Set<Event> getAllEventsFromUser(UUID id) {
+        User user = getterUser.getUser(id);
+        return user.getEvents();
     }
 
     public Event getEvent(UUID id) {
