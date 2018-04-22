@@ -3,6 +3,7 @@ package com.bottle.controller;
 
 import com.bottle.model.DTO.*;
 import com.bottle.model.entity.*;
+import com.bottle.model.repository.UserStore;
 import com.bottle.service.post.*;
 import com.bottle.service.user.AllUserService;
 import com.sun.org.apache.regexp.internal.RE;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +27,7 @@ public class PostController {
     private CommentService commentService;
     private LikeService likeService;
 
+
     @Autowired
     public PostController(PostService postService, AllUserService allUserService, SecurityService securityService, ImageService imageService, CommentService commentService, LikeService likeService) {
         this.postService = postService;
@@ -33,7 +36,7 @@ public class PostController {
         this.imageService = imageService;
         this.commentService = commentService;
         this.likeService = likeService;
-    }
+            }
 
     @RequestMapping(value = "/getPosts", params = "user_Id", method = RequestMethod.GET)
     public ResponseEntity<List<Post>> listAllPosts(@RequestParam("user_Id") UUID id) {
@@ -142,6 +145,14 @@ public class PostController {
         comment.setIsDeleted( true );
         commentService.addComment(comment);
         return new ResponseEntity<>( HttpStatus.NO_CONTENT );
+    }
+    @RequestMapping(path = "/addUser", method = RequestMethod.POST)
+    public ResponseEntity<Void> saveUser(@RequestBody UserDTO userDTO) {
+        User user = new User();
+        user.setName( userDTO.getName() );
+        user.setSurname( userDTO.getSurname() );
+        allUserService.createUser( user );
+        return new ResponseEntity<>( HttpStatus.OK );
     }
 }
 

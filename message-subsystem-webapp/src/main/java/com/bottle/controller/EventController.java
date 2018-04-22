@@ -106,13 +106,13 @@ public class EventController {
         return eventDTO;
     }
 
-    @PostMapping(path = "/createUser")
-    @ResponseBody
-    public ResultResponseDTO createUser() { //TODO
-        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(String.valueOf(allUserService.createUser().getId()));
-        return resultResponseDTO;
-    }
+ //   @PostMapping(path = "/createUser")
+ //   @ResponseBody
+  //  public ResultResponseDTO createUser() { //TODO
+  //      ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
+ //       resultResponseDTO.setResult(String.valueOf(allUserService.createUser().getId()));
+  //      return resultResponseDTO;
+ //   }
 
     @PostMapping(path = "/createPlace")
     @ResponseBody

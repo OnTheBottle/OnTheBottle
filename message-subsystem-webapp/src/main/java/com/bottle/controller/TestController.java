@@ -39,10 +39,10 @@ public class TestController {
         this.allUserService = allUserService;
     }
 
-    @PostMapping(path = "/createUser")
-    public void createUser() {
-        allUserService.createUser();
-    }
+//    @PostMapping(path = "/createUser")
+ //   public void createUser() {
+  //      allUserService.createUser(User user);
+  //  }
 
     @PostMapping(path = "/createPlace")
     public void createPlace() {
