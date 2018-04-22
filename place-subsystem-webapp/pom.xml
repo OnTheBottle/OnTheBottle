@@ -21,6 +21,7 @@
         <lombok.version>1.16.20</lombok.version>
         <junit.version>3.8.1</junit.version>
         <postgresql.version>9.4.1211</postgresql.version>
+        <hibernate-entitymanager.version>5.2.3.Final</hibernate-entitymanager.version>
     </properties>
 
     <dependencies>
@@ -29,6 +30,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${springframework.web}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
