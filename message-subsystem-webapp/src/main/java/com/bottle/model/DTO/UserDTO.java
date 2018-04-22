@@ -11,6 +11,6 @@ public class UserDTO {
     private UUID user_id;
     private String name;
     private String surname;
-    private String avatarUrl;
+
 }
 

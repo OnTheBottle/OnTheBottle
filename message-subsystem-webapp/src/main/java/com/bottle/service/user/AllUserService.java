@@ -23,13 +23,9 @@ public class AllUserService {
         return getterUser.getUser(id);
     }
 
-    public User createUser() {
-        Random random = new Random();
-        UUID id = UUID.randomUUID();
-        String name = "TestName" + random.nextInt(100);
-        String surname = "TestSurname" + random.nextInt(100);
-        String avatar = Properties.SUBMESSAGEPATH + "/images/68572.jpeg";
-        return getterUser.createUser(id, name, surname, avatar);
+    public void createUser(User user) {
+
+        getterUser.saveUser(user);
     }
 
     public List<UUID> getAllUsersId() {
