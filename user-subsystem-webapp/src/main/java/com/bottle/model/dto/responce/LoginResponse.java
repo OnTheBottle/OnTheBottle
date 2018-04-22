@@ -13,5 +13,5 @@ import java.util.UUID;
 @AllArgsConstructor
 
 public class LoginResponse {
-    private UUID uuid;
+    private String message;
 }

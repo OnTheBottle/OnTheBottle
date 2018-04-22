@@ -6,7 +6,7 @@ function userAuth() {
         type: "POST",
         url: "/authorize",
         dataType: "json",
-        data: {requestType: "userAuth",
+        data: {//requestType: "userAuth",
             login: login, password: password},
         success: function (data) {
             if (data.result == "error") {
