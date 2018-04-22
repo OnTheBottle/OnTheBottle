@@ -1,14 +1,14 @@
 package com.bottle.service.user;
 
-import com.bottle.Properties;
-import com.bottle.model.DTO.EventDTO;
-import com.bottle.model.DTO.request.IdRequestDTO;
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class AllUserService {
@@ -24,13 +24,12 @@ public class AllUserService {
     }
 
     public void createUser(User user) {
-
         getterUser.saveUser(user);
     }
 
-    public List<UUID> getAllUsersId() {
-        return getterUser.getAllId();
-    }
+    /*public List<UUID> getAllUsersId() {
+        return getterUser.getAll();
+    }*/
 
     public List<User> getAllUsers() {
         return getterUser.getAll();

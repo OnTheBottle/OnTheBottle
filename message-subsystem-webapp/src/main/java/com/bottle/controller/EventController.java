@@ -1,29 +1,23 @@
 package com.bottle.controller;
 
-import com.bottle.model.DTO.EventDTO;
-import com.bottle.model.DTO.request.IdEventAndUserRequestDTO;
-import com.bottle.model.DTO.request.IdRequestDTO;
-import com.bottle.model.DTO.response.EventsResponseDTO;
-import com.bottle.model.DTO.response.ListResponseDTO;
-import com.bottle.model.DTO.response.ResultResponseDTO;
 import com.bottle.model.DTO.validators.EventValidator;
 import com.bottle.model.entity.Event;
-import com.bottle.model.entity.User;
 import com.bottle.service.event.AllEventService;
 import com.bottle.service.place.AllPlaceService;
 import com.bottle.service.user.AllUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
+@CrossOrigin(origins = "*")
 @Controller
 public class EventController {
     private AllEventService allEventService;
@@ -39,14 +33,21 @@ public class EventController {
         this.eventValidator = eventValidator;
     }
 
-    @PostMapping(path = "/saveEvent")
+    @RequestMapping(value = "/getEvents", params = "user_Id", method = RequestMethod.GET)
+    public ResponseEntity<Set<Event>> showAllEvents(@RequestParam("user_Id") UUID id) {
+        Set<Event> events = allEventService.getAllEventsFromUser(id);
+        if (events.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
+    /*@PostMapping(path = "/saveEvent")
     @ResponseBody
-    public ResponseEntity createEvent(EventDTO eventDTO, BindingResult bindingResult) { //TODO
+    public ResponseEntity createEvent(EventDTO eventDTO, BindingResult bindingResult) {
         ResponseEntity responseEntity;
         eventValidator.validate(eventDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            for (ObjectError objectError : bindingResult.getAllErrors()) { //TODO
+            for (ObjectError objectError : bindingResult.getAllErrors()) {
                 System.out.println(objectError.getDefaultMessage());
             }
             responseEntity = ResponseEntity.badRequest().body("LoL");
@@ -59,25 +60,15 @@ public class EventController {
 
     @PostMapping(path = "/closeEvent")
     @ResponseBody
-    public ResultResponseDTO deleteEvent(IdRequestDTO idRequestDTO) { //TODO
+    public ResultResponseDTO deleteEvent(IdRequestDTO idRequestDTO) {
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
         resultResponseDTO.setResult(allEventService.closeEvent(idRequestDTO.getId()));
         return resultResponseDTO;
     }
 
-    @PostMapping(path = "/showAllEvents")
-    @ResponseBody
-    public EventsResponseDTO showAllEvents() { //TODO
-        EventsResponseDTO eventListDTO = new EventsResponseDTO();
-        eventListDTO.setActiveEvents(allEventService.getAllActiveEventsId());
-        eventListDTO.setPassedEvents(allEventService.getAllPassedEventsId());
-
-        return eventListDTO;
-    }
-
     @PostMapping(path = "/showAllPlaces")
     @ResponseBody
-    public ListResponseDTO<UUID> showAllPlaces() { //TODO
+    public ListResponseDTO<UUID> showAllPlaces() {
         ListResponseDTO<UUID> placesResponseDTO = new ListResponseDTO<>();
         placesResponseDTO.setList(allPlaceService.getAllPlaces());
 
@@ -86,7 +77,7 @@ public class EventController {
 
     @PostMapping(path = "/showInfoEvent")
     @ResponseBody
-    public EventDTO showInfoEvent(IdRequestDTO idRequestDTO) { //TODO
+    public EventDTO showInfoEvent(IdRequestDTO idRequestDTO) {
         EventDTO eventDTO = new EventDTO();
         Event event = allEventService.getEvent(idRequestDTO.getId());
 
@@ -106,17 +97,9 @@ public class EventController {
         return eventDTO;
     }
 
- //   @PostMapping(path = "/createUser")
- //   @ResponseBody
-  //  public ResultResponseDTO createUser() { //TODO
-  //      ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
- //       resultResponseDTO.setResult(String.valueOf(allUserService.createUser().getId()));
-  //      return resultResponseDTO;
- //   }
-
     @PostMapping(path = "/createPlace")
     @ResponseBody
-    public ResultResponseDTO createPlace() { //TODO
+    public ResultResponseDTO createPlace() {
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
         resultResponseDTO.setResult(String.valueOf(allPlaceService.createPlace().getId()));
         return resultResponseDTO;
@@ -124,7 +107,7 @@ public class EventController {
 
     @PostMapping(path = "/showAllUsers")
     @ResponseBody
-    public ListResponseDTO<UUID> showAllUsers() { //TODO
+    public ListResponseDTO<UUID> showAllUsers() {
         ListResponseDTO<UUID> listResponseDTO = new ListResponseDTO<>();
         listResponseDTO.setList(allUserService.getAllUsersId());
 
@@ -133,7 +116,7 @@ public class EventController {
 
     @PostMapping(path = "/addUserToEvent")
     @ResponseBody
-    public ResultResponseDTO addUserToEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) { //TODO
+    public ResultResponseDTO addUserToEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
         UUID idUser = idEventAndUserRequestDTO.getIdUser();
         UUID idEvent = idEventAndUserRequestDTO.getIdEvent();
@@ -144,7 +127,7 @@ public class EventController {
 
     @PostMapping(path = "/deleteUserFromEvent")
     @ResponseBody
-    public ResultResponseDTO deleteUserFromEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) { //TODO
+    public ResultResponseDTO deleteUserFromEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
         UUID idUser = idEventAndUserRequestDTO.getIdUser();
         UUID idEvent = idEventAndUserRequestDTO.getIdEvent();
@@ -155,7 +138,7 @@ public class EventController {
 
     @PostMapping(path = "/showEventsFromUser")
     @ResponseBody
-    public EventsResponseDTO showEventsFromUser(IdRequestDTO idRequestDTO) { //TODO
+    public EventsResponseDTO showEventsFromUser(IdRequestDTO idRequestDTO) {
         EventsResponseDTO eventListDTO = new EventsResponseDTO();
         eventListDTO.setActiveEvents(allUserService.getAllEventsIdFromUser(idRequestDTO.getId()));
 
@@ -164,10 +147,10 @@ public class EventController {
 
     @PostMapping(path = "/showEventsFromPlace")
     @ResponseBody
-    public EventsResponseDTO showEventsFromPlace(IdRequestDTO idRequestDTO) { //TODO
+    public EventsResponseDTO showEventsFromPlace(IdRequestDTO idRequestDTO) {
         EventsResponseDTO eventListDTO = new EventsResponseDTO();
         eventListDTO.setActiveEvents(allPlaceService.getAllEventsIdInPlace(idRequestDTO.getId()));
 
         return eventListDTO;
-    }
+    }*/
 }

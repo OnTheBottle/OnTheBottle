@@ -4,13 +4,10 @@ import com.bottle.model.DTO.EventDTO;
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.Place;
 import com.bottle.model.entity.User;
-import com.bottle.model.repository.EventStore;
 import com.bottle.service.place.AllPlaceService;
 import com.bottle.service.user.AllUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
 
 @Service
 public class RegistrationEvent {
