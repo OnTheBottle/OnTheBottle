@@ -19,7 +19,7 @@ public class TestUserController {
   //  @RequestMapping(value = "/getfriends")
  //   public List<UserDTO> getFriends(@RequestParam(value = "id") UUID id) {
  //       System.out.println("UUID from news to user subsystem: " + id);
- //       String avatarPath = Properties.SUBMESSAGEPATH + "/images/";
+ //       String avatarPath = Properties.SUB_MESSAGE_PATH + "/images/";
  //       List<UserDTO> friends = new ArrayList<>();
  //       friends.add(new UserDTO(UUID.fromString("c4f63463-beb9-42c7-8921-7d3184845689"), "Vasja", "Test", avatarPath + "11.jpg"));
  //       friends.add(new UserDTO(UUID.fromString("36fe8f70-3287-4521-b00f-807682ab8204"), "Dima", "Test", avatarPath + "16.jpg"));

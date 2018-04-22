@@ -19,7 +19,6 @@ public class FavoritePostController {
         this.favoriteRepository = favoriteRepository;
     }
 
-    @CrossOrigin(origins = "http://localhost:63342")
     @RequestMapping(path = "/change", method = RequestMethod.POST)
     public void getFavorite(
             @RequestParam(name = "userId") UUID userId,
