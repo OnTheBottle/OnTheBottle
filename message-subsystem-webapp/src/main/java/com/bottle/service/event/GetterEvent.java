@@ -1,66 +1,27 @@
 package com.bottle.service.event;
 
 import com.bottle.model.entity.Event;
-import com.bottle.model.repository.EventStore;
+import com.bottle.model.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class GetterEvent {
-    private EventStore eventStore;
+    private EventRepository eventRepository;
 
     @Autowired
-    public GetterEvent(EventStore eventStore) {
-        this.eventStore = eventStore;
+    public GetterEvent(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
     }
 
-    public Map<UUID, String> getAllActiveIdAndTitle() {
-        try {
-            Map<UUID, String> events = new HashMap<>();
-            List<Event> eventList = eventStore.getAllActive();
-            Date dateNow = new Date();
-
-            for (Event event : eventList) {
-                if (event.getEndTime().after(dateNow)) {
-                    events.put(event.getId(), event.getTitle());
-                } else {
-                    event.setIsActive(false);
-                    eventStore.createOrUpdate(event);
-                }
-            }
-
-            return events;
-        } catch (SQLException e) { // TODO
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public Map<UUID, String> getAllPassedIdAndTitle() {
-        try {
-            Map<UUID, String> events = new HashMap<>();
-            List<Event> eventList = eventStore.getAllPassed();
-
-            for (Event event : eventList) {
-                events.put(event.getId(), event.getTitle());
-            }
-
-            return events;
-        } catch (SQLException e) { // TODO
-            e.printStackTrace();
-            return null;
-        }
+    public List<Event> getAllEventsFromUser() {
+        return eventRepository.findAll();
     }
 
     public Event getEvent(UUID id) {
-        try {
-            return eventStore.getById(id);
-        } catch (SQLException e) { //TODO
-            e.printStackTrace();
-            return null;
-        }
+        return eventRepository.getOne(id);
     }
 }
