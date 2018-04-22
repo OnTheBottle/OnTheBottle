@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,12 +35,12 @@ public class PubsCommentsController {
         response.setStart_number(start);
         response.setEnd_number(end);
         response.setComments_count(allComments.size());
-        //response.setCommentList(sliceList(allComments, start, end));
+        response.setCommentList(sliceList(allComments, start, end));
 
         return response;
     }
 
-    /*private List<Comment> sliceList(List<Comment> allComments, int start, int end) {
+    private List<Comment> sliceList(List<Comment> allComments, int start, int end) {
         if (end > allComments.size()) {
             end = allComments.size();
         }
@@ -48,7 +49,7 @@ public class PubsCommentsController {
             result.add(allComments.get(start));
         }
         return result;
-    }*/
+    }
 
     @PostMapping(path = "/addPubComment")
     @ResponseBody
