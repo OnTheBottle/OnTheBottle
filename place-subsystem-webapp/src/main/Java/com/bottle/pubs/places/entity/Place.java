@@ -1,5 +1,4 @@
-package com.bottle.pubs.list.entity;
-
+package com.bottle.pubs.places.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.UUID;
 
 @Getter
@@ -20,7 +20,7 @@ public class Place {
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid")
     @GeneratedValue(generator = "uuid-gen")
-    @Column(name = "id")
+    @Column(name = "place_id")
     private UUID id;
     @Column(name = "place_name")
     private String name;
@@ -30,8 +30,19 @@ public class Place {
     private String workTime;
     @Column(name = "place_avatar_url")
     private String avatarUrl;
+    @Column(name = "commend_id")
+    private UUID comment_id;
+    @Column(name = "user_id")
+    private UUID user_id;
+    @Column(name = "comment_time")
+    private Instant comment_time;
+    @Column(name = "comment_text")
+    private String comment_text;
 
 }
+
+
+
 
 
 

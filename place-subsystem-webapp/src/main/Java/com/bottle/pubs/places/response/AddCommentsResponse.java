@@ -1,4 +1,4 @@
-package com.bottle.pubs.list.request;
+package com.bottle.pubs.places.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PubSearchQueryDTO {
-    private boolean showAll;
-    private String searchQuery;
-    private String searchType;
+public class AddCommentsResponse {
+    private boolean result;
 }

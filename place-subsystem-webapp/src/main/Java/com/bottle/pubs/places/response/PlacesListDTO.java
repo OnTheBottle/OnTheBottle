@@ -1,6 +1,6 @@
-package com.bottle.pubs.list.response;
+package com.bottle.pubs.places.response;
 
-import com.bottle.pubs.list.entity.Place;
+import com.bottle.pubs.places.entity.Place;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,3 +15,4 @@ import java.util.List;
 public class PlacesListDTO {
     private List<Place> places;
 }
+//_

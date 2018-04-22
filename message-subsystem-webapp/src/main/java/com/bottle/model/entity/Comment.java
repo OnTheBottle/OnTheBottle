@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "comments")
+@Table(name = "places")
 @EqualsAndHashCode
 @ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

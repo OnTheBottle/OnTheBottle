@@ -1,9 +1,9 @@
-package com.bottle.pubs.list.logic;
+package com.bottle.pubs.places.logic;
 
-import com.bottle.pubs.list.entity.Place;
-import com.bottle.pubs.list.repository.PubsRepository;
-import com.bottle.pubs.list.request.PubSearchQueryDTO;
-import com.bottle.pubs.list.response.PlacesListDTO;
+import com.bottle.pubs.places.entity.Place;
+import com.bottle.pubs.places.repository.PubsRepository;
+import com.bottle.pubs.places.request.PubSearchQueryDTO;
+import com.bottle.pubs.places.response.PlacesListDTO;
 
 import java.util.ArrayList;
 import java.util.List;
