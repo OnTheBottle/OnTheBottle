@@ -6,7 +6,8 @@ function showUsers() {
         url: "/showUsers",
         dataType: "json",
         data:{
-            id : '90eae3ce-acee-4d03-80f3-23f925f581d1'
+            // id : '90eae3ce-acee-4d03-80f3-23f925f581d1'
+            id:$(document.location.search.split('=')[1])
         },
         success: function (data) {
 
