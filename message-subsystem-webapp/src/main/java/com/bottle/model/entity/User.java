@@ -15,8 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(exclude = {"events", "ownerEvents", "likes", "posts", "places"})
-@ToString(exclude = {"events", "ownerEvents", "likes", "posts", "places"})
+@EqualsAndHashCode(exclude = {"events", "ownerEvents", "likes", "posts", "comments"})
+@ToString(exclude = {"events", "ownerEvents", "likes", "posts", "comments"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "users")
 public class User {
