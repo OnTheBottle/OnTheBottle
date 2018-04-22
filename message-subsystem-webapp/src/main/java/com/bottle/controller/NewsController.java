@@ -1,6 +1,6 @@
 package com.bottle.controller;
 
-import com.bottle.client.NewsClient;
+import com.bottle.client.UserSubsystemClient;
 import com.bottle.model.entity.Like;
 import com.bottle.model.entity.Post;
 import com.bottle.model.entity.User;
@@ -16,25 +16,23 @@ import java.util.*;
 @RequestMapping(path = "/news")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class NewsController {
-    private final NewsClient client;
+    private final UserSubsystemClient client;
     private final PostRepository postRepository;
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public NewsController(NewsClient client, PostRepository postRepository, LikeRepository likeRepository, UserRepository userRepository) {
+    public NewsController(UserSubsystemClient client, PostRepository postRepository, LikeRepository likeRepository, UserRepository userRepository) {
         this.client = client;
         this.postRepository = postRepository;
         this.likeRepository = likeRepository;
         this.userRepository = userRepository;
     }
 
-    //@CrossOrigin(origins = "http://localhost:63342")
-    @RequestMapping(path = "/getfriendsposts", method = RequestMethod.POST)
-    public List<List> getFriendsPosts(@RequestParam(name = "id") String id) {
-        System.out.println("request id: " + id);
-        UUID uuid = UUID.fromString(id);
-        List<Map> friends = client.getFriends(uuid);
+    @RequestMapping(path = "/get_friends_posts", method = RequestMethod.POST)
+    public List<List> getFriendsPosts(@RequestParam(name = "id") UUID userId) {
+        System.out.println("request id: " + userId);
+        List<Map> friends = client.getFriends(userId);
         System.out.println(friends);
         List<Post> posts = new ArrayList<>();
         for (Map<String, String> friend : friends) {
@@ -49,35 +47,6 @@ public class NewsController {
         return resp;
     }
 
-    @RequestMapping(path = "/setlike", method = RequestMethod.POST)
-    public void getLikePost(
-            @RequestParam(name = "userId") UUID userId,
-            @RequestParam(name = "postId") UUID postId,
-            @RequestParam(name = "isLike") boolean isLike
-    ) {
-        //System.out.println(postId.getClass().getName());
-        System.out.println("request: " + userId + " " + postId + " " + isLike);
-        Set<Like> likePosts = likeRepository.findByPost_Id(postId);
-        System.out.println(likePosts);
-    }
-
-    @RequestMapping(path = "/addlike", method = RequestMethod.POST)
-    public void addLike() {
-        UUID userId;
-        UUID postId;
-
-        userId = UUID.fromString("36fe8f70-3287-4521-b00f-807682ab8204"); //TODO
-        postId = UUID.fromString("bfae92d5-84c1-46ec-afe4-57a44bfac85e"); //TODO
-
-        Post post = postRepository.getOne(postId);
-        User user = userRepository.getOne(userId);
-
-        Like like = new Like();
-        like.setUser(user);
-        like.setPost(post);
-        System.out.println(like);
-        likeRepository.save(like);
-    }
 
     @GetMapping(path = "/printrequest")
     public void getAllParams(@RequestParam Map<String, String> allRequestParams) {

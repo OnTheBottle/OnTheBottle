@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -55,4 +58,13 @@ public class FriendController {
 
         return true;
     }
+
+    @RequestMapping(path = "/get_friends_by_userid", method = RequestMethod.POST)
+    public Set<User> getFriendsByUserId(@RequestParam(value = "id") UUID userId) {
+        System.out.println("UUID from news to user subsystem: " + userId);
+        User user = new User();
+        user = userRepository.getUserById(userId);
+        return user.getFriends();
+    }
+
 }
