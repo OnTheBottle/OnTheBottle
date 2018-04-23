@@ -1,10 +1,7 @@
 package com.bottle.controller;
 
-import com.bottle.entity.User;
 import com.bottle.model.dto.UserDTO;
-import com.bottle.repository.UserRepository;
 import com.bottle.service.FriendService;
-import com.bottle.service.UserService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +39,7 @@ public class FriendController {
     @RequestMapping(path = "/get_friends_by_userid", method = RequestMethod.POST)
     public Set<UserDTO> getFriendsByUserId(
             @RequestParam(value = "id") UUID userId) {
-        return friendService.getFriendsByUserId(userId);
+        return friendService.getConfirmedFriends(userId);
     }
 
 }
