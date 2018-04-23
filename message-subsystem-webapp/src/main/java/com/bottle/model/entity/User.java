@@ -66,13 +66,4 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private Set<Event> ownerEvents = new HashSet<>();
-
-    @ManyToMany(cascade={CascadeType.ALL})
-    @JoinTable(name="User_Friend",
-            joinColumns={@JoinColumn(name="user_id")},
-            inverseJoinColumns={@JoinColumn(name="Friend_ID")})
-    private Set<User> friends = new HashSet<>();
-
-    @ManyToMany(mappedBy="friends")
-    private Set<User> teammates = new HashSet<>();
 }

@@ -27,8 +27,8 @@ public class AllEventService {
         this.getterUser = getterUser;
     }
 
-    public String registrationEvent(EventDTO eventDTO) {
-        return registrationEvent.createEvent(eventDTO);
+    public void createEvent(EventDTO eventDTO) {
+        registrationEvent.createEvent(eventDTO);
     }
 
     public String closeEvent(UUID id) {
@@ -44,8 +44,8 @@ public class AllEventService {
         return getterEvent.getEvent(id);
     }
 
-    public String addUser(UUID idEvent, UUID idUser) {
-        return entityBinder.addUserToEvent(idEvent, idUser);
+    public void addUser(UUID idEvent, UUID idUser) {
+       entityBinder.addUserToEvent(idEvent, idUser);
     }
 
     public String deleteUser(UUID idEvent, UUID idUser) {

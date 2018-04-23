@@ -8,19 +8,25 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-import java.util.UUID;
 
 @Service
 public class BuildEvent {
-    public Event build(EventDTO eventDTO) { //TODO
-        UUID id = eventDTO.getId();
+    public Event build(EventDTO eventDTO) {
+
+        System.out.println("Id " + eventDTO.getId());
+        System.out.println("Title " + eventDTO.getTitle());
+        System.out.println("Text " + eventDTO.getText());
+        System.out.println("StartTime " + eventDTO.getStartTime());
+        System.out.println("EndTime " + eventDTO.getEndTime());
+        System.out.println("Place " + eventDTO.getPlace());
+        System.out.println("Owner " + eventDTO.getOwner());
+
         String title = eventDTO.getTitle();
         String text = eventDTO.getText();
         Date startTime = formatDate(eventDTO.getStartTime());
         Date endTime = formatDate(eventDTO.getEndTime());
 
         Event event = new Event();
-        event.setId(id);
         event.setTitle(title);
         event.setText(text);
         event.setStartTime(startTime);

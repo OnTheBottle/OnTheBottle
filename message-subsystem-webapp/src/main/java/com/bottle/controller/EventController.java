@@ -1,7 +1,9 @@
 package com.bottle.controller;
 
+import com.bottle.model.DTO.EventDTO;
 import com.bottle.model.DTO.validators.EventValidator;
 import com.bottle.model.entity.Event;
+import com.bottle.model.entity.Place;
 import com.bottle.service.event.AllEventService;
 import com.bottle.service.place.AllPlaceService;
 import com.bottle.service.user.AllUserService;
@@ -9,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -40,39 +40,26 @@ public class EventController {
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
-    /*@PostMapping(path = "/saveEvent")
-    @ResponseBody
-    public ResponseEntity createEvent(EventDTO eventDTO, BindingResult bindingResult) {
-        ResponseEntity responseEntity;
-        eventValidator.validate(eventDTO, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            for (ObjectError objectError : bindingResult.getAllErrors()) {
-                System.out.println(objectError.getDefaultMessage());
-            }
-            responseEntity = ResponseEntity.badRequest().body("LoL");
-        } else {
-            responseEntity = ResponseEntity.ok(allEventService.registrationEvent(eventDTO));
-        }
-
-        return responseEntity;
+    @RequestMapping(value = "/getPlaces", method = RequestMethod.GET)
+    public ResponseEntity<List<Place>> showAllPlaces() {
+        List<Place> places = allPlaceService.getAllPlaces();
+        if (places.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(places, HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/createEvent", method = RequestMethod.POST)
+    public ResponseEntity<Void> savePost(@RequestBody EventDTO eventDTO) {
+        allEventService.createEvent(eventDTO);
+        return new ResponseEntity<>( HttpStatus.OK );
+    }
+
+    /*
     @PostMapping(path = "/closeEvent")
     @ResponseBody
     public ResultResponseDTO deleteEvent(IdRequestDTO idRequestDTO) {
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
         resultResponseDTO.setResult(allEventService.closeEvent(idRequestDTO.getId()));
         return resultResponseDTO;
-    }
-
-    @PostMapping(path = "/showAllPlaces")
-    @ResponseBody
-    public ListResponseDTO<UUID> showAllPlaces() {
-        ListResponseDTO<UUID> placesResponseDTO = new ListResponseDTO<>();
-        placesResponseDTO.setList(allPlaceService.getAllPlaces());
-
-        return placesResponseDTO;
     }
 
     @PostMapping(path = "/showInfoEvent")

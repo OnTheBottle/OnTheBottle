@@ -1,5 +1,6 @@
 package com.bottle.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -25,6 +26,7 @@ public class Place {
     @Column(name = "Avatar")
     private String avatar;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "place")
     private Set<Event> events = new HashSet<>();
 }

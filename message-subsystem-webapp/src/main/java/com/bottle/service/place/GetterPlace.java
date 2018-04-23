@@ -5,7 +5,6 @@ import com.bottle.model.repository.PlaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,15 +17,8 @@ public class GetterPlace {
         this.placeRepository = placeRepository;
     }
 
-    public List<UUID> getAllId() {
-        List<UUID> uuids = new ArrayList<>();
-        List<Place> places = placeRepository.findAll();
-
-        for (Place place : places) {
-            uuids.add(place.getId());
-        }
-
-        return uuids;
+    public List<Place> getAll() {
+        return placeRepository.findAll();
     }
 
     public Place getPlace(UUID id) {

@@ -45,12 +45,4 @@ public class AllUserService {
 
         return allEvents;
     }
-
-    public void addFriend(UUID userIdOne, UUID userIdTwo) {
-        User userOne = getUser(userIdOne);
-        User userTwo = getUser(userIdTwo);
-        userOne.getFriends().add(userTwo);
-        userTwo.getFriends().add(userOne);
-        getterUser.saveUser(userOne);
-    }
 }
