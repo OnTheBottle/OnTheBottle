@@ -7,6 +7,7 @@ import com.bottle.pubs.places.request.PubSearchQueryDTO;
 import com.bottle.pubs.places.response.PlacesListDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,6 +21,7 @@ public class PlacesController {
     }
 
     @PostMapping(path = "/pubList")
+    @ResponseBody
     public PlacesListDTO getPubs(PubSearchQueryDTO request) {
         return new FindPlace().doSearch(pubsRepository, request);
     }

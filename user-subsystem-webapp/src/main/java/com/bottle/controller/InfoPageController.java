@@ -26,6 +26,7 @@ public class InfoPageController {
     public InfoPageResponce getUserInfo(InfoPageRequest request) {
 
         User user = userRepository.findOne(request.getId());
+//        User user = userRepository.findOne(UUID.fromString("14dd28b2-1e7e-4575-9923-135c4fbf345b"));
         UserDTO userDTO = new UserDTO();
 
         userDTO.setName(user.getName());
