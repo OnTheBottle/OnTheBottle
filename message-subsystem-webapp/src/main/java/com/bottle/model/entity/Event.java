@@ -1,5 +1,6 @@
 package com.bottle.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -27,9 +28,13 @@ public class Event {
     @Column(name = "Text")
     private String text;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "HH:mm MM.dd.yyyy")
     @Column(name = "Start_time")
     private Date startTime;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "HH:mm MM.dd.yyyy")
     @Column(name = "End_time")
     private Date endTime;
 
