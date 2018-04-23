@@ -34,6 +34,7 @@ public class InfoPageController {
         userDTO.setAge(user.getAge());
 
         System.out.println("TestController: A name of the userDTO is " + userDTO.getName());
+        // TODO: 24.04.2018 why you add this wrapper?
         return new InfoPageResponce(userDTO);
     }
 }

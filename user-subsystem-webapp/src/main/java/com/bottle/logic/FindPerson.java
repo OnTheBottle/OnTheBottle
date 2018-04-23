@@ -17,6 +17,7 @@ public class FindPerson {
         String type = request.getSearchType();
         List<User> userList = new ArrayList<>();
         List<UserDTO> dtoList = new ArrayList<>();
+        // TODO: 24.04.2018 use ENUM
         switch (type) {
             case "name":
                 userList = repository.getByName(searchQuery);
@@ -37,7 +38,7 @@ public class FindPerson {
         }
 
         System.out.println("User's name from response is " + userList.get(0).getName());
-
+// TODO: 24.04.2018 write build method
         for (User user : userList){
             UserDTO dto = new UserDTO();
             dto.setId(user.getId());

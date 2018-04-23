@@ -30,6 +30,7 @@ public class AuthorisationController {
         System.out.println("LoginRequest is " + request.getLogin() + request.getPassword());
         LoginResponse response = new LoginResponse();
         User userByLogin = userRepository.findByLogin(request.getLogin());
+        // TODO: 24.04.2018 need add normal error message
         if (userByLogin != null) {
             if (userByLogin.getPassword().equals(request.getPassword())) {
 //                response.setUuid(userByLogin.getId().toString());
@@ -45,6 +46,7 @@ public class AuthorisationController {
     @ResponseBody
     public RegistrationResponse registration(RegistrationRequest request) {
         RegistrationResponse response = new RegistrationResponse();
+        // TODO: 24.04.2018 need use uniq in db
         User userByEmail = userRepository.findByEmail(request.getEmail());
         User userByLogin = userRepository.findByLogin(request.getLogin());
         if (userByEmail == null && userByLogin == null) {
@@ -55,6 +57,7 @@ public class AuthorisationController {
             response.setSuccessful(false);
             System.out.println("The user already exists!");
         }
+        // TODO: 24.04.2018 need normal response
         return response;
     }
 }

@@ -32,6 +32,7 @@ public class FindPersonController {
     @ResponseBody
     public FindPersonResponse getListOfPersons(FindPersonRequest request) {
         System.out.println("request contents: " + request.getSearch() + " " + request.getSearchType());
+        // TODO: 24.04.2018 why? need normal service
         return new FindPerson().findFromDB(userRepository, request);
     }
 

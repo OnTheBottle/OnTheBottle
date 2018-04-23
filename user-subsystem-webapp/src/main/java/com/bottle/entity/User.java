@@ -11,7 +11,7 @@ import java.util.UUID;
 //@Table(name = "user")
 @Table(name = "user", schema = "public")
 public class User {
-
+    // TODO: 24.04.2018 plz use lombok....very terrible part
     private UUID id;
     private int age;
     private String login;
