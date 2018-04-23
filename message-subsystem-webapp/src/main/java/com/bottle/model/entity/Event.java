@@ -29,12 +29,12 @@ public class Event {
     private String text;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern = "HH:mm MM.dd.yyyy")
+    @JsonFormat(pattern = "HH:mm dd.MM.yyyy")
     @Column(name = "Start_time")
     private Date startTime;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern = "HH:mm MM.dd.yyyy")
+    @JsonFormat(pattern = "HH:mm dd.MM.yyyy")
     @Column(name = "End_time")
     private Date endTime;
 
