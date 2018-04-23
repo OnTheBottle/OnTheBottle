@@ -1,13 +1,14 @@
 package com.bottle.controller;
 
 import com.bottle.entity.User;
+import com.bottle.model.dto.UserDTO;
 import com.bottle.repository.UserRepository;
+import com.bottle.service.FriendService;
+import com.bottle.service.UserService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,54 +18,31 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FriendController {
 
-    private UserRepository userRepository;
+    private FriendService friendService;
 
     @Autowired
-    public FriendController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public FriendController(FriendService friendService) {
+        this.friendService = friendService;
     }
 
     @RequestMapping(path = "/add_oneway_relation", method = RequestMethod.POST)
     public boolean addOneWayRelationship(
             @RequestParam(name = "firstFriendId") UUID firstFriendId,
-            @RequestParam(name = "secondFriendId") UUID secondFriendId
-    ) {
-        User firstUser;
-        User secondUser;
-
-        firstUser = userRepository.getUserById(firstFriendId);
-        secondUser = userRepository.getUserById(secondFriendId);
-        firstUser.getFriends().add(secondUser);
-        userRepository.save(firstUser);
-        System.out.println("1 user:" + firstUser.getFriends());
-        System.out.println("2 user:" + secondUser.getFriends());
-        return true;
+            @RequestParam(name = "secondFriendId") UUID secondFriendId) {
+        return friendService.addOneWayRelation(firstFriendId, secondFriendId);
     }
 
     @RequestMapping(path = "/add_twoway_relation", method = RequestMethod.POST)
     public boolean addTwoWayRelationship(
             @RequestParam(name = "firstFriendId") UUID firstFriendId,
-            @RequestParam(name = "secondFriendId") UUID secondFriendId
-    ) {
-        User firstUser;
-        User secondUser;
-
-        firstUser = userRepository.getUserById(firstFriendId);
-        secondUser = userRepository.getUserById(secondFriendId);
-        firstUser.getFriends().add(secondUser);
-        secondUser.getFriends().add(firstUser);
-        userRepository.save(firstUser);
-        userRepository.save(secondUser);
-
-        return true;
+            @RequestParam(name = "secondFriendId") UUID secondFriendId) {
+        return friendService.addTwoWayRelation(firstFriendId, secondFriendId);
     }
 
     @RequestMapping(path = "/get_friends_by_userid", method = RequestMethod.POST)
-    public Set<User> getFriendsByUserId(@RequestParam(value = "id") UUID userId) {
-        System.out.println("UUID from news to user subsystem: " + userId);
-        User user = new User();
-        user = userRepository.getUserById(userId);
-        return user.getFriends();
+    public Set<UserDTO> getFriendsByUserId(
+            @RequestParam(value = "id") UUID userId) {
+        return friendService.getFriendsByUserId(userId);
     }
 
 }
