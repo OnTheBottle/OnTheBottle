@@ -33,6 +33,9 @@ public class Post {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "deleted")
+    private Boolean isDeleted;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
     @JsonFormat(pattern = "MM-yyyy-dd HH:mm:ss")
