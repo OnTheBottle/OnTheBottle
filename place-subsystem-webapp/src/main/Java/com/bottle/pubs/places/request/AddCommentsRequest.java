@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AddCommentsRequest {
     private UUID user_id;
-    private UUID pub_id;
+    private UUID place_id;
     private String comment_text;
     private float rating;
 }

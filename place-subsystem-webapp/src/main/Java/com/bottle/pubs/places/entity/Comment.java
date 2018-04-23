@@ -1,5 +1,6 @@
 package com.bottle.pubs.places.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -21,16 +23,17 @@ public class Comment {
     @GenericGenerator(name = "uuid-gen", strategy = "uuid")
     @GeneratedValue(generator = "uuid-gen")
     @Column(name = "commend_id")
-    private UUID comment_id;
+    private UUID commentid;
     @Column(name = "user_id")
-    private UUID user_id;
+    private UUID userid;
     @Column(name = "comment_time")
-    private Instant comment_time;
+    private Instant commenttime;
     @Column(name = "comment_text")
-    private String comment_text;
-    @Column(name = "place_id")
-    private UUID place_id;
+    private String commenttext;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "place_id")
+    private Place place;
 }
 
 

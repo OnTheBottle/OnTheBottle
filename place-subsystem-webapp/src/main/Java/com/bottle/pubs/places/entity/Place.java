@@ -1,5 +1,6 @@
 package com.bottle.pubs.places.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -21,24 +24,25 @@ public class Place {
     @GenericGenerator(name = "uuid-gen", strategy = "uuid")
     @GeneratedValue(generator = "uuid-gen")
     @Column(name = "place_id")
-    private UUID id;
+    private UUID placeid;
+
     @Column(name = "place_name")
     private String name;
+
     @Column(name = "place_type")
     private String type;
+
     @Column(name = "place_work_time")
     private String workTime;
+
     @Column(name = "place_avatar_url")
     private String avatarUrl;
-    @Column(name = "commend_id")
-    private UUID comment_id;
-    @Column(name = "user_id")
-    private UUID user_id;
-    @Column(name = "comment_time")
-    private Instant comment_time;
-    @Column(name = "comment_text")
-    private String comment_text;
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "place")
+    private List<Comment> comments;
 }
 
 

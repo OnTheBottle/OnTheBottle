@@ -11,11 +11,7 @@ import java.util.List;
 public class FindPlace {
     public PlacesListDTO doSearch(PubsRepository pubsRepository, PubSearchQueryDTO request) {
         PlacesListDTO response = new PlacesListDTO();
-        if (request.isShowAll()) {
-            List<Place> allPlaces = new ArrayList<>();
-            pubsRepository.findAll().forEach(allPlaces::add);
-            response.setPlaces(allPlaces);
-        }
+        response.setPlaces(pubsRepository.findAll());
         return response;
     }
 }

@@ -13,8 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetCommentsResponse {
-    private int comments_count;
     private List<Comment> commentList;
-    private int start_number;
-    private int end_number;
 }
