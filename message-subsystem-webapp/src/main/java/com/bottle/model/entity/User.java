@@ -15,8 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(exclude = {"events", "ownerEvents", "likes", "posts", "places"})
-@ToString(exclude = {"events", "ownerEvents", "likes", "posts", "places"})
+@EqualsAndHashCode(exclude = {"events", "ownerEvents", "likes", "posts", "comments"})
+@ToString(exclude = {"events", "ownerEvents", "likes", "posts", "comments"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "users")
 public class User {
@@ -66,13 +66,4 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private Set<Event> ownerEvents = new HashSet<>();
-
-    @ManyToMany(cascade={CascadeType.ALL})
-    @JoinTable(name="User_Friend",
-            joinColumns={@JoinColumn(name="user_id")},
-            inverseJoinColumns={@JoinColumn(name="Friend_ID")})
-    private Set<User> friends = new HashSet<>();
-
-    @ManyToMany(mappedBy="friends")
-    private Set<User> teammates = new HashSet<>();
 }

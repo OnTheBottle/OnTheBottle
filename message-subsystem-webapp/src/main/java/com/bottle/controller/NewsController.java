@@ -33,10 +33,10 @@ public class NewsController {
     public List<List> getFriendsPosts(@RequestParam(name = "id") UUID userId) {
         System.out.println("request id: " + userId);
         List<Map> friends = client.getFriends(userId);
-        System.out.println(friends);
+        System.out.println("friends: " + friends);
         List<Post> posts = new ArrayList<>();
         for (Map<String, String> friend : friends) {
-            UUID friendId = UUID.fromString(friend.get("user_id"));
+            UUID friendId = UUID.fromString(friend.get("id"));
             posts.addAll(postRepository.findAllByUserId(friendId));
         }
         List<List> resp = new ArrayList<List>() {{

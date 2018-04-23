@@ -1,7 +1,5 @@
 package com.bottle.service.place;
 
-import com.bottle.model.DTO.EventDTO;
-import com.bottle.model.DTO.request.IdRequestDTO;
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.Place;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +28,8 @@ public class AllPlaceService {
         return getterPlace.createPlace(id, title, avatar);
     }
 
-    public List<UUID> getAllPlaces() {
-        return getterPlace.getAllId();
+    public List<Place> getAllPlaces() {
+        return getterPlace.getAll();
     }
 
     public Map<UUID, String> getAllEventsIdInPlace(UUID id) {

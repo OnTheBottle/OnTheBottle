@@ -15,6 +15,7 @@ public class UserSubsystemClient {
     public List getFriends(UUID id) {
         String userSystemPath = Properties.SUB_USER_PATH + "/friend/get_friends_by_userid";
         String url = userSystemPath + "?id=" + id;
+        System.out.println("client sends reguest: " + url);
         //POST request
         return new RestTemplate().postForObject(url, null, ArrayList.class);
     }

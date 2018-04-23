@@ -20,22 +20,19 @@ public class EntityBinder {
         this.userRepository = userRepository;
     }
 
-    public String addUserToEvent(UUID idEvent, UUID idUser) {
+    public void addUserToEvent(UUID idEvent, UUID idUser) {
         Event event = eventRepository.getOne(idEvent);
         User user = userRepository.getOne(idUser);
 
         event.getUsers().add(user);
         user.getEvents().add(event);
         eventRepository.save(event);
-
-        return "complete";
     }
 
-    public String addUserToEvent(Event event, User user) {
+    public void addUserToEvent(Event event, User user) {
         event.getUsers().add(user);
         user.getEvents().add(event);
         eventRepository.save(event);
-        return "complete";
     }
 
     public String deleteUserFromEvent(UUID idEvent, UUID idUser) {
