@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @CrossOrigin(origins = "*")
@@ -55,6 +56,7 @@ public class PostController {
         post.setTitle( requestDTO.getPostDTO().getTitle() );
         post.setUser( user );
         post.setText( requestDTO.getPostDTO().getText() );
+        post.setIsDeleted( false );
         postService.addPost( post );
         return new ResponseEntity<>( HttpStatus.OK );
     }
@@ -89,8 +91,9 @@ public class PostController {
         if (post == null) {
             return new ResponseEntity<>( HttpStatus.NOT_FOUND );
         }
-        postService.deletePostById( postId );
-        return new ResponseEntity<>( HttpStatus.NO_CONTENT );
+        post.setIsDeleted( true );
+        postService.addPost( post );
+        return new ResponseEntity<>( HttpStatus.OK );
     }
 
     @RequestMapping(path = "/updatePost", method = RequestMethod.POST)
@@ -150,6 +153,51 @@ public class PostController {
         user.setSurname( userDTO.getSurname() );
         allUserService.createUser( user );
         return new ResponseEntity<>( HttpStatus.OK );
+    }
+
+    @RequestMapping(path = "/addLike", method=RequestMethod.POST)
+    public ResponseEntity<Void> addLike(@RequestBody LikeDTO likeDTO) {
+        Post post = postService.getPost( likeDTO.getPost_id() );
+        User user = allUserService.getUser( likeDTO.getUser_id() );
+        Set<Like> likes;
+        likes = likeService.findByPost_Id( likeDTO.getPost_id() );
+        boolean a = false;
+        if (likes.size() == 0) {
+            Like like = new Like();
+            like.setStatus( likeDTO.getStatus() );
+            like.setPost( post );
+            like.setUser( user );
+            likeService.save( like );
+            Integer size = likes.size();
+            return new ResponseEntity<>( HttpStatus.OK );
+        } else {
+            for (Like like : likes) {
+                if (like.getUser() == user) {
+                    if (like.getPost() == post) {
+                        System.out.println( "Вы уже оценили этот пост" );
+                        System.out.println( "Ваша оценка этого поста " + like.getStatus() );
+                    }
+                    System.out.println( "Всего оценок" + likes.size() );
+                    a = false;
+                } else a = true;
+            }
+            if (a) {
+
+                Like like = new Like();
+                like.setStatus( likeDTO.getStatus() );
+                like.setPost( post );
+                like.setUser( user );
+                likeService.save( like );
+                System.out.println( "Ваша оценка добавлена" );
+                System.out.println( "Всего оценок" + likes.size() );
+                Integer size = likes.size();
+                return new ResponseEntity<>( HttpStatus.OK );
+            } else {
+
+                Integer size = likes.size();
+                return new ResponseEntity<>( HttpStatus.NO_CONTENT );
+            }
+        }
     }
 }
 

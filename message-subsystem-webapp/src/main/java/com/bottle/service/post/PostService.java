@@ -42,7 +42,7 @@ public class PostService {
 
     @Transactional
     public List<Post> getPosts(UUID user_id) {
-        return postRepository.findAllByUserId( user_id );
+        return postRepository.findAllByIsDeletedIsFalseAndUserId( user_id );
     }
 
     @Transactional

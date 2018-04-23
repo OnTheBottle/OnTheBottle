@@ -1,5 +1,6 @@
 package com.bottle.model.repository;
 
+
 import com.bottle.model.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,6 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     List<Post> findAllByUserId(UUID user_id);
 
 //    List<Post> getPostByAuthorId(UUID id);
-
+    List<Post> findAllByIsDeletedIsFalseAndUserId(UUID user_id);
     List<Post> findFirst10ByUserIdOrderByDateDesc(UUID user_id);
 }
