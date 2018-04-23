@@ -59,12 +59,14 @@ public class PubsCommentsController {
 
     @PostMapping(path = "/addPubComment")
     @ResponseBody
+    // TODO: 24.04.2018 bad naming
     public AddCommentsResponse getPubs(AddCommentsRequest request) {
         AddCommentsResponse response = new AddCommentsResponse();
         Comment newComment = new Comment();
         newComment.setCommenttext(request.getComment_text());
         newComment.setUserid(request.getUser_id());
         Place place =pubsRepository.findOne(request.getPlace_id());
+        // TODO: 24.04.2018 mb better newComment.setPlace(pubsRepository.findOne(request.getPlace_id()));
         newComment.setPlace(place);
         Comment dbResult = pubsCommentsRepository.save(newComment);
         response.setResult(dbResult != null);

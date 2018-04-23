@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindPlace {
+    // TODO: 24.04.2018 what the fuck?
     public PlacesListDTO doSearch(PubsRepository pubsRepository, PubSearchQueryDTO request) {
         PlacesListDTO response = new PlacesListDTO();
         response.setPlaces(pubsRepository.findAll());

@@ -20,6 +20,9 @@ import java.util.UUID;
 @Entity
 @Table(name = "place")
 public class Place {
+
+    // TODO: 24.04.2018 CAMEL CASE NOTATION !!!!
+
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid")
     @GeneratedValue(generator = "uuid-gen")
