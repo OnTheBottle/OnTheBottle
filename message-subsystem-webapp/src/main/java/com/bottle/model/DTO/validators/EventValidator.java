@@ -51,7 +51,7 @@ public class EventValidator implements Validator {
         try {
             param = param.replace('T', ' ');
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            dateFormat.setTimeZone(TimeZone.getDefault());
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC+2"));
             date = dateFormat.parse(param);
         } catch (ParseException e) {
             e.printStackTrace();
