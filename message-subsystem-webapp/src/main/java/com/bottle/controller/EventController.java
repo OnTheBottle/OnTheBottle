@@ -1,6 +1,7 @@
 package com.bottle.controller;
 
 import com.bottle.model.DTO.EventDTO;
+import com.bottle.model.DTO.RequestEventDTO;
 import com.bottle.model.DTO.validators.EventValidator;
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.Place;
@@ -13,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @CrossOrigin(origins = "*")
@@ -33,9 +32,9 @@ public class EventController {
         this.eventValidator = eventValidator;
     }
 
-    @RequestMapping(value = "/getEvents", params = "user_Id", method = RequestMethod.GET)
-    public ResponseEntity<Set<Event>> showAllEvents(@RequestParam("user_Id") UUID id) {
-        Set<Event> events = allEventService.getAllEventsFromUser(id);
+    @RequestMapping(value = "/getEvents", method = RequestMethod.POST)
+    public ResponseEntity<Set<Event>> showAllEvents(@RequestBody RequestEventDTO requestEventDTO) {
+        Set<Event> events = allEventService.getEvents(requestEventDTO);
         if (events.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(events, HttpStatus.OK);
     }

@@ -5,7 +5,9 @@ import com.bottle.model.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -17,11 +19,13 @@ public class GetterEvent {
         this.eventRepository = eventRepository;
     }
 
-    public List<Event> getAllEventsFromUser() {
-        return eventRepository.findAll();
-    }
-
     public Event getEvent(UUID id) {
         return eventRepository.getOne(id);
     }
+
+    public Set<Event> getEvents() {
+        return new HashSet<>(eventRepository.findAll());
+    }
+
+
 }

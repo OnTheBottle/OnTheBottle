@@ -1,12 +1,15 @@
 package com.bottle.service.event;
 
 import com.bottle.model.DTO.EventDTO;
+import com.bottle.model.DTO.OptionsDTO;
+import com.bottle.model.DTO.RequestEventDTO;
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.User;
 import com.bottle.service.user.GetterUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -35,9 +38,14 @@ public class AllEventService {
         return closeEvent.closeEvent(id);
     }
 
-    public Set<Event> getAllEventsFromUser(UUID id) {
-        User user = getterUser.getUser(id);
-        return user.getEvents();
+    public Set<Event> getEvents(RequestEventDTO requestEventDTO) { //TODO: added filter Passed/Active
+        OptionsDTO options = requestEventDTO.getOptions();
+        if (options.isAllEvents()) {
+            return getterEvent.getEvents();
+        } else {
+            User user = getterUser.getUser(requestEventDTO.getUserId());
+            return user.getEvents();
+        }
     }
 
     public Event getEvent(UUID id) {
