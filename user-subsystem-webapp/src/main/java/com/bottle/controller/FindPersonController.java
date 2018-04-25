@@ -1,20 +1,14 @@
 package com.bottle.controller;
 
-import com.bottle.entity.User;
 import com.bottle.logic.FindPerson;
-import com.bottle.model.dto.UserDTO;
 import com.bottle.repository.UserRepository;
 import com.bottle.model.dto.request.FindPersonRequest;
-import com.bottle.model.dto.responce.FindPersonResponse;
+import com.bottle.model.dto.response.FindPersonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Controller

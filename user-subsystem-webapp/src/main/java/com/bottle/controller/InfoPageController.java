@@ -3,13 +3,11 @@ import com.bottle.entity.User;
 import com.bottle.model.dto.UserDTO;
 import com.bottle.repository.UserRepository;
 import com.bottle.model.dto.request.InfoPageRequest;
-import com.bottle.model.dto.responce.InfoPageResponce;
+import com.bottle.model.dto.response.InfoPageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.UUID;
 
 @Controller
 
@@ -23,18 +21,18 @@ public class InfoPageController {
 
     @GetMapping("/showUsers")
     @ResponseBody
-    public InfoPageResponce getUserInfo(InfoPageRequest request) {
+    public InfoPageResponse getUserInfo(InfoPageRequest request) {
 
         User user = userRepository.findOne(request.getId());
 //        User user = userRepository.findOne(UUID.fromString("14dd28b2-1e7e-4575-9923-135c4fbf345b"));
-        UserDTO userDTO = new UserDTO();
+        InfoPageResponse infoPageResponse = new InfoPageResponse();
 
-        userDTO.setName(user.getName());
-        userDTO.setSurname(user.getSurname());
-        userDTO.setAge(user.getAge());
+        infoPageResponse.setName(user.getName());
+        infoPageResponse.setSurname(user.getSurname());
+        infoPageResponse.setAge(user.getAge());
 
-        System.out.println("TestController: A name of the userDTO is " + userDTO.getName());
+        System.out.println("TestController: A name of the user is " + infoPageResponse.getName());
         // TODO: 24.04.2018 why you add this wrapper?
-        return new InfoPageResponce(userDTO);
+        return infoPageResponse;
     }
 }

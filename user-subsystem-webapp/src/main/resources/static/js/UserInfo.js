@@ -18,7 +18,7 @@ function showUsers() {
             var nameRowData = nameRow.insertCell(1);
 
             nameRowTitle.innerText = "name";
-            nameRowData.innerText = data.userDTO.name;
+            nameRowData.innerText = data.name;
             // nameRowData.innerText = response.name;
 
             var surnameRow = table.insertRow();
@@ -26,14 +26,14 @@ function showUsers() {
             var surnameRowData = surnameRow.insertCell(1);
 
             surnameRowTitle.innerText = "surname";
-            surnameRowData.innerText = data.userDTO.surname;
+            surnameRowData.innerText = data.surname;
 
             var ageRow = table.insertRow();
             var ageRowTitle = ageRow.insertCell(0);
             var ageRowData = ageRow.insertCell(1);
 
             ageRowTitle.innerText = "age";
-            ageRowData.innerText = data.userDTO.age;
+            ageRowData.innerText = data.age;
 
             document.getElementById("table-area").appendChild(table);
         }

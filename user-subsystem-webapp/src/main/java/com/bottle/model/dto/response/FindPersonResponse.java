@@ -1,4 +1,4 @@
-package com.bottle.model.dto.responce;
+package com.bottle.model.dto.response;
 
 import com.bottle.model.dto.UserDTO;
 import lombok.AllArgsConstructor;

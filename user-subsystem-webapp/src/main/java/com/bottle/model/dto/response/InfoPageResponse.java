@@ -1,6 +1,5 @@
-package com.bottle.model.dto.responce;
+package com.bottle.model.dto.response;
 
-import com.bottle.entity.User;
 import com.bottle.model.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +12,12 @@ import lombok.Setter;
 @NoArgsConstructor
 
 // TODO: 24.04.2018 I think you understand what is wrong
-public class InfoPageResponce {
-    private UserDTO userDTO;
+public class InfoPageResponse {
+    private String name;
+    private String surname;
+    private int age;
+    private String email;
+    private String country;
+    private String city;
+    private String avatarUrl;
 }

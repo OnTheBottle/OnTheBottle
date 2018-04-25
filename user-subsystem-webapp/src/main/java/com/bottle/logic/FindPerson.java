@@ -4,7 +4,7 @@ import com.bottle.entity.User;
 import com.bottle.model.dto.UserDTO;
 import com.bottle.repository.UserRepository;
 import com.bottle.model.dto.request.FindPersonRequest;
-import com.bottle.model.dto.responce.FindPersonResponse;
+import com.bottle.model.dto.response.FindPersonResponse;
 
 import java.util.ArrayList;
 import java.util.List;
