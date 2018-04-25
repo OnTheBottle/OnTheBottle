@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.bottle")
 @EntityScan("com.bottle")
 @ComponentScan("com.bottle")
-public class MainClass {
+public class UserMainClass {
     public static void main(String[] args) {
-        SpringApplication.run(MainClass.class, args);
+        SpringApplication.run(UserMainClass.class, args);
     }
 }

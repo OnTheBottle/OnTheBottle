@@ -3,10 +3,15 @@ package com.bottle.service;
 import com.bottle.entity.User;
 import com.bottle.model.dto.UserDTO;
 import com.bottle.repository.UserRepository;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,22 +27,20 @@ public class FriendService {
         this.userService = userService;
     }
 
-    // TODO: 24.04.2018 why?????
-    public boolean addTwoWayRelation(UUID firstId, UUID secondId) {
+    public void addTwoWayRelation(UUID firstId, UUID secondId) {
         addOneWayRelation(firstId, secondId);
         addOneWayRelation(secondId, firstId);
-        return true;
     }
-    // TODO: 24.04.2018 why?????
-    public boolean addOneWayRelation(UUID firstId, UUID secondId) {
+
+    public void addOneWayRelation(UUID firstId, UUID secondId) {
         User firstUser = userRepository.getUserById(firstId);
         User secondUser = userRepository.getUserById(secondId);
         firstUser.getFriends().add(secondUser);
         userRepository.save(firstUser);
-        return true;
     }
-    // TODO: 24.04.2018 better use db
+
     public Set<UserDTO> getConfirmedFriends(UUID id) {
+        System.out.println("user ID: " + id);
         User user = userRepository.getUserById(id);
         Set<User> friends = user.getFriends();
         Set<User> confirmedFriends = new HashSet<>();

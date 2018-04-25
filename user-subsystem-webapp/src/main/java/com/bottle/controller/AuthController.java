@@ -1,32 +1,42 @@
 package com.bottle.controller;
 
-import com.bottle.entity.User;
-import com.bottle.model.dto.request.LoginRequest;
-import com.bottle.model.dto.request.RegistrationRequest;
-import com.bottle.model.dto.response.LoginResponse;
-import com.bottle.model.dto.response.RegistrationResponse;
-import com.bottle.repository.UserRepository;
+import com.bottle.model.dto.request.AuthDTO;
+import com.bottle.model.dto.request.RegistrationDTO;
+import com.bottle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@RequestMapping(path = "/auth")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class AuthorisationController {
-    private UserRepository userRepository;
+public class AuthController {
+
+    private UserService userService;
 
     @Autowired
-    public AuthorisationController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuthController(UserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping("/authorize")
+    @PostMapping(path = "/authorigation")
+    public boolean authUser(AuthDTO authDTO) {
+        return userService.authUser(authDTO);
+    }
+
+    @PostMapping(path = "/registration")
+    public boolean addNewUser(RegistrationDTO userDTO) {
+        return userService.addNewUser(userDTO);
+    }
+
+/*
+    @PostMapping("/authorigation")
     @ResponseBody
-    public LoginResponse userLogin(LoginRequest request) {
-        System.out.println("LoginRequest is " + request.getLogin() + request.getPassword());
+    public LoginResponse userLogin(AuthDTO request) {
+        System.out.println("AuthDTO is " + request.getLogin() + request.getPassword());
         LoginResponse response = new LoginResponse();
         User userByLogin = userRepository.findByLogin(request.getLogin());
         // TODO: 24.04.2018 need add normal error message
@@ -43,7 +53,7 @@ public class AuthorisationController {
 
     @PostMapping("/registration")
     @ResponseBody
-    public RegistrationResponse registration(RegistrationRequest request) {
+    public RegistrationResponse registration(RegistrationDTO request) {
         RegistrationResponse response = new RegistrationResponse();
         // TODO: 24.04.2018 need use uniq in db
         User userByEmail = userRepository.findByEmail(request.getEmail());
@@ -59,5 +69,6 @@ public class AuthorisationController {
         // TODO: 24.04.2018 need normal response
         return response;
     }
+*/
 }
 

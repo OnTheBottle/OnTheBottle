@@ -1,6 +1,6 @@
 package com.bottle.entity;
 
-import com.bottle.model.dto.request.RegistrationRequest;
+import com.bottle.model.dto.request.RegistrationDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,30 +18,29 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Table(name = "user", schema = "public")
 public class User {
-    // TODO: 24.04.2018 plz use lombok....very terrible part
     @Id
     @GeneratedValue(generator = "uuid-gen")
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     private UUID id;
-    @Column(name = "age")
-    private int age;
-    @Column(name = "login", nullable = false)
+    @Column(name = "login", nullable = false, unique = true)
     private String login;
     @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "surname")
     private String surname;
-    @Column(name = "avatar_url")
-    private String avatarUrl;
+    @Column(name = "age")
+    private int age;
     @Column(name = "country")
     private String country;
     @Column(name = "city")
     private String city;
+    @Column(name = "avatar_url")
+    private String avatarUrl;
     @Column(name = "deleted", columnDefinition = "boolean default false", nullable = false)
     private Boolean deleted = false;
 
@@ -56,7 +55,7 @@ public class User {
         this.email = email;
     }
 
-    public User(RegistrationRequest request) {
+    public User(RegistrationDTO request) {
         this.login = request.getLogin();
         this.password = request.getPassword();
         this.email = request.getEmail();

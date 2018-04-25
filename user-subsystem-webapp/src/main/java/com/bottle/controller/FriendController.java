@@ -22,23 +22,20 @@ public class FriendController {
         this.friendService = friendService;
     }
 
-    // TODO: 24.04.2018 why return boolean if this always true?
     @RequestMapping(path = "/add_oneway_relation", method = RequestMethod.POST)
-    public boolean addOneWayRelationship(
+    public void addOneWayRelationship(
             @RequestParam(name = "firstFriendId") UUID firstFriendId,
             @RequestParam(name = "secondFriendId") UUID secondFriendId) {
-        return friendService.addOneWayRelation(firstFriendId, secondFriendId);
+        friendService.addOneWayRelation(firstFriendId, secondFriendId);
     }
 
-    // TODO: 24.04.2018 why return boolean if this always true?
     @RequestMapping(path = "/add_twoway_relation", method = RequestMethod.POST)
-    public boolean addTwoWayRelationship(
+    public void addTwoWayRelationship(
             @RequestParam(name = "firstFriendId") UUID firstFriendId,
             @RequestParam(name = "secondFriendId") UUID secondFriendId) {
-        return friendService.addTwoWayRelation(firstFriendId, secondFriendId);
+        friendService.addTwoWayRelation(firstFriendId, secondFriendId);
     }
 
-    // TODO: 24.04.2018 why return boolean if this always true?
     @RequestMapping(path = "/get_friends_by_userid", method = RequestMethod.POST)
     public Set<UserDTO> getFriendsByUserId(
             @RequestParam(value = "id") UUID userId) {
