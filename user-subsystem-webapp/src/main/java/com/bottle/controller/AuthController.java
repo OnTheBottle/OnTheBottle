@@ -5,12 +5,10 @@ import com.bottle.model.dto.request.RegistrationDTO;
 import com.bottle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
-@Controller
+@RestController
 @RequestMapping(path = "/auth")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthController {
@@ -29,6 +27,8 @@ public class AuthController {
 
     @PostMapping(path = "/registration")
     public boolean addNewUser(RegistrationDTO userDTO) {
+        System.out.println("userDTO: " + userDTO);
+        System.out.println("getLogin: " + userDTO.getLogin());
         return userService.addNewUser(userDTO);
     }
 
