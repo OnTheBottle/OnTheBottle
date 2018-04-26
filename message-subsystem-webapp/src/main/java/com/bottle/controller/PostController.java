@@ -36,8 +36,8 @@ public class PostController {
         this.likeService = likeService;
             }
 
-    @RequestMapping(value = "/getPosts", params = "user_Id", method = RequestMethod.GET)
-    public ResponseEntity<List<Post>> listAllPosts(@RequestParam("user_Id") UUID id) {
+    @RequestMapping(value = "/getPosts", params = "userId", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> listAllPosts(@RequestParam("userId") UUID id) {
         List<Post> posts = postService.getPosts( id );
         if (posts.isEmpty()) {
             return new ResponseEntity<>( HttpStatus.NO_CONTENT );
@@ -61,8 +61,8 @@ public class PostController {
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
-    @RequestMapping(value = "/getUser", params = "user_Id", method = RequestMethod.GET)
-    public ResponseEntity<User> getUser(@RequestParam("user_Id") UUID user_id) {
+    @RequestMapping(value = "/getUser", params = "userId", method = RequestMethod.GET)
+    public ResponseEntity<User> getUser(@RequestParam("userId") UUID user_id) {
         User user = allUserService.getUser( user_id );
         return new ResponseEntity<>( user, HttpStatus.OK );
     }
@@ -113,7 +113,7 @@ public class PostController {
         return new ResponseEntity<>( HttpStatus.OK );
     }
     @RequestMapping(path = "/saveComment", method = RequestMethod.POST)
-    public ResponseEntity<Void> saveComment(@RequestBody CommentDTO commentDTO) {
+    public ResponseEntity<List<Comment>> saveComment(@RequestBody CommentDTO commentDTO) {
         Comment comment = new Comment();
         User user = allUserService.getUser(commentDTO.getUser_id() );
         Post post = postService.getPost( commentDTO.getPost_id() );
@@ -124,11 +124,12 @@ public class PostController {
         comment.setUser( user );
         comment.setIsDeleted( false );
         commentService.addComment( comment );
-        return new ResponseEntity<>( HttpStatus.OK );
+        List<Comment>comments=commentService.getComments( commentDTO.getPost_id() );
+        return new ResponseEntity<>(comments, HttpStatus.OK );
     }
 
-    @RequestMapping(value = "/getComments", params = "post_Id", method = RequestMethod.GET)
-    public ResponseEntity<List<Comment>> listAllComments(@RequestParam("post_Id") UUID postId) {
+    @RequestMapping(value = "/getComments", params = "postId", method = RequestMethod.GET)
+    public ResponseEntity<List<Comment>> listAllComments(@RequestParam("postId") UUID postId) {
         List<Comment> comments = commentService.getComments(postId);
         if (comments.isEmpty()) {
             return new ResponseEntity<>( HttpStatus.NO_CONTENT );
