@@ -26,6 +26,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     List<User> getByAge(int age);
 
+    boolean existsById(UUID id);
+
     User getUserById(UUID id);
 
     User findByEmail(String email);

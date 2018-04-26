@@ -20,6 +20,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public boolean isUserById(UUID id){
+        return userRepository.existsById(id);
+    }
+
     public boolean addNewUser(RegistrationDTO userDTO) {
         try {
             User user = new User(userDTO);
