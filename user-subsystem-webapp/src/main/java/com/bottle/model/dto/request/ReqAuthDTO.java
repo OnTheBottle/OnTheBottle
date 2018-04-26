@@ -2,9 +2,11 @@ package com.bottle.model.dto.request;
 
 import lombok.*;
 
-@Getter
+@Data
 @ToString
-public class AuthDTO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ReqAuthDTO {
     private String login;
     private String password;
 }

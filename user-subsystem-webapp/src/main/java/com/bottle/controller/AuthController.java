@@ -1,10 +1,10 @@
 package com.bottle.controller;
 
-import com.bottle.model.dto.request.AuthDTO;
 import com.bottle.model.dto.request.RegistrationDTO;
+import com.bottle.model.dto.request.ReqAuthDTO;
+import com.bottle.model.dto.response.RespAuthDTO;
 import com.bottle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,8 +21,13 @@ public class AuthController {
     }
 
     @PostMapping(path = "/authorigation")
-    public boolean authUser(AuthDTO authDTO) {
-        return userService.authUser(authDTO);
+    public RespAuthDTO authUser(ReqAuthDTO reqAuthDTO) {
+        System.out.println("request authDTO: " + reqAuthDTO);
+        RespAuthDTO respAuthDTO = new RespAuthDTO();
+        if (userService.isAuth(reqAuthDTO)) {
+            respAuthDTO.setUserId(userService.getIdByLogin(reqAuthDTO.getLogin()));
+        }
+        return respAuthDTO;
     }
 
     @PostMapping(path = "/registration")

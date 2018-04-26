@@ -10,11 +10,12 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-    default boolean checkAuth(String login, String pass) {
-        return existsByLoginAndPasswordAndDeletedFalse(login, pass);
+    default boolean isAuth(String login, String pass) {
+        return existsByLoginIgnoreCaseAndPasswordAndDeletedFalse(login, pass);
     }
 
-    boolean existsByLoginAndPasswordAndDeletedFalse(String login, String pass);
+
+    boolean existsByLoginIgnoreCaseAndPasswordAndDeletedFalse(String login, String pass);
 
     List<User> getByName(String name);
 
@@ -29,6 +30,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     boolean existsById(UUID id);
 
     User getUserById(UUID id);
+
+    @Query("SELECT u.id FROM User u WHERE LOWER(u.login) = LOWER(?1)")
+    String getIdByLogin(String login);
 
     User findByEmail(String email);
 
