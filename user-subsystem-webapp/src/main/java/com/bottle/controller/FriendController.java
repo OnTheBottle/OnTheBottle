@@ -47,6 +47,7 @@ public class FriendController {
     @RequestMapping(path = "/get_friends_by_userid", method = RequestMethod.POST)
     public Set<UserDTO> getFriendsByUserId(
             @RequestParam(value = "id") UUID userId) {
+        System.out.println("req get_friends_by_userid:" + userId);
         if (userService.isUserById(userId)) {
             return friendService.getConfirmedFriends(userId);
         }

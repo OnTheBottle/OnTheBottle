@@ -1,6 +1,6 @@
 package com.bottle.entity;
 
-import com.bottle.model.dto.request.RegistrationDTO;
+import com.bottle.model.dto.request.ReqRegDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,7 +55,7 @@ public class User {
         this.email = email;
     }
 
-    public User(RegistrationDTO request) {
+    public User(ReqRegDTO request) {
         this.login = request.getLogin();
         this.password = request.getPassword();
         this.email = request.getEmail();
