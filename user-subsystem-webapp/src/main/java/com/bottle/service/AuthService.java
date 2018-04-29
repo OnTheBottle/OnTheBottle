@@ -15,6 +15,10 @@ import java.util.Date;
 @Service
 public class AuthService {
 
+    private String secretKeyJWT = "JKKJfkjdfdskjf";
+    private long ttlMillis = 86400000;
+
+
     private UserService userService;
 
     @Autowired
@@ -23,7 +27,7 @@ public class AuthService {
     }
 
     //Sample method to construct a JWT
-    public String createJWT(String id, long ttlMillis) {
+    public String createJWT(String id) {
 
         //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -31,9 +35,8 @@ public class AuthService {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
 
-        String secretKey = "JKKJfkjdfdskjf";
 
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secretKey);
+        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secretKeyJWT);
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
         //Key signingKey = MacProvider.generateKey();
 
@@ -57,11 +60,25 @@ public class AuthService {
         return builder.compact();
     }
 
-    public RespAuthDTO getTokenByLogin(String login){
-        RespAuthDTO respAuthDTO = new RespAuthDTO();
+    public boolean isValidToken(String token) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(secretKeyJWT))
+                    .parseClaimsJws(token).getBody();
+            System.out.println("Token is True");
+            System.out.println("id: " + claims.getId());
+            System.out.println("Expiration: " + claims.getExpiration());
+        }
+        catch (ExpiredJwtException e){
+            System.out.println("Token is False");
+            return false;
+        }
+        return true;
+    }
+
+    public String getTokenByLogin(String login) {
         String id = userService.getIdByLogin(login).toString();
-        String token = createJWT(id,0);
-        respAuthDTO.setToken(token);
-        return respAuthDTO;
+        String token = createJWT(id);
+        return token;
     }
 }

@@ -6,9 +6,15 @@ import com.bottle.model.dto.response.RespAuthDTO;
 import com.bottle.service.AuthService;
 import com.bottle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -25,27 +31,39 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @GetMapping("/forwardWithForwardPrefix")
-    public ModelAndView redirectWithUsingForwardPrefix(ModelMap model) {
-        System.out.println(model);
-        model.addAttribute("attribute", "forwardWithForwardPrefix");
-        return new ModelAndView("forward:/google.com.ua", model);
+    @PostMapping(path = "/verify")
+    public boolean verifyToken(@RequestParam(name = "access_token") String token){
+        return authService.isValidToken(token);
     }
 
-    @PostMapping(path = "/authorigation")
+    @PostMapping(path = "/authorization")
     public RespAuthDTO authUser(ReqAuthDTO userDTO) {
         RespAuthDTO respAuthDTO = new RespAuthDTO();
         if (userService.isAuth(userDTO)) {
-            respAuthDTO = authService.getTokenByLogin(userDTO.getLogin());
+            String token = authService.getTokenByLogin(userDTO.getLogin());
+            respAuthDTO.setToken(token);
+        }
+        return respAuthDTO;
+    }
+
+    @PostMapping(path = "/authorization-test")
+    public RespAuthDTO authUserTest(ReqAuthDTO userDTO, HttpServletResponse response) {
+        RespAuthDTO respAuthDTO = new RespAuthDTO();
+        if (userService.isAuth(userDTO)) {
+            String token = authService.getTokenByLogin(userDTO.getLogin());
+            respAuthDTO.setToken(token);
+            response.addCookie(new Cookie("access_token",token));
         }
         return respAuthDTO;
     }
 
     @PostMapping(path = "/registration")
-    public RespAuthDTO addNewUser(ReqRegDTO userDTO) {
+    public RespAuthDTO addNewUser(ReqRegDTO userDTO, HttpServletResponse response) {
         RespAuthDTO respAuthDTO = new RespAuthDTO();
         if (userService.addNewUser(userDTO)) {
-            respAuthDTO = authService.getTokenByLogin(userDTO.getLogin());
+            String token = authService.getTokenByLogin(userDTO.getLogin());
+            respAuthDTO.setToken(token);
+            response.addCookie(new Cookie("access_token", token ));
         }
         return respAuthDTO;
     }
