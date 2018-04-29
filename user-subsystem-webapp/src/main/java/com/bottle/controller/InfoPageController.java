@@ -32,7 +32,6 @@ public class InfoPageController {
         infoPageResponse.setAge(user.getAge());
 
         System.out.println("TestController: A name of the user is " + infoPageResponse.getName());
-        // TODO: 24.04.2018 why you add this wrapper?
         return infoPageResponse;
     }
 }

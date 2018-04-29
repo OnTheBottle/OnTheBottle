@@ -11,7 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-// TODO: 24.04.2018 I think you understand what is wrong
 public class InfoPageResponse {
     private String name;
     private String surname;
