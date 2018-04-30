@@ -6,11 +6,12 @@ import com.bottle.model.dto.request.InfoPageRequest;
 import com.bottle.model.dto.response.InfoPageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class InfoPageController {
     private UserRepository userRepository;
 

@@ -58,12 +58,11 @@ public class AuthController {
     }
 
     @PostMapping(path = "/registration")
-    public RespAuthDTO addNewUser(ReqRegDTO userDTO, HttpServletResponse response) {
+    public RespAuthDTO addNewUser(ReqRegDTO userDTO) {
         RespAuthDTO respAuthDTO = new RespAuthDTO();
         if (userService.addNewUser(userDTO)) {
             String token = authService.getTokenByLogin(userDTO.getLogin());
             respAuthDTO.setToken(token);
-            response.addCookie(new Cookie("access_token", token ));
         }
         return respAuthDTO;
     }
