@@ -4,8 +4,10 @@ import com.bottle.model.dto.request.AuthDTO;
 import com.bottle.model.dto.request.RegistrationDTO;
 import com.bottle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
@@ -20,7 +22,7 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping(path = "/authorigation")
+    @PostMapping(path = "/authorization")
     public boolean authUser(AuthDTO authDTO) {
         return userService.authUser(authDTO);
     }
