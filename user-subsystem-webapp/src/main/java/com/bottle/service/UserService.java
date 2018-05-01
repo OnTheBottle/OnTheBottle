@@ -2,8 +2,8 @@ package com.bottle.service;
 
 import com.bottle.entity.User;
 import com.bottle.model.dto.UserDTO;
-import com.bottle.model.dto.request.AuthDTO;
-import com.bottle.model.dto.request.RegistrationDTO;
+import com.bottle.model.dto.request.ReqRegDTO;
+import com.bottle.model.dto.request.ReqAuthDTO;
 import com.bottle.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,15 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public boolean addNewUser(RegistrationDTO userDTO) {
+    public boolean isUserById(UUID id) {
+        return userRepository.existsById(id);
+    }
+
+    public UUID getIdByLogin(String login) {
+        return UUID.fromString(userRepository.getIdByLogin(login));
+    }
+
+    public boolean addNewUser(ReqRegDTO userDTO) {
         try {
             User user = new User(userDTO);
             userRepository.save(user);
@@ -30,8 +38,8 @@ public class UserService {
         return true;
     }
 
-    public boolean authUser(AuthDTO authDTO) {
-        return userRepository.checkAuth(authDTO.getLogin(), authDTO.getPassword());
+    public boolean isAuth(ReqAuthDTO authDTO) {
+        return userRepository.isAuth(authDTO.getLogin(), authDTO.getPassword());
     }
 
     public UserDTO getUserById(UUID id) {

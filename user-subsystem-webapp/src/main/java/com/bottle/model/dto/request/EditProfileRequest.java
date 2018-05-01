@@ -1,22 +1,19 @@
-package com.bottle.model.dto.response;
+package com.bottle.model.dto.request;
 
-import com.bottle.model.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class InfoPageResponse {
+public class EditProfileRequest {
+    private UUID id;
     private String name;
     private String surname;
     private int age;
-    private String email;
-    private String country;
-    private String city;
-    private String avatarUrl;
 }
