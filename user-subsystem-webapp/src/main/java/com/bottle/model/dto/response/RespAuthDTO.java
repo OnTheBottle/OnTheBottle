@@ -13,5 +13,4 @@ import java.util.UUID;
 @AllArgsConstructor
 public class RespAuthDTO {
     String token;
-    //UUID userId;
 }
