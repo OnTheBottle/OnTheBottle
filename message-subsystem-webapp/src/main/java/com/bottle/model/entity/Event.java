@@ -25,7 +25,7 @@ public class Event {
     @Column(name = "Title")
     private String title;
 
-    @Column(name = "Text")
+    @Column(name = "Text", columnDefinition = "TEXT")
     private String text;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -49,6 +49,6 @@ public class Event {
     @JoinColumn(name = "user_id")
     private User owner;
 
-    @Column(name = "isActive")
+    @Column(name = "is_active")
     private Boolean isActive;
 }

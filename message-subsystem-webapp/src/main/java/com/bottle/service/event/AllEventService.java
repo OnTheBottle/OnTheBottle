@@ -10,10 +10,7 @@ import com.bottle.service.user.GetterUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AllEventService {
@@ -51,7 +48,8 @@ public class AllEventService {
         } else {
             User user = getterUser.getUser(requestEventDTO.getUserId());
             if ((options.isActiveEvents() && options.isPassedEvents()) || (!options.isActiveEvents() && !options.isPassedEvents())) {
-                return checkPassedEvents(user.getEvents());
+                return checkPassedEvents(new HashSet<>(user.getEvents()));
+                //return checkPassedEvents(user.getEvents());
             } else if (options.isActiveEvents()) {
                 return getterEvent.getActiveFromUser(requestEventDTO.getUserId());
             } else {
