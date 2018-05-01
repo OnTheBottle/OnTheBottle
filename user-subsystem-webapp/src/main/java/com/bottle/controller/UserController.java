@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/get_by_id", method = RequestMethod.POST)
-    public UserDTO addOneWayRelationship(@RequestParam(name = "userId") UUID userId) {
+    public UserDTO getUserById(@RequestParam(name = "userId") UUID userId) {
         return userService.getUserById(userId);
     }
 
