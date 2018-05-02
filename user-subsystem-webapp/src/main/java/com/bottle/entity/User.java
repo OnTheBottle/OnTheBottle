@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+//@EqualsAndHashCode
 @Table(name = "user", schema = "public")
 public class User {
     @Id
