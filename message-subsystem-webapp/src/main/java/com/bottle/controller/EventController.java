@@ -1,6 +1,7 @@
 package com.bottle.controller;
 
 import com.bottle.model.DTO.EventDTO;
+import com.bottle.model.DTO.UserEventDTO;
 import com.bottle.model.DTO.RequestEventDTO;
 import com.bottle.model.DTO.validators.EventValidator;
 import com.bottle.model.entity.Event;
@@ -49,7 +50,19 @@ public class EventController {
     @RequestMapping(path = "/createEvent", method = RequestMethod.POST)
     public ResponseEntity<Void> savePost(@RequestBody EventDTO eventDTO) {
         allEventService.createEvent(eventDTO);
-        return new ResponseEntity<>( HttpStatus.OK );
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/joinEvent", method = RequestMethod.POST)
+    public ResponseEntity<Void> addUserToEvent(@RequestBody UserEventDTO userEventDTO) {
+        allEventService.addUser(userEventDTO.getEventId(), userEventDTO.getUserId());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/leaveEvent", method = RequestMethod.POST)
+    public ResponseEntity<Void> leaveUserEvent(@RequestBody UserEventDTO userEventDTO) {
+        allEventService.deleteUser(userEventDTO.getEventId(), userEventDTO.getUserId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /*
@@ -58,67 +71,6 @@ public class EventController {
     public ResultResponseDTO deleteEvent(IdRequestDTO idRequestDTO) {
         ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
         resultResponseDTO.setResult(allEventService.closeEvent(idRequestDTO.getId()));
-        return resultResponseDTO;
-    }
-
-    @PostMapping(path = "/showInfoEvent")
-    @ResponseBody
-    public EventDTO showInfoEvent(IdRequestDTO idRequestDTO) {
-        EventDTO eventDTO = new EventDTO();
-        Event event = allEventService.getEvent(idRequestDTO.getId());
-
-        eventDTO.setTitle(event.getTitle());
-        eventDTO.setText(event.getText());
-        eventDTO.setStartTime(String.valueOf(event.getStartTime()).replace(' ', 'T'));
-        eventDTO.setEndTime(String.valueOf(event.getEndTime()).replace(' ', 'T'));
-        eventDTO.setPlace(event.getPlace().getId());
-        eventDTO.setOwner(event.getOwner().getId());
-
-        List<UUID> uuids = new ArrayList<>();
-        for (User user : event.getUsers()) {
-            uuids.add(user.getId());
-        }
-        eventDTO.setUsers(uuids);
-
-        return eventDTO;
-    }
-
-    @PostMapping(path = "/createPlace")
-    @ResponseBody
-    public ResultResponseDTO createPlace() {
-        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(String.valueOf(allPlaceService.createPlace().getId()));
-        return resultResponseDTO;
-    }
-
-    @PostMapping(path = "/showAllUsers")
-    @ResponseBody
-    public ListResponseDTO<UUID> showAllUsers() {
-        ListResponseDTO<UUID> listResponseDTO = new ListResponseDTO<>();
-        listResponseDTO.setList(allUserService.getAllUsersId());
-
-        return listResponseDTO;
-    }
-
-    @PostMapping(path = "/addUserToEvent")
-    @ResponseBody
-    public ResultResponseDTO addUserToEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
-        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        UUID idUser = idEventAndUserRequestDTO.getIdUser();
-        UUID idEvent = idEventAndUserRequestDTO.getIdEvent();
-        resultResponseDTO.setResult(allEventService.addUser(idEvent, idUser));
-
-        return resultResponseDTO;
-    }
-
-    @PostMapping(path = "/deleteUserFromEvent")
-    @ResponseBody
-    public ResultResponseDTO deleteUserFromEvent(IdEventAndUserRequestDTO idEventAndUserRequestDTO) {
-        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        UUID idUser = idEventAndUserRequestDTO.getIdUser();
-        UUID idEvent = idEventAndUserRequestDTO.getIdEvent();
-        resultResponseDTO.setResult(allEventService.deleteUser(idEvent, idUser));
-
         return resultResponseDTO;
     }
 
