@@ -7,6 +7,7 @@ import com.bottle.model.entity.User;
 import com.bottle.model.repository.LikeRepository;
 import com.bottle.model.repository.PostRepository;
 import com.bottle.model.repository.UserRepository;
+import com.bottle.service.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,37 +17,21 @@ import java.util.*;
 @RequestMapping(path = "/news")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class NewsController {
-    private final UserSubsystemClient client;
-    private final PostRepository postRepository;
+    private final NewsService newsService;
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public NewsController(UserSubsystemClient client, PostRepository postRepository, LikeRepository likeRepository, UserRepository userRepository) {
-        this.client = client;
-        this.postRepository = postRepository;
+    public NewsController(NewsService newsService, LikeRepository likeRepository, UserRepository userRepository) {
+        this.newsService = newsService;
         this.likeRepository = likeRepository;
         this.userRepository = userRepository;
     }
 
     @RequestMapping(path = "/get_friends_posts", method = RequestMethod.POST)
     public List<List> getFriendsPosts(@RequestParam(name = "id") UUID userId) {
-        System.out.println("request id: " + userId);
-        List<Map> friends = client.getFriends(userId);
-        System.out.println("friends: " + friends);
-        List<Post> posts = new ArrayList<>();
-        for (Map<String, String> friend : friends) {
-            UUID friendId = UUID.fromString(friend.get("id"));
-            posts.addAll(postRepository.findAllByUserId(friendId));
-        }
-        List<List> resp = new ArrayList<List>() {{
-            add(friends);
-            add(posts);
-        }};
-        System.out.println("All resp data: \n" + resp);
-        return resp;
+        return newsService.getFriendsPosts(userId);
     }
-
 
     @GetMapping(path = "/printrequest")
     public void getAllParams(@RequestParam Map<String, String> allRequestParams) {

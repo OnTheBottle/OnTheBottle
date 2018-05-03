@@ -41,7 +41,6 @@ public class Post {
     @JsonFormat(pattern = "MM-yyyy-dd HH:mm:ss")
     private Date date = new Date();
 
-
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "post")
