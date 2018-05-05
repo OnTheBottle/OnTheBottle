@@ -13,27 +13,17 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @Setter
-@Table(name = "FAVORITE_POSTS")
-public class FavoritePost {
-    private UUID favoriteId;
+@Table(name = "LIKE_POSTS")
+public class LikeNews {
+    private UUID likeId;
     private UUID postId;
     private UUID userId;
     private Date date;
 
     @Id
-    @Column(name = "FAVORITE_ID")
-    public UUID getFavoriteId() {
-        return favoriteId;
-    }
-
-    @Column(name = "DATE")
-    public Date getDate() {
-        return date;
-    }
-
-    @Column(name = "USER_ID")
-    public UUID getUserId() {
-        return userId;
+    @Column(name = "LIKE_ID")
+    public UUID getLikeId() {
+        return likeId;
     }
 
     @Column(name = "POST_ID")
@@ -41,14 +31,23 @@ public class FavoritePost {
         return postId;
     }
 
+    @Column(name = "USER_ID")
+    public UUID getUserId() {
+        return userId;
+    }
+
+    @Column(name = "DATE")
+    public Date getDate() {
+        return date;
+    }
+
     @Override
     public String toString() {
-        return "FavoritePost{" +
-                "favoriteId=" + favoriteId +
+        return "LikeNews{" +
+                "likeId=" + likeId +
                 ", postId=" + postId +
                 ", userId=" + userId +
                 ", date=" + date +
                 '}';
     }
 }
-

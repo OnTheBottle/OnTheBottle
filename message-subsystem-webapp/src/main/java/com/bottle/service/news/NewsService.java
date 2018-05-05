@@ -2,6 +2,8 @@ package com.bottle.service.news;
 
 import com.bottle.client.UserSubsystemClient;
 import com.bottle.model.entity.Post;
+import com.bottle.model.repository.FavoriteNewsRepository;
+import com.bottle.model.repository.LikeRepository;
 import com.bottle.model.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,15 @@ public class NewsService {
 
     private UserSubsystemClient client;
     private PostRepository postRepository;
+    private FavoriteNewsRepository favoriteRepository;
+    private LikeRepository likeRepository;
 
     @Autowired
-    public NewsService(UserSubsystemClient client, PostRepository postRepository) {
+    public NewsService(UserSubsystemClient client, PostRepository postRepository, FavoriteNewsRepository favoriteRepository, LikeRepository likeRepository) {
         this.client = client;
         this.postRepository = postRepository;
+        this.favoriteRepository = favoriteRepository;
+        this.likeRepository = likeRepository;
     }
 
     public List getFriendsPosts(UUID userId){
@@ -30,7 +36,8 @@ public class NewsService {
         List<Post> posts = new ArrayList<>();
         for (Map<String, String> friend : friends) {
             UUID friendId = UUID.fromString(friend.get("id"));
-            posts.addAll(postRepository.findAllByUserId(friendId));
+            int securityLevel = 2; // 1 - view All, 2 - view only Friends, 3 - view only Owner
+            posts.addAll(postRepository.findAllByIsDeletedIsFalseAndUserIdAndSecurityIdLessThan(friendId, securityLevel + 1));
         }
         List<List> resp = new ArrayList<List>() {{
             add(friends);

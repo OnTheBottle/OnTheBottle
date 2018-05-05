@@ -16,5 +16,6 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
 
 //    List<Post> getPostByAuthorId(UUID id);
     List<Post> findAllByIsDeletedIsFalseAndUserId(UUID user_id);
+    List<Post> findAllByIsDeletedIsFalseAndUserIdAndSecurityIdLessThan(UUID user_id, int securityLevel);
     List<Post> findFirst10ByUserIdOrderByDateDesc(UUID user_id);
 }

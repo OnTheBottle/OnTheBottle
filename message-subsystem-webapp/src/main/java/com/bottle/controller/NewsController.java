@@ -1,11 +1,6 @@
 package com.bottle.controller;
 
-import com.bottle.client.UserSubsystemClient;
-import com.bottle.model.entity.Like;
-import com.bottle.model.entity.Post;
-import com.bottle.model.entity.User;
 import com.bottle.model.repository.LikeRepository;
-import com.bottle.model.repository.PostRepository;
 import com.bottle.model.repository.UserRepository;
 import com.bottle.service.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +24,7 @@ public class NewsController {
     }
 
     @RequestMapping(path = "/get_friends_posts", method = RequestMethod.POST)
-    public List<List> getFriendsPosts(@RequestParam(name = "id") UUID userId) {
+    public List getFriendsPosts(@RequestParam(name = "id") UUID userId) {
         return newsService.getFriendsPosts(userId);
     }
 

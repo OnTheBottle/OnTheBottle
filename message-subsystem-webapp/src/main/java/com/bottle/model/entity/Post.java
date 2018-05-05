@@ -67,5 +67,5 @@ public class Post {
 
     @OneToMany
     @JoinColumn(name = "POST_ID")
-    private Set<FavoritePost> favorites;
+    private Set<FavoriteNews> favorites;
 }
