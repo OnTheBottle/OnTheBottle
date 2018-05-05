@@ -31,8 +31,14 @@ public class InfoPageController {
         infoPageResponse.setName(user.getName());
         infoPageResponse.setSurname(user.getSurname());
         infoPageResponse.setAge(user.getAge());
+        infoPageResponse.setEmail(user.getEmail());
+        infoPageResponse.setCountry((user.getCountry()));
+        infoPageResponse.setCity(user.getCity());
+        infoPageResponse.setAvatarUrl(user.getAvatarUrl());
+        infoPageResponse.setStatus(user.getStatus());
 
         System.out.println("TestController: A name of the user is " + infoPageResponse.getName());
+
         return infoPageResponse;
     }
 }
