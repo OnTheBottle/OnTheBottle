@@ -66,4 +66,6 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private Set<Event> ownerEvents = new HashSet<>();
+
+
 }

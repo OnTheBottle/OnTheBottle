@@ -65,7 +65,7 @@ public class Post {
             mappedBy = "post")
     private Set<Like> likes;
 
-    @OneToMany
-    @JoinColumn(name = "POST_ID")
-    private Set<FavoriteNews> favorites;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "FavoriteNews", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
+    private Set<User> favoriteUsers;
 }

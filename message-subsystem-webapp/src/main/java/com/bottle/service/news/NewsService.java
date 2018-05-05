@@ -2,7 +2,6 @@ package com.bottle.service.news;
 
 import com.bottle.client.UserSubsystemClient;
 import com.bottle.model.entity.Post;
-import com.bottle.model.repository.FavoriteNewsRepository;
 import com.bottle.model.repository.LikeRepository;
 import com.bottle.model.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +17,12 @@ public class NewsService {
 
     private UserSubsystemClient client;
     private PostRepository postRepository;
-    private FavoriteNewsRepository favoriteRepository;
     private LikeRepository likeRepository;
 
     @Autowired
-    public NewsService(UserSubsystemClient client, PostRepository postRepository, FavoriteNewsRepository favoriteRepository, LikeRepository likeRepository) {
+    public NewsService(UserSubsystemClient client, PostRepository postRepository, LikeRepository likeRepository) {
         this.client = client;
         this.postRepository = postRepository;
-        this.favoriteRepository = favoriteRepository;
         this.likeRepository = likeRepository;
     }
 
