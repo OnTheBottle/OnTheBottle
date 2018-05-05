@@ -19,4 +19,5 @@ public class InfoPageResponse {
     private String country;
     private String city;
     private String avatarUrl;
+    private String status;
 }
