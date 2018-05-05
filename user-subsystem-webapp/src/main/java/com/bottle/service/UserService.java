@@ -25,12 +25,15 @@ public class UserService {
     }
 
     public UUID getIdByLogin(String login) {
+        //System.out.println("getIdByLogin login: " + login);
         return UUID.fromString(userRepository.getIdByLogin(login));
     }
 
     public boolean addNewUser(ReqRegDTO userDTO) {
         try {
             User user = new User(userDTO);
+            user.setLogin(userDTO.getLogin().toLowerCase());
+            user.setEmail(userDTO.getEmail().toLowerCase());
             userRepository.save(user);
         } catch (Exception e) {
             return false;

@@ -43,6 +43,10 @@ public class User {
     private String avatarUrl;
     @Column(name = "deleted", columnDefinition = "boolean default false", nullable = false)
     private Boolean deleted = false;
+    @Column (name = "status")
+    private String status;
+    @Column(name = "info")
+    private String info;
 
     //@ManyToMany(cascade = CascadeType.ALL)
     @ManyToMany(fetch = FetchType.LAZY)
