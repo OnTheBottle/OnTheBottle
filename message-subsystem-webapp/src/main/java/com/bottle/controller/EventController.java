@@ -65,6 +65,12 @@ public class EventController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/updateEvent", method = RequestMethod.POST)
+    public ResponseEntity<Void> updateEvent(@RequestBody EventDTO eventDTO) {
+        allEventService.updateEvent(eventDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     /*
     @PostMapping(path = "/closeEvent")
     @ResponseBody

@@ -58,6 +58,10 @@ public class AllEventService {
         }
     }
 
+    public void updateEvent(EventDTO eventDTO) {
+        registrationEvent.updateEvent(eventDTO);
+    }
+
     public String closeEvent(UUID id) {
         return closeEvent.closeEvent(id);
     }
@@ -70,8 +74,8 @@ public class AllEventService {
         entityBinder.addUserToEvent(idEvent, idUser);
     }
 
-    public String deleteUser(UUID idEvent, UUID idUser) {
-        return entityBinder.deleteUserFromEvent(idEvent, idUser);
+    public void deleteUser(UUID idEvent, UUID idUser) {
+        entityBinder.deleteUserFromEvent(idEvent, idUser);
     }
 
     private Set<Event> checkPassedEvents(Set<Event> events) {

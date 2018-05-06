@@ -12,17 +12,27 @@ import java.util.TimeZone;
 @Service
 public class BuildEvent {
     public Event build(EventDTO eventDTO) {
+        Event event = new Event();
+        event = setInfo(eventDTO, event);
+        event.setIsActive(true);
+
+        return event;
+    }
+
+    public Event build(EventDTO eventDTO, Event event) {
+        return setInfo(eventDTO, event);
+    }
+
+    private Event setInfo(EventDTO eventDTO, Event event) {
         String title = eventDTO.getTitle();
         String text = eventDTO.getText();
         Date startTime = formatDate(eventDTO.getStartTime());
         Date endTime = formatDate(eventDTO.getEndTime());
 
-        Event event = new Event();
         event.setTitle(title);
         event.setText(text);
         event.setStartTime(startTime);
         event.setEndTime(endTime);
-        event.setIsActive(true);
 
         return event;
     }

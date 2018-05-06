@@ -35,18 +35,14 @@ public class EntityBinder {
         eventRepository.save(event);
     }
 
-    public String deleteUserFromEvent(UUID idEvent, UUID idUser) {
+    public void deleteUserFromEvent(UUID idEvent, UUID idUser) {
         Event event = eventRepository.getOne(idEvent);
         User user = userRepository.getOne(idUser);
 
-        if (user.equals(event.getOwner())) {
-            return "Can't delete owner";
+        if (!user.equals(event.getOwner())) {
+            event.getUsers().remove(user);
+            user.getEvents().remove(event);
+            eventRepository.save(event);
         }
-
-        event.getUsers().remove(user);
-        user.getEvents().remove(event);
-        eventRepository.save(event);
-
-        return "complete";
     }
 }
