@@ -24,25 +24,27 @@ public class PostController {
     private ImageService imageService;
     private CommentService commentService;
     private LikeService likeService;
+    private GetterPost getterPost;
 
 
     @Autowired
-    public PostController(PostService postService, AllUserService allUserService, SecurityService securityService, ImageService imageService, CommentService commentService, LikeService likeService) {
+    public PostController(PostService postService, AllUserService allUserService, SecurityService securityService, ImageService imageService, CommentService commentService, LikeService likeService, GetterPost getterPost) {
         this.postService = postService;
         this.allUserService = allUserService;
         this.securityService = securityService;
         this.imageService = imageService;
         this.commentService = commentService;
         this.likeService = likeService;
-            }
+        this.getterPost = getterPost;
+    }
 
     @RequestMapping(value = "/getPosts", params = "userId", method = RequestMethod.GET)
     public ResponseEntity<List<Post>> listAllPosts(@RequestParam("userId") UUID id) {
-        List<Post> posts = postService.getPosts( id );
-        if (posts.isEmpty()) {
-            return new ResponseEntity<>( HttpStatus.NO_CONTENT );
-        }
-        return new ResponseEntity<>( posts, HttpStatus.OK );
+        List<Post> posts = getterPost.getPosts( id );
+
+            return new ResponseEntity<>( posts, HttpStatus.OK );
+
+
     }
 
     @RequestMapping(path = "/savePost", method = RequestMethod.POST)
@@ -61,11 +63,7 @@ public class PostController {
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
-    @RequestMapping(value = "/getUser", params = "userId", method = RequestMethod.GET)
-    public ResponseEntity<User> getUser(@RequestParam("userId") UUID user_id) {
-        User user = allUserService.getUser( user_id );
-        return new ResponseEntity<>( user, HttpStatus.OK );
-    }
+
 
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
@@ -112,25 +110,26 @@ public class PostController {
         postService.addPost( post );
         return new ResponseEntity<>( HttpStatus.OK );
     }
+
     @RequestMapping(path = "/saveComment", method = RequestMethod.POST)
     public ResponseEntity<List<Comment>> saveComment(@RequestBody CommentDTO commentDTO) {
         Comment comment = new Comment();
-        User user = allUserService.getUser(commentDTO.getUser_id() );
+        User user = allUserService.getUser( commentDTO.getUser_id() );
         Post post = postService.getPost( commentDTO.getPost_id() );
         if (comment.getDate() == null)
             comment.setDate( new Date() );
-        comment.setText(commentDTO.getComment());
-        comment.setPost( post);
+        comment.setText( commentDTO.getComment() );
+        comment.setPost( post );
         comment.setUser( user );
         comment.setIsDeleted( false );
         commentService.addComment( comment );
-        List<Comment>comments=commentService.getComments( commentDTO.getPost_id() );
-        return new ResponseEntity<>(comments, HttpStatus.OK );
+        List<Comment> comments = commentService.getComments( commentDTO.getPost_id() );
+        return new ResponseEntity<>( comments, HttpStatus.OK );
     }
 
     @RequestMapping(value = "/getComments", params = "postId", method = RequestMethod.GET)
     public ResponseEntity<List<Comment>> listAllComments(@RequestParam("postId") UUID postId) {
-        List<Comment> comments = commentService.getComments(postId);
+        List<Comment> comments = commentService.getComments( postId );
         if (comments.isEmpty()) {
             return new ResponseEntity<>( HttpStatus.NO_CONTENT );
         }
@@ -139,24 +138,16 @@ public class PostController {
 
     @RequestMapping(value = "/deleteComment", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteComment(@RequestParam("id") UUID commentId) {
-        Comment comment = commentService.getCommentById(commentId);
+        Comment comment = commentService.getCommentById( commentId );
         if (comment == null) {
             return new ResponseEntity<>( HttpStatus.NOT_FOUND );
         }
         comment.setIsDeleted( true );
-        commentService.addComment(comment);
+        commentService.addComment( comment );
         return new ResponseEntity<>( HttpStatus.NO_CONTENT );
     }
-    @RequestMapping(path = "/addUser", method = RequestMethod.POST)
-    public ResponseEntity<Void> saveUser(@RequestBody UserDTO userDTO) {
-        User user = new User();
-        user.setName( userDTO.getName() );
-        user.setSurname( userDTO.getSurname() );
-        allUserService.createUser( user );
-        return new ResponseEntity<>( HttpStatus.OK );
-    }
 
-    @RequestMapping(path = "/addLike", method=RequestMethod.POST)
+    @RequestMapping(path = "/addLike", method = RequestMethod.POST)
     public ResponseEntity<Void> addLike(@RequestBody LikeDTO likeDTO) {
         Post post = postService.getPost( likeDTO.getPost_id() );
         User user = allUserService.getUser( likeDTO.getUser_id() );

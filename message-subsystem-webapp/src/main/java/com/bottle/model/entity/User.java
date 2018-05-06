@@ -21,19 +21,8 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
     @Id
-    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
-    @GeneratedValue(generator = "uuid-gen")
     @Column(name = "user_id")
     private UUID id;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "surname")
-    private String surname;
-
-    @Column(name = "avatarUrl")
-    private String avatarUrl;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,

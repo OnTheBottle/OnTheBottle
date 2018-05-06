@@ -18,13 +18,11 @@ public class GetterUser {
     }
 
     public User getUser(UUID id) {
-        if (userRepository.exists(id)) {
-            return userRepository.getOne(id);
+        if (userRepository.exists( id )) {
+            return userRepository.getOne( id );
         } else {
-            String name = "NotUser";
-            String surname = "NotUser";
-            String avatar = "";
-            return createUser(id, name, surname, avatar); //TODO: добавить поля из запроса
+
+            return createUser( id); //TODO: добавить поля из запроса
         }
     }
 
@@ -33,16 +31,13 @@ public class GetterUser {
     }
 
     public void saveUser(User user) {
-        userRepository.save(user);
+        userRepository.save( user );
     }
 
-    private User createUser(UUID id, String name, String surname, String avatar) {
+    private User createUser(UUID id) {
         User user = new User();
-        user.setId(id);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setAvatarUrl(avatar);
-        userRepository.save(user);
+        user.setId( id );
+        userRepository.save( user );
         return user;
     }
 }
