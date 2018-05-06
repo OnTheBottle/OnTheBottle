@@ -22,7 +22,7 @@ public class LikeNewsService {
     }
 
     public boolean changeState(UUID postId, UUID userId) {
-        User user = userRepository.findById(userId);
+        User user = userRepository.findOne(userId);
         Post post = postRepository.getById(postId);
         boolean isExist = postRepository.existsByIdAndLikeUsersContaining(postId, user);
         if (isExist) {
