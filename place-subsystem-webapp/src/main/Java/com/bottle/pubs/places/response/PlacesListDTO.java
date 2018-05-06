@@ -15,4 +15,3 @@ import java.util.List;
 public class PlacesListDTO {
     private List<Place> places;
 }
-//_

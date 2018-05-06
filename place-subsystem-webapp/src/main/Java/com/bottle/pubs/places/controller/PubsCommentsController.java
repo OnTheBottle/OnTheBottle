@@ -63,11 +63,10 @@ public class PubsCommentsController {
     public AddCommentsResponse getPubs(AddCommentsRequest request) {
         AddCommentsResponse response = new AddCommentsResponse();
         Comment newComment = new Comment();
-        newComment.setCommenttext(request.getComment_text());
-        newComment.setUserid(request.getUser_id());
-        Place place =pubsRepository.findOne(request.getPlace_id());
+        newComment.setCommentText(request.getCommentText());
+        newComment.setUserId(request.getUserId());
         // TODO: 24.04.2018 mb better newComment.setPlace(pubsRepository.findOne(request.getPlace_id()));
-        newComment.setPlace(place);
+        newComment.setPlace(pubsRepository.findOne(request.getPlaceId()));
         Comment dbResult = pubsCommentsRepository.save(newComment);
         response.setResult(dbResult != null);
         return response;

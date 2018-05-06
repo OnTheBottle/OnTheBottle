@@ -26,19 +26,19 @@ public class Place {
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid")
     @GeneratedValue(generator = "uuid-gen")
-    @Column(name = "place_id")
-    private UUID placeid;
+    @Column(name = "placeId")
+    private UUID placeId;
 
-    @Column(name = "place_name")
+    @Column(name = "placeName")
     private String name;
 
-    @Column(name = "place_type")
+    @Column(name = "placeType")
     private String type;
 
-    @Column(name = "place_work_time")
+    @Column(name = "placeWorkTime")
     private String workTime;
 
-    @Column(name = "place_avatar_url")
+    @Column(name = "placeAvatarUrl")
     private String avatarUrl;
 
     @JsonIgnore

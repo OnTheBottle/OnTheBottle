@@ -23,17 +23,17 @@ public class Comment {
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid")
     @GeneratedValue(generator = "uuid-gen")
-    @Column(name = "commend_id")
-    private UUID commentid;
-    @Column(name = "user_id")
-    private UUID userid;
-    @Column(name = "comment_time")
-    private Instant commenttime;
-    @Column(name = "comment_text")
-    private String commenttext;
+    @Column(name = "commendId")
+    private UUID commentId;
+    @Column(name = "userId")
+    private UUID userId;
+    @Column(name = "commentTime")
+    private Instant commentTime;
+    @Column(name = "commentText")
+    private String commentText;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "place_id")
+    @JoinColumn(name = "placeId")
     private Place place;
 }
 

@@ -12,8 +12,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AddCommentsRequest {
     // TODO: 24.04.2018 wtf?Use camelCase
-    private UUID user_id;
-    private UUID place_id;
-    private String comment_text;
+    private UUID userId;
+    private UUID placeId;
+    private String commentText;
     private float rating;
 }
