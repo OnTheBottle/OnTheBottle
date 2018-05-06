@@ -1,9 +1,12 @@
 package com.bottle.controller;
 
+
 import com.bottle.model.dto.UserDTO;
 import com.bottle.service.UserService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -12,7 +15,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "/user")
 @NoArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*")
 public class UserController {
     private UserService userService;
 
@@ -31,5 +34,5 @@ public class UserController {
     public Set<UserDTO> getUsers() {
         return userService.getUsers();
     }
-}
 
+}
