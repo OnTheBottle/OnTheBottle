@@ -21,5 +21,6 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
 
     Post getById(UUID postId);
     boolean existsByIdAndFavoriteUsersContaining(UUID postId, User user);
+    boolean existsByIdAndLikeUsersContaining(UUID postId, User user);
 
 }

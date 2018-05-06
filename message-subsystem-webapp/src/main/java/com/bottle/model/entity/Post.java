@@ -68,4 +68,8 @@ public class Post {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "FavoriteNews", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
     private Set<User> favoriteUsers;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "LikeNews", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
+    private Set<User> likeUsers;
 }
