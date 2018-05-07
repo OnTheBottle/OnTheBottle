@@ -39,10 +39,12 @@ public class EntityBinder {
         Event event = eventRepository.getOne(idEvent);
         User user = userRepository.getOne(idUser);
 
-        if (!user.equals(event.getOwner())) {
-            event.getUsers().remove(user);
-            user.getEvents().remove(event);
-            eventRepository.save(event);
+        event.getUsers().remove(user);
+        user.getEvents().remove(event);
+        if (user.equals(event.getOwner())) {
+            event.setIsActive(false);
         }
+
+        eventRepository.save(event);
     }
 }
