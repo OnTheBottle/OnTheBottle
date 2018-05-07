@@ -36,9 +36,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("SELECT u.id FROM User u WHERE LOWER(u.login) = LOWER(?1)")
     String getIdByLogin(String login);
 
-    User findByEmail(String email);
-
-    User findByLogin(String login);
+    Set<User> getAllByFriendsContaining(User user);
 
     Set<User> getAllByDeletedFalse();
 

@@ -17,4 +17,5 @@ public class UserDTO {
     private String city;
     private String country;
     private List<UUID> friendsId;
+    private String friendStatus;
 }

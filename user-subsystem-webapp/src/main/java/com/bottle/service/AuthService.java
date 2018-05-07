@@ -16,8 +16,8 @@ import java.util.UUID;
 @Service
 public class AuthService {
 
-    private String secretKeyJWT = "JKKJfkjdfdskjf";
-    private long ttlMillis = 86400000;
+    private static final String secretKeyJWT = "JKKJfkjdfdskjf";
+    private static final long ttlMillis = 86400000;
 
 
     private UserService userService;
@@ -66,4 +66,13 @@ public class AuthService {
         String userId = userService.getIdByLogin(login).toString();
         return createJWT(userId);
     }
+
+    public UUID getAuthId(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary(secretKeyJWT))
+                .parseClaimsJws(token).getBody();
+        System.out.println("claims.get: " + claims.get("userId"));
+        return UUID.fromString(claims.get("userId").toString());
+    }
+
 }

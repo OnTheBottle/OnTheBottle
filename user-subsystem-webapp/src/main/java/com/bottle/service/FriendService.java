@@ -27,6 +27,18 @@ public class FriendService {
         this.userService = userService;
     }
 
+    public void removeRelationship(UUID firstId, UUID secondId) {
+        removeOneWayRelation(firstId, secondId);
+        removeOneWayRelation(secondId, firstId);
+    }
+
+    private void removeOneWayRelation(UUID firstId, UUID secondId) {
+        User firstUser = userRepository.getUserById(firstId);
+        User secondUser = userRepository.getUserById(secondId);
+        firstUser.getFriends().remove(secondUser);
+        userRepository.save(firstUser);
+    }
+
     public void addTwoWayRelation(UUID firstId, UUID secondId) {
         addOneWayRelation(firstId, secondId);
         addOneWayRelation(secondId, firstId);
@@ -40,7 +52,7 @@ public class FriendService {
     }
 
     public Set<UserDTO> getConfirmedFriends(UUID id) {
-        System.out.println("user ID: " + id);
+        String friendStatus = "confirmed";
         User user = userRepository.getUserById(id);
         Set<User> friends = user.getFriends();
         Set<User> confirmedFriends = new HashSet<>();
@@ -50,7 +62,16 @@ public class FriendService {
                 confirmedFriends.add(friend);
             }
         }
-        return userService.getUsersDTO(confirmedFriends);
+        return userService.getUsersDTO(confirmedFriends, friendStatus);
+    }
+
+    public Set<UserDTO> getNotConfirmedFriends(UUID id) {
+        String friendStatus = "notConfirmed";
+        User user = userRepository.getUserById(id);
+        Set<User> userFriends = user.getFriends();
+        Set<User> maybeFriends = userRepository.getAllByFriendsContaining(user);
+        maybeFriends.removeAll(userFriends);
+        return userService.getUsersDTO(maybeFriends, friendStatus);
     }
 }
 
