@@ -62,8 +62,8 @@ public class AllEventService {
         registrationEvent.updateEvent(eventDTO);
     }
 
-    public String closeEvent(UUID id) {
-        return closeEvent.closeEvent(id);
+    public void closeEvent(UUID id) {
+        closeEvent.closeEvent(id);
     }
 
     public Event getEvent(UUID id) {

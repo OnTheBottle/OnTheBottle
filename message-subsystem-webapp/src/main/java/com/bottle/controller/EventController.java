@@ -71,15 +71,13 @@ public class EventController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /*
-    @PostMapping(path = "/closeEvent")
-    @ResponseBody
-    public ResultResponseDTO deleteEvent(IdRequestDTO idRequestDTO) {
-        ResultResponseDTO resultResponseDTO = new ResultResponseDTO();
-        resultResponseDTO.setResult(allEventService.closeEvent(idRequestDTO.getId()));
-        return resultResponseDTO;
+    @RequestMapping(path = "/closeEvent", method = RequestMethod.POST)
+    public ResponseEntity<Void> closeEvent(@RequestBody EventDTO eventDTO) {
+        allEventService.closeEvent(eventDTO.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /*
     @PostMapping(path = "/showEventsFromUser")
     @ResponseBody
     public EventsResponseDTO showEventsFromUser(IdRequestDTO idRequestDTO) {
