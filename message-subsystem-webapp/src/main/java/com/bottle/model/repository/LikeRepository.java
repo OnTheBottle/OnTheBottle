@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -15,5 +16,7 @@ public interface LikeRepository extends CrudRepository<Like, UUID> {
     HashSet<Like> findByPost_Id(UUID post_id);
 
     @Transactional
-    Iterable<Like> findAllByPost_Id(UUID post_id);
+    List<Like> findAllByPost_Id(UUID post_id);
+
+
 }
