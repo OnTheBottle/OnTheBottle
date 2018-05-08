@@ -70,8 +70,8 @@ public class AllEventService {
         return getterEvent.getEvent(id);
     }
 
-    public void addUser(UUID idEvent, UUID idUser) {
-        entityBinder.addUserToEvent(idEvent, idUser);
+    public String addUser(UUID idEvent, UUID idUser) {
+        return entityBinder.addUserToEvent(idEvent, idUser);
     }
 
     public void deleteUser(UUID idEvent, UUID idUser) {

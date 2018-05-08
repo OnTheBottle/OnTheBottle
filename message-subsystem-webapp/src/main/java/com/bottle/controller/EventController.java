@@ -55,8 +55,14 @@ public class EventController {
 
     @RequestMapping(path = "/joinEvent", method = RequestMethod.POST)
     public ResponseEntity<Void> addUserToEvent(@RequestBody UserEventDTO userEventDTO) {
-        allEventService.addUser(userEventDTO.getEventId(), userEventDTO.getUserId());
-        return new ResponseEntity<>(HttpStatus.OK);
+        String result = allEventService.addUser(userEventDTO.getEventId(), userEventDTO.getUserId());
+
+        ResponseEntity<Void> response = new ResponseEntity<>(HttpStatus.OK);
+        if (result.equals("Closed")) {
+            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return response;
     }
 
     @RequestMapping(path = "/leaveEvent", method = RequestMethod.POST)
