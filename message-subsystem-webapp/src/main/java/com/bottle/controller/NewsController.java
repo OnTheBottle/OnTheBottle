@@ -42,10 +42,4 @@ public class NewsController {
         }
         return newsService.getUserPosts(userId, token);
     }
-
-    @GetMapping(path = "/printrequest")
-    public void getAllParams(@RequestParam Map<String, String> allRequestParams) {
-        System.out.println(allRequestParams);
-    }
-
 }

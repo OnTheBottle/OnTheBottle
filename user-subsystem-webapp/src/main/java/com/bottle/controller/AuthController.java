@@ -1,5 +1,6 @@
 package com.bottle.controller;
 
+import com.bottle.client.MessageSubsystemClient;
 import com.bottle.model.dto.request.ReqRegDTO;
 import com.bottle.model.dto.request.ReqAuthDTO;
 import com.bottle.model.dto.response.RespAuthDTO;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 
 @RestController
@@ -24,11 +26,13 @@ public class AuthController {
 
     private UserService userService;
     private AuthService authService;
+    private MessageSubsystemClient client;
 
     @Autowired
-    public AuthController(UserService userService, AuthService authService) {
+    public AuthController(UserService userService, AuthService authService, MessageSubsystemClient client) {
         this.userService = userService;
         this.authService = authService;
+        this.client = client;
     }
 
     @PostMapping(path = "/verify")
@@ -42,6 +46,7 @@ public class AuthController {
         if (userService.isAuth(userDTO)) {
             String token = authService.getTokenByLogin(userDTO.getLogin());
             respAuthDTO.setToken(token);
+            client.addUser(token);
         }
         return respAuthDTO;
     }
@@ -53,6 +58,7 @@ public class AuthController {
             String token = authService.getTokenByLogin(userDTO.getLogin());
             respAuthDTO.setToken(token);
             response.addCookie(new Cookie("access_token",token));
+            client.addUser(token);
         }
         return respAuthDTO;
     }
@@ -63,6 +69,7 @@ public class AuthController {
         if (userService.addNewUser(userDTO)) {
             String token = authService.getTokenByLogin(userDTO.getLogin());
             respAuthDTO.setToken(token);
+            client.addUser(token);
         }
         return respAuthDTO;
     }

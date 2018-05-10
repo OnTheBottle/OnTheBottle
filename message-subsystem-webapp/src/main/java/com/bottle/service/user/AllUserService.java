@@ -2,6 +2,7 @@ package com.bottle.service.user;
 
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.User;
+import com.bottle.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,17 @@ public class AllUserService {
         }
 
         return allEvents;
+    }
+
+    //added by Alexander.Cherba
+    public void addUserById(UUID id) {
+        User user = new User();
+        user.setId(id);
+        System.out.println("New User: " + user);
+        getterUser.saveUser(user);
+    }
+
+    public boolean isExistUserById(UUID id){
+        return getterUser.isExistUserById(id);
     }
 }

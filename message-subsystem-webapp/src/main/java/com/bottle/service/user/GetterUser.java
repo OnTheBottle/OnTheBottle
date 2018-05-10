@@ -18,11 +18,11 @@ public class GetterUser {
     }
 
     public User getUser(UUID id) {
-        if (userRepository.exists( id )) {
-            return userRepository.getOne( id );
+        if (userRepository.exists(id)) {
+            return userRepository.getOne(id);
         } else {
 
-            return createUser( id); //TODO: добавить поля из запроса
+            return createUser(id); //TODO: добавить поля из запроса
         }
     }
 
@@ -31,13 +31,17 @@ public class GetterUser {
     }
 
     public void saveUser(User user) {
-        userRepository.save( user );
+        userRepository.save(user);
+    }
+
+    public boolean isExistUserById(UUID id) {
+        return userRepository.exists(id);
     }
 
     private User createUser(UUID id) {
         User user = new User();
-        user.setId( id );
-        userRepository.save( user );
+        user.setId(id);
+        userRepository.save(user);
         return user;
     }
 }
