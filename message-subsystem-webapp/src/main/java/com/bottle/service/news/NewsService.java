@@ -26,10 +26,8 @@ public class NewsService {
         this.likeRepository = likeRepository;
     }
 
-    public List getFriendsPosts(UUID userId) {
-        System.out.println("getFriendsPosts get id: " + userId);
-        List<Map> friends = client.getFriends(userId);
-        System.out.println("getFriendsPosts get friends: " + friends);
+    public List getFriendsPosts(UUID userId, String token) {
+        List<Map> friends = client.getFriends(userId, token);
         List<Post> posts = new ArrayList<>();
         for (Map<String, String> friend : friends) {
             UUID friendId = UUID.fromString(friend.get("id"));
@@ -44,22 +42,22 @@ public class NewsService {
         return resp;
     }
 
-    public List getUserPosts(UUID authId, UUID userId) {
-        List<Map> friends = client.getFriends(authId);
-        int securityLevel = 1;
+    public List getUserPosts(UUID userId, String token) {
+        List<Map> friends = new ArrayList<>();
         List<Post> posts = new ArrayList<>();
-        for (Map<String, String> friend : friends) {
-            UUID friendId = UUID.fromString(friend.get("id"));
-            if (friendId == userId) {
-                securityLevel = 2;
-                break;
-            }
-        }
+        friends.add(client.getFriend(userId, token));
+
+        int securityLevel = 1;
+        if (client.isFriend(userId, token)) securityLevel = 2;
+
         posts.addAll(postRepository.findAllByIsDeletedIsFalseAndUserIdAndSecurityIdLessThan(userId, securityLevel + 1));
+
         List<List> resp = new ArrayList<List>() {{
             add(friends);
             add(posts);
         }};
+
+        System.out.println("getUserPosts All response data: \n" + resp);
         return resp;
     }
 }

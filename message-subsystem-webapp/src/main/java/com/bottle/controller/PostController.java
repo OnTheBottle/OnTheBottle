@@ -191,5 +191,14 @@ public class PostController {
             }
         }
     }
+    @RequestMapping(value = "/getLikes", params = "postId", method = RequestMethod.GET)
+    public ResponseEntity<List<Like>> listAllLikes(@RequestParam("postId") UUID postId) {
+        List<Like> likes = likeService.findByPostId( postId );
+        if (likes.isEmpty()) {
+            return new ResponseEntity<>( HttpStatus.NO_CONTENT );
+        }
+        return new ResponseEntity<>(likes, HttpStatus.OK );
+    }
+
 }
 

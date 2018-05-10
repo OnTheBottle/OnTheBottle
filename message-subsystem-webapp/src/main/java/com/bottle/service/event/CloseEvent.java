@@ -18,11 +18,9 @@ public class CloseEvent {
         this.eventRepository = eventRepository;
     }
 
-    public String closeEvent(UUID id) {
+    public void closeEvent(UUID id) {
         Event event = getterEvent.getEvent(id);
         event.setIsActive(false);
-
         eventRepository.save(event);
-        return "complete";
     }
 }

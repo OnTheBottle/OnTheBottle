@@ -1,10 +1,8 @@
 package com.bottle.entity;
 
 import com.bottle.model.dto.request.ReqRegDTO;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,6 +13,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString(exclude = "friends")
+//@ToString(exclude = {"events", "ownerEvents", "likes", "posts", "comments"})
 //@EqualsAndHashCode
 @Table(name = "user", schema = "public")
 public class User {
@@ -49,9 +49,12 @@ public class User {
     private String info;
 
     //@ManyToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "RelationShip", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id", referencedColumnName = "id"))
     private Set<User> friends;
+
+    private String friendStatus;
 
     public User(String login, String password, String email) {
         this.login = login;
