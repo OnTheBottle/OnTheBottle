@@ -35,13 +35,11 @@ public class UserSubsystemClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("response ArrayList: \n" + array);
         return array;
     }
 
     public boolean isFriend(UUID id, String token) {
         String url = Properties.SUB_USER_PATH + "/friend/is_confirmed_friend";
-        System.out.println(url);
         boolean isFriend = false;
         try {
             String response = Request.Post(url)
@@ -52,8 +50,6 @@ public class UserSubsystemClient {
                     .execute().returnContent().toString();
             ObjectMapper mapper = new ObjectMapper();
             isFriend = mapper.readValue(response, boolean.class);
-            System.out.println("isFriend json: " + isFriend);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,14 +65,12 @@ public class UserSubsystemClient {
                             .add("userId", id.toString())
                             .build())
                     .execute().returnContent().toString();
-            System.out.println("getFriend json: " + json);
             ObjectMapper mapper = new ObjectMapper();
             map = mapper.readValue(json, HashMap.class);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("response getFriend HashMap: \n" + map);
         return map;
     }
 

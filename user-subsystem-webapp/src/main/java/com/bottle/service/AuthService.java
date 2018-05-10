@@ -71,7 +71,6 @@ public class AuthService {
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(secretKeyJWT))
                 .parseClaimsJws(token).getBody();
-        System.out.println("claims.get: " + claims.get("userId"));
         return UUID.fromString(claims.get("userId").toString());
     }
 

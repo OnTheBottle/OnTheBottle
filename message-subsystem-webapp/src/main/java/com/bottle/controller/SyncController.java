@@ -26,12 +26,10 @@ public class SyncController {
     @RequestMapping(path = "/user/add_user", method = RequestMethod.POST)
     public void addUser(
             @RequestParam(name = "access_token") String token) {
-        System.out.println("addUser /user/add_user token:\n" + token);
         if (authService.isValidToken(token)) {
             UUID id = authService.getAuthId(token);
             System.out.println("id: " + id);
-            if (!userService.isExistUserById(id)){
-                System.out.println("it is new user id: " + id);
+            if (!userService.isExistUserById(id)) {
                 userService.addUserById(id);
             }
         }

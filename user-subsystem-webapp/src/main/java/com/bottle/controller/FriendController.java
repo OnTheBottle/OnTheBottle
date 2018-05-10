@@ -87,8 +87,6 @@ public class FriendController {
             @RequestParam(name = "access_token") String token,
             @RequestParam(value = "userId") UUID userId) {
         String select = "confirmed";
-        System.out.println("get_confirmed_friends access_token: " + token);
-        System.out.println("get_confirmed_friends userId: " + userId);
         return getFriendsDTO(token, userId, select);
     }
 
@@ -96,7 +94,6 @@ public class FriendController {
     public boolean isConfirmedFriend(
             @RequestParam(name = "access_token") String token,
             @RequestParam(value = "userId") UUID userId) {
-        System.out.println("Request isConfirmedFriend by userId: " + userId);
         if (authService.isValidToken(token)) {
             if (userService.isUserById(userId)) {
                 UUID authId = authService.getAuthId(token);

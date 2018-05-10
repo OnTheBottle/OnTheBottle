@@ -38,7 +38,6 @@ public class NewsService {
             add(friends);
             add(posts);
         }};
-        System.out.println("getFriendsPosts All response data: \n" + resp);
         return resp;
     }
 

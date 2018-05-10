@@ -55,7 +55,6 @@ public class FriendService {
         User auth = userRepository.getUserById(authId);
         User user = userRepository.getUserById(userId);
         boolean isTrue = auth.getFriends().contains(user)&&user.getFriends().contains(auth);
-        System.out.println("isFriend: " + isTrue);
         return isTrue;
     }
 
@@ -112,7 +111,6 @@ public class FriendService {
                     break;
             }
             friend.setFriendStatus(status);
-            System.out.println("friend with status - " + status + ":\n" + friend);
         }
         return friends;
     }

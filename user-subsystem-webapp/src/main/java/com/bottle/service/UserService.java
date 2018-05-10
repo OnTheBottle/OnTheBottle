@@ -26,7 +26,6 @@ public class UserService {
     }
 
     public UUID getIdByLogin(String login) {
-        //System.out.println("getIdByLogin login: " + login);
         return UUID.fromString(userRepository.getIdByLogin(login));
     }
 

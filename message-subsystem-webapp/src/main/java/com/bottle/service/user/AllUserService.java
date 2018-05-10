@@ -51,7 +51,6 @@ public class AllUserService {
     public void addUserById(UUID id) {
         User user = new User();
         user.setId(id);
-        System.out.println("New User: " + user);
         getterUser.saveUser(user);
     }
 
