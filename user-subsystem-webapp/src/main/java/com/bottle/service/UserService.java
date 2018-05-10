@@ -48,7 +48,7 @@ public class UserService {
 
     public UserDTO getUserById(UUID id) {
         User user = userRepository.getUserById(id);
-        return getUserDTO(user,"");
+        return getUserDTO(user);
     }
 
     @Transactional
@@ -58,20 +58,20 @@ public class UserService {
 
     public Set<UserDTO> getUsers() {
         Set<User> users = userRepository.getAllByDeletedFalse();
-        return getUsersDTO(users, "");
+        return getUsersDTO(users);
     }
 
-    public Set<UserDTO> getUsersDTO(Set<User> users, String friendStatus) {
+    public Set<UserDTO> getUsersDTO(Set<User> users) {
         Set<UserDTO> usersDTO = new HashSet<>();
         for (User user : users) {
-            usersDTO.add(getUserDTO(user, friendStatus));
+            usersDTO.add(getUserDTO(user));
         }
         return usersDTO;
     }
 
-    public UserDTO getUserDTO(User user, String friendStatus) {
+    public UserDTO getUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setFriendStatus(friendStatus);
+        userDTO.setFriendStatus(user.getFriendStatus());
         userDTO.setName(user.getName());
         userDTO.setSurname(user.getSurname());
         userDTO.setId(user.getId());

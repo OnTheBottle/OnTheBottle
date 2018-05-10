@@ -51,28 +51,72 @@ public class FriendService {
         userRepository.save(firstUser);
     }
 
-    public Set<UserDTO> getConfirmedFriends(UUID id) {
-        String friendStatus = "confirmed";
-        User user = userRepository.getUserById(id);
-        Set<User> friends = user.getFriends();
-        Set<User> confirmedFriends = new HashSet<>();
+    public boolean isFriend(UUID authId, UUID userId) {
+        User auth = userRepository.getUserById(authId);
+        User user = userRepository.getUserById(userId);
+        boolean isTrue = auth.getFriends().contains(user)&&user.getFriends().contains(auth);
+        System.out.println("isFriend: " + isTrue);
+        return isTrue;
+    }
+
+
+        public Set<User> getFriends(UUID authId, UUID userId, String select) {
+        User auth = userRepository.getUserById(authId);
+        Set<User> friends = new HashSet<>();
+
+        switch (select) {
+            case "notconfirmed":
+                friends = userRepository.getAllByFriendsContaining(auth);
+                friends.removeAll(auth.getFriends());
+                break;
+            case "requested":
+                friends = userRepository.getAllByFriendsContaining(auth);
+                Set<User> temp = auth.getFriends();
+                temp.removeAll(friends);
+                friends = temp;
+                break;
+            case "confirmed":
+                User user = userRepository.getUserById(userId);
+                Set<User> userFriends = user.getFriends();
+                Set<User> friendsTemp = userRepository.getAllByFriendsContaining(user);
+                for (User friend : userFriends) {
+                    if (friendsTemp.contains(friend)) {
+                        if (!friend.equals(auth)) friends.add(friend);
+                    }
+                }
+                break;
+        }
+        return setFriendsStatus(friends, auth);
+    }
+
+    private Set<User> setFriendsStatus(Set<User> friends, User auth) {
 
         for (User friend : friends) {
-            if (friend.getFriends().contains(user)) {
-                confirmedFriends.add(friend);
-            }
-        }
-        return userService.getUsersDTO(confirmedFriends, friendStatus);
-    }
+            String status = "";
+            int count = 1;
+            if (friend.getFriends().contains(auth)) count = count + 2;
+            if (auth.getFriends().contains(friend)) count = count + 4;
 
-    public Set<UserDTO> getNotConfirmedFriends(UUID id) {
-        String friendStatus = "notConfirmed";
-        User user = userRepository.getUserById(id);
-        Set<User> userFriends = user.getFriends();
-        Set<User> maybeFriends = userRepository.getAllByFriendsContaining(user);
-        maybeFriends.removeAll(userFriends);
-        return userService.getUsersDTO(maybeFriends, friendStatus);
+            switch (count) {
+                case 1:
+                    status = "unknown";
+                    break;
+                case 3:
+                    status = "notconfirmed";
+                    break;
+                case 5:
+                    status = "requested";
+                    break;
+                case 7:
+                    status = "confirmed";
+                    break;
+            }
+            friend.setFriendStatus(status);
+            System.out.println("friend with status - " + status + ":\n" + friend);
+        }
+        return friends;
     }
 }
+
 
 

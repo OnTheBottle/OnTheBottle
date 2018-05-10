@@ -54,7 +54,6 @@ public class FriendController {
         }
     }
 
-
     @RequestMapping(path = "/manual_add_oneway_relation", method = RequestMethod.POST)
     public void addOneWayRelationshipManual(
             @RequestParam(name = "firstFriendId") UUID firstId, // Whose want relationship
@@ -64,7 +63,6 @@ public class FriendController {
         }
     }
 
-
     @RequestMapping(path = "/manual_add_twoway_relation", method = RequestMethod.POST)
     public void addTwoWayRelationshipManual(
             @RequestParam(name = "firstFriendId") UUID firstId,
@@ -72,16 +70,6 @@ public class FriendController {
         if (userService.isUserById(firstId) && userService.isUserById(secondId)) {
             friendService.addTwoWayRelation(firstId, secondId);
         }
-    }
-
-    @RequestMapping(path = "/get_users_want_relationship", method = RequestMethod.POST)
-    public Set<UserDTO> getUsersWantRelationship(
-            @RequestParam(name = "access_token") String token) {
-        if (authService.isValidToken(token)) {
-            UUID authId = authService.getAuthId(token);
-            return friendService.getNotConfirmedFriends(authId);
-        }
-        return null;
     }
 
     @RequestMapping(path = "/remove_relationship", method = RequestMethod.POST)
@@ -94,14 +82,55 @@ public class FriendController {
         }
     }
 
-    @RequestMapping(path = "/get_friends_by_userid", method = RequestMethod.POST)
-    public Set<UserDTO> getFriendsByUserId(
-            @RequestParam(value = "id") UUID userId) {
-        System.out.println("req get_friends_by_userid:" + userId);
-        if (userService.isUserById(userId)) {
-            return friendService.getConfirmedFriends(userId);
-        }
-        return new HashSet<>();
+    @RequestMapping(path = "/get_confirmed_friends", method = RequestMethod.POST)
+    public Set<UserDTO> getConfirmedFriendsDTO(
+            @RequestParam(name = "access_token") String token,
+            @RequestParam(value = "userId") UUID userId) {
+        String select = "confirmed";
+        System.out.println("get_confirmed_friends access_token: " + token);
+        System.out.println("get_confirmed_friends userId: " + userId);
+        return getFriendsDTO(token, userId, select);
     }
 
+    @RequestMapping(path = "/is_confirmed_friend", method = RequestMethod.POST)
+    public boolean isConfirmedFriend(
+            @RequestParam(name = "access_token") String token,
+            @RequestParam(value = "userId") UUID userId) {
+        System.out.println("Request isConfirmedFriend by userId: " + userId);
+        if (authService.isValidToken(token)) {
+            if (userService.isUserById(userId)) {
+                UUID authId = authService.getAuthId(token);
+                return friendService.isFriend(authId, userId);
+            }
+        }
+        return false;
+    }
+
+    @RequestMapping(path = "/get_notconfirmed_friends", method = RequestMethod.POST)
+    public Set<UserDTO> getNotConfirmedFriends(
+            @RequestParam(name = "access_token") String token,
+            @RequestParam(value = "userId") UUID userId) {
+        String select = "notconfirmed";
+        return getFriendsDTO(token, userId, select);
+    }
+
+    @RequestMapping(path = "/get_requested_friends", method = RequestMethod.POST)
+    public Set<UserDTO> getRequestedFriendsDTO(
+            @RequestParam(name = "access_token") String token,
+            @RequestParam(value = "userId") UUID userId) {
+        String select = "requested";
+        return getFriendsDTO(token, userId, select);
+    }
+
+    private Set<UserDTO> getFriendsDTO(String token, UUID userId, String select) {
+        if (authService.isValidToken(token)) {
+            if (userService.isUserById(userId)) {
+                UUID authId = authService.getAuthId(token);
+                return userService.getUsersDTO(friendService.getFriends(authId, userId, select));
+            }
+        }
+        return null;
+    }
 }
+
+

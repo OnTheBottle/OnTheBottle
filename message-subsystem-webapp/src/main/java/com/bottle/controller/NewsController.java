@@ -24,20 +24,23 @@ public class NewsController {
     }
 
     @RequestMapping(path = "/get_friends_posts", method = RequestMethod.POST)
-    public List getFriendsPosts(@RequestParam(name = "id") UUID userId) {
-        return newsService.getFriendsPosts(userId);
-    }
-
-    @RequestMapping(path = "/get_user_posts", method = RequestMethod.POST)
     public List getFriendsPosts(
             @RequestParam(name = "id") UUID userId,
-            @RequestParam(name = "access_token") String token
-    ) {
+            @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) {
             return null;
         }
-        UUID authId = authService.getAuthId(token);
-        return newsService.getUserPosts(authId, userId);
+        return newsService.getFriendsPosts(userId, token);
+    }
+
+    @RequestMapping(path = "/get_user_posts", method = RequestMethod.POST)
+    public List getUserPosts(
+            @RequestParam(name = "id") UUID userId,
+            @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) {
+            return null;
+        }
+        return newsService.getUserPosts(userId, token);
     }
 
     @GetMapping(path = "/printrequest")
