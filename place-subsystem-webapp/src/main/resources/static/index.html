@@ -1,27 +1,106 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Места</title>
+	<meta charset="UTF-8">
+	<title>Find you PUB</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 </head>
-
 <body>
-<div id="show_places" class="update-form">
-    <input type="button" onclick="allPubs()" value="Show places"/>
-    <input type="button" onclick="allComments()" value="Show comments"/>
-</div>
-<div id="all_pubs">
-    <p>All pubs</p>
-</div>
-<br>
-<div id="all_comments">
-    <p>All comments</p>
-</div>
-</body>
-<script src="js/allPubs.js"></script>
-<script src="js/jquery-1.11.1.js"></script>
+	<div class="wrapper">
+		<div class="holder">
+			<div class="container">
+				<h1>Find Best PUB for You</h1>
+				<div class="items">
+					<div class="pubs">
+						
+						<ul class="nav">
+							<li id="#">
+								<div class="pub_title">
+									<img class="avatar" id="place_avatar_url" src="img/1.jpg">
+									<a href="#" class="name" id="place_name">Best PUB on the river</a>				
+								</div>
+								<p class="time" id="place_work_time">08.00-23.00</p>
+								<p class="location" id="place_id">Boston street</p>
+								<a href="#" class="comments">Comments</a>			
+							</li>
 
+
+							<li id="#">
+								<div class="pub_title">
+									<img class="avatar" id="place_avatar_url" src="img/2.jpg">
+									<a href="#" class="name" id="place_name">Favorite restoraunt of your Mom</a>				
+								</div>
+								<p class="time" id="place_work_time">09.00-20.00</p>
+								<p class="location" id="place_id">Steefler's street</p>
+								<a href="#" class="comments">Comments</a>			
+							</li>
+
+							<li id="#">
+								<div class="pub_title">
+									<img class="avatar" id="place_avatar_url" src="img/3.jpg">
+									<a href="#" class="name" id="place_name">Awersome stripuha in Kharkov</a>				
+								</div>
+								<p class="time" id="place_work_time">23.00-08.00</p>
+								<p class="location" id="place_id">5$ and i'll say you</p>
+								<a href="#" class="comments">Comments</a>			
+							</li>
+
+							
+							<li id="#">
+								<div class="pub_title">
+									<img class="avatar" id="place_avatar_url" src="img/1.jpg">
+									<a href="#" class="name" id="place_name">Best PUB on the river</a>				
+								</div>
+								<p class="time" id="place_work_time">08.00-23.00</p>
+								<p class="location" id="place_id">Boston street</p>
+								<a href="#" class="comments">Comments</a>			
+							</li>
+
+							
+						</ul>
+					</div>
+
+
+					<div class="check">
+						<p>Choose options:</p>
+						<form action="" class="form">
+							<div class="type">
+								<label for="select">Type of institution:</label>
+								<select name="type_of" id="" >
+									<option value="">Gendel</option>
+									<option value="">Stripuha</option>
+									<option value="">Restoran</option>
+									<option value="">Toilet</option>
+								</select>
+							</div>
+
+							<div class="time">
+								<label for="select">Work time:</label>
+								<input id="" value="" name="" type="time">
+								<input id="" value="" name="" type="time">
+							</div>
+							
+						</form>
+						<div class="sorting">
+							<p>Sorting by price:</p>
+							<a href="" title="Lower first">
+								<i class="fas fa-arrow-down"></i>
+								Lower first
+							</a>
+							
+							<a href="" title="Expencive first">
+								<i class="fas fa-arrow-up"></i>
+								Expencive first
+							</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</body>
 </html>
