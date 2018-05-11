@@ -21,8 +21,7 @@ public class GetterUser {
         if (userRepository.exists(id)) {
             return userRepository.getOne(id);
         } else {
-
-            return createUser(id); //TODO: добавить поля из запроса
+            return createUser(id);
         }
     }
 

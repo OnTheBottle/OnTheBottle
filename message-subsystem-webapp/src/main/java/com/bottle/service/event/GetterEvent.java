@@ -1,6 +1,7 @@
 package com.bottle.service.event;
 
 import com.bottle.model.entity.Event;
+import com.bottle.model.entity.User;
 import com.bottle.model.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,6 @@ public class GetterEvent {
         return eventRepository.getOne(id);
     }
 
-    @Transactional
-    public Set<Event> getEvents() {
-        return new HashSet<>(eventRepository.findAll());
-    }
-
     public Set<Event> getActiveEvents() {
         return eventRepository.findAllByIsActive(true);
     }
@@ -40,5 +36,9 @@ public class GetterEvent {
 
     public Set<Event> getPassedFromUser(UUID idUser) {
         return eventRepository.getEventsFromUserIsActive(idUser, false);
+    }
+
+    public Set<Event> getOwnerFromUser(User user) {
+        return eventRepository.getEventsByOwnerAndIsActiveTrue(user);
     }
 }

@@ -6,5 +6,5 @@ import lombok.Data;
 public class OptionsDTO {
     private boolean allEvents;
     private boolean activeEvents;
-    private boolean passedEvents;
+    private boolean ownerEvents;
 }

@@ -37,21 +37,24 @@ public class AllEventService {
 
     public Set<Event> getEvents(RequestEventDTO requestEventDTO) {
         OptionsDTO options = requestEventDTO.getOptions();
+        User user = getterUser.getUser(requestEventDTO.getUserId());
         if (options.isAllEvents()) {
-            if ((options.isActiveEvents() && options.isPassedEvents()) || (!options.isActiveEvents() && !options.isPassedEvents())) {
-                return checkPassedEvents(getterEvent.getEvents());
-            } else if (options.isActiveEvents()) {
-                return getterEvent.getActiveEvents();
+            if (options.isActiveEvents()) {
+                if (options.isOwnerEvents()) {
+                    return getterEvent.getOwnerFromUser(user);
+                } else {
+                    return checkPassedEvents(getterEvent.getActiveEvents());
+                }
             } else {
                 return getterEvent.getPassedEvents();
             }
         } else {
-            User user = getterUser.getUser(requestEventDTO.getUserId());
-            if ((options.isActiveEvents() && options.isPassedEvents()) || (!options.isActiveEvents() && !options.isPassedEvents())) {
-                return checkPassedEvents(new HashSet<>(user.getEvents()));
-                //return checkPassedEvents(user.getEvents());
-            } else if (options.isActiveEvents()) {
-                return getterEvent.getActiveFromUser(requestEventDTO.getUserId());
+            if (options.isActiveEvents()) {
+                if (options.isOwnerEvents()) {
+                    return getterEvent.getOwnerFromUser(user);
+                } else {
+                    return checkPassedEvents(getterEvent.getActiveFromUser(requestEventDTO.getUserId()));
+                }
             } else {
                 return getterEvent.getPassedFromUser(requestEventDTO.getUserId());
             }
