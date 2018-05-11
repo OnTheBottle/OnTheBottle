@@ -6,10 +6,12 @@ import com.bottle.model.DTO.RequestEventDTO;
 import com.bottle.model.DTO.validators.EventValidator;
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.Place;
+import com.bottle.service.auth.AuthService;
 import com.bottle.service.event.AllEventService;
 import com.bottle.service.place.AllPlaceService;
 import com.bottle.service.user.AllUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,41 +24,49 @@ import java.util.*;
 public class EventController {
     private AllEventService allEventService;
     private AllPlaceService allPlaceService;
-    private AllUserService allUserService;
     private EventValidator eventValidator;
+    private AuthService authService;
 
     @Autowired
-    public EventController(AllEventService allEventService, AllPlaceService allPlaceService, AllUserService allUserService, EventValidator eventValidator) {
+    public EventController(AllEventService allEventService, AllPlaceService allPlaceService, AuthService authService, EventValidator eventValidator) {
         this.allEventService = allEventService;
         this.allPlaceService = allPlaceService;
-        this.allUserService = allUserService;
+        this.authService = authService;
         this.eventValidator = eventValidator;
     }
 
     @RequestMapping(value = "/getEvents", method = RequestMethod.POST)
-    public ResponseEntity<Set<Event>> showAllEvents(@RequestBody RequestEventDTO requestEventDTO) {
+    public ResponseEntity<?> showAllEvents(@RequestBody RequestEventDTO requestEventDTO,
+                                           @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return getNonValidTokenResponse();
+
         Set<Event> events = allEventService.getEvents(requestEventDTO);
-        if (events.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getPlaces", method = RequestMethod.GET)
-    public ResponseEntity<List<Place>> showAllPlaces() {
+    public ResponseEntity<?> showAllPlaces(@RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return getNonValidTokenResponse();
+
         List<Place> places = allPlaceService.getAllPlaces();
-        if (places.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(places, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/createEvent", method = RequestMethod.POST)
-    public ResponseEntity<Void> savePost(@RequestBody EventDTO eventDTO) {
+    public ResponseEntity<?> savePost(@RequestBody EventDTO eventDTO,
+                                         @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return getNonValidTokenResponse();
+
         allEventService.createEvent(eventDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/joinEvent", method = RequestMethod.POST)
-    public ResponseEntity<Void> addUserToEvent(@RequestBody UserEventDTO userEventDTO) {
-        String result = allEventService.addUser(userEventDTO.getEventId(), userEventDTO.getUserId());
+    public ResponseEntity<?> addUserToEvent(@RequestBody UserEventDTO userEventDTO,
+                                               @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return getNonValidTokenResponse();
 
+        String result = allEventService.addUser(userEventDTO.getEventId(), userEventDTO.getUserId());
         ResponseEntity<Void> response = new ResponseEntity<>(HttpStatus.OK);
         if (result.equals("Closed")) {
             response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -66,24 +76,41 @@ public class EventController {
     }
 
     @RequestMapping(path = "/leaveEvent", method = RequestMethod.POST)
-    public ResponseEntity<Void> leaveUserEvent(@RequestBody UserEventDTO userEventDTO) {
+    public ResponseEntity<?> leaveUserEvent(@RequestBody UserEventDTO userEventDTO,
+                                               @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return getNonValidTokenResponse();
+
         allEventService.deleteUser(userEventDTO.getEventId(), userEventDTO.getUserId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/updateEvent", method = RequestMethod.POST)
-    public ResponseEntity<Void> updateEvent(@RequestBody EventDTO eventDTO) {
+    public ResponseEntity<?> updateEvent(@RequestBody EventDTO eventDTO,
+                                            @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return getNonValidTokenResponse();
+
         allEventService.updateEvent(eventDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/closeEvent", method = RequestMethod.POST)
-    public ResponseEntity<Void> closeEvent(@RequestBody EventDTO eventDTO) {
+    public ResponseEntity<?> closeEvent(@RequestBody EventDTO eventDTO,
+                                           @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return getNonValidTokenResponse();
+
         allEventService.closeEvent(eventDTO.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /*
+    private ResponseEntity<String> getNonValidTokenResponse() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-type", "text/plain");
+        String message = "Non-valid token";
+        return new ResponseEntity<>(message, headers, HttpStatus.BAD_REQUEST);
+    }
+}
+
+ /*
     @PostMapping(path = "/showEventsFromUser")
     @ResponseBody
     public EventsResponseDTO showEventsFromUser(IdRequestDTO idRequestDTO) {
@@ -101,4 +128,3 @@ public class EventController {
 
         return eventListDTO;
     }*/
-}

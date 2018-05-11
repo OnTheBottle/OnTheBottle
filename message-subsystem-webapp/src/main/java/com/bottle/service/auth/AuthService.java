@@ -22,7 +22,7 @@ public class AuthService {
                     .setSigningKey(DatatypeConverter.parseBase64Binary(secretKeyJWT))
                     .parseClaimsJws(token).getBody();
         }
-        catch (ExpiredJwtException e){
+        catch (ExpiredJwtException | SignatureException e){
             return false;
         }
         return true;
