@@ -18,5 +18,7 @@ public interface LikeRepository extends CrudRepository<Like, UUID> {
     @Transactional
     List<Like> findAllByPost_Id(UUID post_id);
 
+    Like findByPost_IdAndUser_Id(UUID post_id,UUID user_id);
+    boolean existsByPost_IdAndUser_Id(UUID post_id,UUID user_id);
 
 }

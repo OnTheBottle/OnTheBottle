@@ -42,7 +42,7 @@ public class PostController {
     public ResponseEntity<List<Post>> listAllPosts(@RequestParam("userId") UUID id) {
         List<Post> posts = getterPost.getPosts( id );
 
-            return new ResponseEntity<>( posts, HttpStatus.OK );
+        return new ResponseEntity<>( posts, HttpStatus.OK );
 
 
     }
@@ -62,7 +62,6 @@ public class PostController {
         postService.addPost( post );
         return new ResponseEntity<>( HttpStatus.OK );
     }
-
 
 
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
@@ -151,54 +150,28 @@ public class PostController {
     public ResponseEntity<Void> addLike(@RequestBody LikeDTO likeDTO) {
         Post post = postService.getPost( likeDTO.getPost_id() );
         User user = allUserService.getUser( likeDTO.getUser_id() );
-        Set<Like> likes;
-        likes = likeService.findByPost_Id( likeDTO.getPost_id() );
-        boolean a = false;
-        if (likes.size() == 0) {
+        boolean proverka = likeService.exists( likeDTO.getPost_id(), likeDTO.getUser_id() );
+        if (proverka) {
+            System.out.println( "Ocenka est" );
+            return new ResponseEntity<>( HttpStatus.NO_CONTENT );
+        } else {
+            System.out.println( "Ocenki net,dobavlu" );
             Like like = new Like();
             like.setStatus( likeDTO.getStatus() );
             like.setPost( post );
             like.setUser( user );
             likeService.save( like );
-            Integer size = likes.size();
             return new ResponseEntity<>( HttpStatus.OK );
-        } else {
-            for (Like like : likes) {
-                if (like.getUser() == user) {
-                    if (like.getPost() == post) {
-                        System.out.println( "Вы уже оценили этот пост" );
-                        System.out.println( "Ваша оценка этого поста " + like.getStatus() );
-                    }
-                    System.out.println( "Всего оценок" + likes.size() );
-                    a = false;
-                } else a = true;
-            }
-            if (a) {
-
-                Like like = new Like();
-                like.setStatus( likeDTO.getStatus() );
-                like.setPost( post );
-                like.setUser( user );
-                likeService.save( like );
-                System.out.println( "Ваша оценка добавлена" );
-                System.out.println( "Всего оценок" + likes.size() );
-                Integer size = likes.size();
-                return new ResponseEntity<>( HttpStatus.OK );
-            } else {
-
-                Integer size = likes.size();
-                return new ResponseEntity<>( HttpStatus.NO_CONTENT );
-            }
         }
     }
+
     @RequestMapping(value = "/getLikes", params = "postId", method = RequestMethod.GET)
     public ResponseEntity<List<Like>> listAllLikes(@RequestParam("postId") UUID postId) {
         List<Like> likes = likeService.findByPostId( postId );
         if (likes.isEmpty()) {
             return new ResponseEntity<>( HttpStatus.NO_CONTENT );
         }
-        return new ResponseEntity<>(likes, HttpStatus.OK );
+        return new ResponseEntity<>( likes, HttpStatus.OK );
     }
-
 }
 

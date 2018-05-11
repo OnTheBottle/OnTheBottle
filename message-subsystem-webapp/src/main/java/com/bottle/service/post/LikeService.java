@@ -35,4 +35,7 @@ public class LikeService {
     public List<Like> findByPostId(UUID postId) {
         return likeRepository.findAllByPost_Id( postId );
     }
+
+    @Transactional
+    public boolean exists(UUID postId,UUID userId){return likeRepository.existsByPost_IdAndUser_Id( postId,userId );}
 }
