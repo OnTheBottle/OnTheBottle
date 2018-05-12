@@ -1,6 +1,8 @@
 package com.bottle.model.repository;
 
 import com.bottle.model.entity.Like;
+import com.bottle.model.entity.Post;
+import com.bottle.model.entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +22,7 @@ public interface LikeRepository extends CrudRepository<Like, UUID> {
 
     Like findByPost_IdAndUser_Id(UUID post_id,UUID user_id);
     boolean existsByPost_IdAndUser_Id(UUID post_id,UUID user_id);
+
+    Like getByPostAndUser(Post post, User user);
 
 }

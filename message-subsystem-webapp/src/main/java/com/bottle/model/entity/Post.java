@@ -1,6 +1,7 @@
 package com.bottle.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -60,8 +61,9 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
+    //@JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
+            //fetch = FetchType.LAZY,
             mappedBy = "post")
     private Set<Like> likes;
 
@@ -69,7 +71,9 @@ public class Post {
     @JoinTable(name = "FavoriteNews", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
     private Set<User> favoriteUsers;
 
+/*
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "LikeNews", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
     private Set<User> likeUsers;
+*/
 }
