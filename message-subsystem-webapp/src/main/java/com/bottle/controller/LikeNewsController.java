@@ -42,14 +42,4 @@ public class LikeNewsController {
         }
         return 0;
     }
-
-/*
-    @RequestMapping(path = "/change", method = RequestMethod.POST)
-    public boolean changeState(
-            @RequestParam(name = "userId") UUID userId,
-            @RequestParam(name = "postId") UUID postId) {
-        return likeService.changeState(postId, userId);
-    }
-
-*/
 }

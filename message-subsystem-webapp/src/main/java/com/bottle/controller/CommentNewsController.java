@@ -1,0 +1,39 @@
+package com.bottle.controller;
+
+import com.bottle.model.repository.CommentRepository;
+import com.bottle.service.auth.AuthService;
+import com.bottle.service.news.LikeNewsService;
+import com.bottle.service.post.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+
+@RestController
+@RequestMapping(path = "/news/comment")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class CommentNewsController {
+
+    private final CommentService commentService;
+    private final AuthService authService;
+
+    @Autowired
+    public CommentNewsController(CommentService commentService, AuthService authService) {
+        this.commentService = commentService;
+        this.authService = authService;
+    }
+
+    @RequestMapping(path = "/add", method = RequestMethod.POST)
+    public boolean add(
+            @RequestParam(name = "access_token") String token,
+            @RequestParam(name = "text") String text,
+            @RequestParam(name = "postId") UUID postId) {
+        if (authService.isValidToken(token)) {
+            UUID authId = authService.getAuthId(token);
+            commentService.addComment(authId, postId, text);
+            return true;
+        }
+        return false;
+    }
+
+}
