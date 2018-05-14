@@ -54,6 +54,16 @@ public class CommentService {
     }
 
     @Transactional
+    public boolean deleteComment(UUID userId, UUID commentId) {
+        if (commentRepository.existsByIdAndUserId(commentId, userId)) {
+            commentRepository.delete(commentId);
+            return true;
+        }
+        return false;
+    }
+
+
+    @Transactional
     public void deleteCommentById(UUID comment_id) {
         commentRepository.delete(comment_id);
     }
