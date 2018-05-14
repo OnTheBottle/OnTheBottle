@@ -13,4 +13,5 @@ public interface CommentRepository extends JpaRepository<Comment, UUID> {
     List<Comment> findCommentsByPostId(UUID post_id);
     List<Comment> findAllByIsDeletedIsFalseAndPostId(UUID post_id);
 
+    boolean existsByIdAndUserId(UUID commentId, UUID userId);
 }

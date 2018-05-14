@@ -36,4 +36,15 @@ public class CommentNewsController {
         return null;
     }
 
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    public boolean delete(
+            @RequestParam(name = "access_token") String token,
+            @RequestParam(name = "commentId") UUID commentId) {
+        if (authService.isValidToken(token)) {
+            UUID authId = authService.getAuthId(token);
+            return commentService.deleteComment(authId, commentId);
+        }
+        return false;
+    }
+
 }
