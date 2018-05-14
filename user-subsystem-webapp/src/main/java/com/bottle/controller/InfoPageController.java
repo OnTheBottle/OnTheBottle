@@ -36,6 +36,7 @@ public class InfoPageController {
         infoPageResponse.setCity(user.getCity());
         infoPageResponse.setAvatarUrl(user.getAvatarUrl());
         infoPageResponse.setStatus(user.getStatus());
+        infoPageResponse.setInfo(user.getInfo());
 
         System.out.println("TestController: A name of the user is " + infoPageResponse.getName());
 
