@@ -117,6 +117,7 @@ public class PostController {
         Post post = postService.getPost( commentDTO.getPost_id() );
         if (comment.getDate() == null)
             comment.setDate( new Date() );
+        comment.setId(UUID.randomUUID());
         comment.setText( commentDTO.getComment() );
         comment.setPost( post );
         comment.setUser( user );

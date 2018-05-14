@@ -40,15 +40,17 @@ public class CommentService {
     }
 
     @Transactional
-    public void addComment(UUID authId, UUID postId, String text) {
+    public Comment addComment(UUID authId, UUID postId, String text) {
         Comment comment = new Comment();
         User user = userRepository.getOne(authId);
         Post post = postRepository.getById(postId);
+        comment.setId(UUID.randomUUID());
         comment.setUser(user);
         comment.setPost(post);
         comment.setText(text);
         comment.setIsDeleted(false);
         commentRepository.save(comment);
+        return comment;
     }
 
     @Transactional

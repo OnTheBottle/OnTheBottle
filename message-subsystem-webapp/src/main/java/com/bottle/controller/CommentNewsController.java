@@ -1,5 +1,6 @@
 package com.bottle.controller;
 
+import com.bottle.model.entity.Comment;
 import com.bottle.model.repository.CommentRepository;
 import com.bottle.service.auth.AuthService;
 import com.bottle.service.news.LikeNewsService;
@@ -24,16 +25,15 @@ public class CommentNewsController {
     }
 
     @RequestMapping(path = "/add", method = RequestMethod.POST)
-    public boolean add(
+    public Comment add(
             @RequestParam(name = "access_token") String token,
             @RequestParam(name = "text") String text,
             @RequestParam(name = "postId") UUID postId) {
         if (authService.isValidToken(token)) {
             UUID authId = authService.getAuthId(token);
-            commentService.addComment(authId, postId, text);
-            return true;
+            return commentService.addComment(authId, postId, text);
         }
-        return false;
+        return null;
     }
 
 }
