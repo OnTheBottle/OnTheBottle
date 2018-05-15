@@ -2,7 +2,7 @@ package com.bottle.controller;
 
 
 import com.bottle.model.dto.UserDTO;
-import com.bottle.model.dto.request.UsersIdDTO;
+import com.bottle.model.dto.request.UserIdDTO;
 import com.bottle.service.AuthService;
 import com.bottle.service.UserService;
 import lombok.NoArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -40,12 +41,12 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @RequestMapping(path = "/getUsersInfo", method = RequestMethod.POST)  //TODO
-    public ResponseEntity<?> leaveUserEvent(@RequestBody UsersIdDTO usersIdDTO,
+    @RequestMapping(path = "/getUsersInfo", method = RequestMethod.POST)
+    public ResponseEntity<?> leaveUserEvent(@RequestBody List<UserIdDTO> usersIdDTO,
                                             @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return getNonValidTokenResponse();
 
-        usersIdDTO.getUsers().forEach(System.out::println);
+        usersIdDTO.forEach(System.out::println); //TODO
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
