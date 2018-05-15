@@ -1,6 +1,7 @@
 package com.bottle.controller;
 
 import com.bottle.model.DTO.EventDTO;
+import com.bottle.model.DTO.EventResponseDTO;
 import com.bottle.model.DTO.UserEventDTO;
 import com.bottle.model.DTO.RequestEventDTO;
 import com.bottle.model.DTO.validators.EventValidator;
@@ -40,7 +41,7 @@ public class EventController {
                                            @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return getNonValidTokenResponse();
 
-        Set<Event> events = allEventService.getEvents(requestEventDTO);
+        Set<EventResponseDTO> events = allEventService.getEvents(requestEventDTO);
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 

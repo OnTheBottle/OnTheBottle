@@ -1,6 +1,7 @@
 package com.bottle.service.event;
 
 import com.bottle.model.DTO.EventDTO;
+import com.bottle.model.DTO.EventResponseDTO;
 import com.bottle.model.DTO.OptionsDTO;
 import com.bottle.model.DTO.RequestEventDTO;
 import com.bottle.model.entity.Event;
@@ -35,30 +36,26 @@ public class AllEventService {
         registrationEvent.createEvent(eventDTO);
     }
 
-    public Set<Event> getEvents(RequestEventDTO requestEventDTO) {
+    public Set<EventResponseDTO> getEvents(RequestEventDTO requestEventDTO) {
         OptionsDTO options = requestEventDTO.getOptions();
         User user = getterUser.getUser(requestEventDTO.getUserId());
         if (options.isAllEvents()) {
             if (options.isActiveEvents()) {
                 if (options.isOwnerEvents()) {
-                    return getterEvent.getOwnerFromUser(user);
-                } else {
-                    return checkPassedEvents(getterEvent.getActiveEvents());
+                    return setResponseInfo(getterEvent.getOwnerFromUser(user), user);
                 }
-            } else {
-                return getterEvent.getPassedEvents();
+                return setResponseInfo(checkPassedEvents(getterEvent.getActiveEvents()), user);
             }
-        } else {
-            if (options.isActiveEvents()) {
-                if (options.isOwnerEvents()) {
-                    return getterEvent.getOwnerFromUser(user);
-                } else {
-                    return checkPassedEvents(getterEvent.getActiveFromUser(requestEventDTO.getUserId()));
-                }
-            } else {
-                return getterEvent.getPassedFromUser(requestEventDTO.getUserId());
-            }
+            return setResponseInfo(getterEvent.getPassedEvents(), user);
         }
+
+        if (options.isActiveEvents()) {
+            if (options.isOwnerEvents()) {
+                return setResponseInfo(getterEvent.getOwnerFromUser(user), user);
+            }
+            return setResponseInfo(checkPassedEvents(getterEvent.getActiveFromUser(requestEventDTO.getUserId())), user);
+        }
+        return setResponseInfo(getterEvent.getPassedFromUser(requestEventDTO.getUserId()), user);
     }
 
     public void updateEvent(EventDTO eventDTO) {
@@ -90,5 +87,26 @@ public class AllEventService {
             }
         }
         return events;
+    }
+
+    private Set<EventResponseDTO> setResponseInfo(Set<Event> events, User user) {
+        Set<EventResponseDTO> eventsInfo = new HashSet<>();
+
+        for (Event event : events) {
+            EventResponseDTO eventResponseDTO = new EventResponseDTO();
+            eventResponseDTO.setId(event.getId());
+            eventResponseDTO.setTitle(event.getTitle());
+            eventResponseDTO.setText(event.getText());
+            eventResponseDTO.setStartTime(event.getStartTime());
+            eventResponseDTO.setEndTime(event.getEndTime());
+            eventResponseDTO.setPlace(event.getPlace());
+            eventResponseDTO.setMember(event.getUsers().contains(user));
+            eventResponseDTO.setUsersCounter(event.getUsers().size()); //TODO
+            eventResponseDTO.setActive(event.getIsActive());
+            eventResponseDTO.setOwner(event.getOwner() != null && event.getOwner().equals(user));
+            eventsInfo.add(eventResponseDTO);
+        }
+
+        return eventsInfo;
     }
 }
