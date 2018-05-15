@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -71,9 +72,10 @@ public class Post {
     @JoinTable(name = "FavoriteNews", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
     private Set<User> favoriteUsers;
 
-/*
-    @ManyToMany(fetch = FetchType.LAZY)
+/*    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "LikeNews", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
     private Set<User> likeUsers;
 */
+    @ManyToMany(mappedBy = "posts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Saver> savers;
 }

@@ -2,6 +2,7 @@ package com.bottle.model.repository;
 
 
 import com.bottle.model.entity.Post;
+import com.bottle.model.entity.Saver;
 import com.bottle.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,7 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     boolean existsByIdAndFavoriteUsersContaining(UUID postId, User user);
     //boolean existsByIdAndLikeUsersContaining(UUID postId, User user);
 
+    List<Post> findAllByIsDeletedIsFalseAndUserIdAndSecurity_Name(UUID user_id,String SecurityName);
+
+List<Post> findAllByUserIdOrSaversContainingAndIsDeletedFalse(UUID userId, Saver saver);
 }

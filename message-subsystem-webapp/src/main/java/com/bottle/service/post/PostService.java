@@ -2,6 +2,7 @@ package com.bottle.service.post;
 
 
 import com.bottle.model.entity.Post;
+import com.bottle.model.entity.Saver;
 import com.bottle.model.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,16 @@ public class PostService {
     @Transactional
     public List<Post> getFirst10Post(UUID user_id) {
         return postRepository.findFirst10ByUserIdOrderByDateDesc( user_id );
+    }
+
+    @Transactional
+    public List<Post> getPostsFriend (UUID user_id,String name) {
+        return postRepository.findAllByIsDeletedIsFalseAndUserIdAndSecurity_Name( user_id ,name);
+    }
+
+    @Transactional
+    public List<Post> getPostsForWall(UUID userId, Saver saver ){
+        return postRepository.findAllByUserIdOrSaversContainingAndIsDeletedFalse( userId,saver );
     }
 
 }
