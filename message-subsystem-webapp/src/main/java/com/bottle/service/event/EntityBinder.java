@@ -7,6 +7,7 @@ import com.bottle.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
@@ -22,6 +23,7 @@ public class EntityBinder {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public String addUserToEvent(UUID idEvent, UUID idUser) {
         Event event = eventRepository.getOne(idEvent);
         User user = userRepository.getOne(idUser);
@@ -29,6 +31,7 @@ public class EntityBinder {
         if (event.getUsers().size() != 0 && event.getIsActive()) {
             event.getUsers().add(user);
             user.getEvents().add(event);
+            event.setUsersCounter(event.getUsersCounter() + 1);
             eventRepository.save(event);
             return "Ok";
         } else {
@@ -42,12 +45,14 @@ public class EntityBinder {
         eventRepository.save(event);
     }
 
+    @Transactional
     public void deleteUserFromEvent(UUID idEvent, UUID idUser) {
         Event event = eventRepository.getOne(idEvent);
         User user = userRepository.getOne(idUser);
 
         event.getUsers().remove(user);
         user.getEvents().remove(event);
+        event.setUsersCounter(event.getUsersCounter() - 1);
 
         if (user.equals(event.getOwner())) {
             User owner = getRandomOwner(event.getUsers());

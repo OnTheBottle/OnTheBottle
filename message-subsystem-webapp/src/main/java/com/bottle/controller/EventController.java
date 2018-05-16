@@ -54,7 +54,7 @@ public class EventController {
     }
 
     @RequestMapping(path = "/createEvent", method = RequestMethod.POST)
-    public ResponseEntity<?> savePost(@RequestBody EventDTO eventDTO,
+    public ResponseEntity<?> createEvent(@RequestBody EventDTO eventDTO,
                                          @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return getNonValidTokenResponse();
 

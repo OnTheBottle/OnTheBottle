@@ -101,7 +101,7 @@ public class AllEventService {
             eventResponseDTO.setEndTime(event.getEndTime());
             eventResponseDTO.setPlace(event.getPlace());
             eventResponseDTO.setMember(event.getUsers().contains(user));
-            eventResponseDTO.setUsersCounter(event.getUsers().size()); //TODO
+            eventResponseDTO.setUsersCounter(event.getUsersCounter());
             eventResponseDTO.setActive(event.getIsActive());
             eventResponseDTO.setOwner(event.getOwner() != null && event.getOwner().equals(user));
             eventsInfo.add(eventResponseDTO);

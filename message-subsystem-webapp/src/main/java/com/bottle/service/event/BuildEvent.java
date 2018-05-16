@@ -33,6 +33,7 @@ public class BuildEvent {
         event.setText(text);
         event.setStartTime(startTime);
         event.setEndTime(endTime);
+        event.setUsersCounter(1);
 
         return event;
     }
