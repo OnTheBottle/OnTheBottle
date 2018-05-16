@@ -5,12 +5,10 @@ import com.bottle.model.DTO.EventResponseDTO;
 import com.bottle.model.DTO.UserEventDTO;
 import com.bottle.model.DTO.RequestEventDTO;
 import com.bottle.model.DTO.validators.EventValidator;
-import com.bottle.model.entity.Event;
 import com.bottle.model.entity.Place;
 import com.bottle.service.auth.AuthService;
 import com.bottle.service.event.AllEventService;
 import com.bottle.service.place.AllPlaceService;
-import com.bottle.service.user.AllUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,7 +35,7 @@ public class EventController {
     }
 
     @RequestMapping(value = "/getEvents", method = RequestMethod.POST)
-    public ResponseEntity<?> showAllEvents(@RequestBody RequestEventDTO requestEventDTO,
+    public ResponseEntity<?> getAllEvents(@RequestBody RequestEventDTO requestEventDTO,
                                            @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return getNonValidTokenResponse();
 
@@ -45,8 +43,17 @@ public class EventController {
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/getEvent", method = RequestMethod.POST)
+    public ResponseEntity<?> getEvent(@RequestBody UserEventDTO userEventDTO,
+                                           @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return getNonValidTokenResponse();
+
+        EventResponseDTO event = allEventService.getEvent(userEventDTO.getEventId(), userEventDTO.getUserId());
+        return new ResponseEntity<>(event, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/getPlaces", method = RequestMethod.GET)
-    public ResponseEntity<?> showAllPlaces(@RequestParam(name = "access_token") String token) {
+    public ResponseEntity<?> getAllPlaces(@RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return getNonValidTokenResponse();
 
         List<Place> places = allPlaceService.getAllPlaces();

@@ -42,20 +42,20 @@ public class AllEventService {
         if (options.isAllEvents()) {
             if (options.isActiveEvents()) {
                 if (options.isOwnerEvents()) {
-                    return setResponseInfo(getterEvent.getOwnerFromUser(user), user);
+                    return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user), user);
                 }
-                return setResponseInfo(checkPassedEvents(getterEvent.getActiveEvents()), user);
+                return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveEvents()), user);
             }
-            return setResponseInfo(getterEvent.getPassedEvents(), user);
+            return getSetResponseEventsInfo(getterEvent.getPassedEvents(), user);
         }
 
         if (options.isActiveEvents()) {
             if (options.isOwnerEvents()) {
-                return setResponseInfo(getterEvent.getOwnerFromUser(user), user);
+                return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user), user);
             }
-            return setResponseInfo(checkPassedEvents(getterEvent.getActiveFromUser(requestEventDTO.getUserId())), user);
+            return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveFromUser(requestEventDTO.getUserId())), user);
         }
-        return setResponseInfo(getterEvent.getPassedFromUser(requestEventDTO.getUserId()), user);
+        return getSetResponseEventsInfo(getterEvent.getPassedFromUser(requestEventDTO.getUserId()), user);
     }
 
     public void updateEvent(EventDTO eventDTO) {
@@ -66,8 +66,10 @@ public class AllEventService {
         closeEvent.closeEvent(id);
     }
 
-    public Event getEvent(UUID id) {
-        return getterEvent.getEvent(id);
+    public EventResponseDTO getEvent(UUID idEvent, UUID idUser) {
+        Event event = getterEvent.getEvent(idEvent);
+        User user = getterUser.getUser(idUser);
+        return setResponseEventInfo(event, user);
     }
 
     public String addUser(UUID idEvent, UUID idUser) {
@@ -89,24 +91,26 @@ public class AllEventService {
         return events;
     }
 
-    private Set<EventResponseDTO> setResponseInfo(Set<Event> events, User user) {
+    private Set<EventResponseDTO> getSetResponseEventsInfo(Set<Event> events, User user) {
         Set<EventResponseDTO> eventsInfo = new HashSet<>();
-
         for (Event event : events) {
-            EventResponseDTO eventResponseDTO = new EventResponseDTO();
-            eventResponseDTO.setId(event.getId());
-            eventResponseDTO.setTitle(event.getTitle());
-            eventResponseDTO.setText(event.getText());
-            eventResponseDTO.setStartTime(event.getStartTime());
-            eventResponseDTO.setEndTime(event.getEndTime());
-            eventResponseDTO.setPlace(event.getPlace());
-            eventResponseDTO.setMember(event.getUsers().contains(user));
-            eventResponseDTO.setUsersCounter(event.getUsersCounter());
-            eventResponseDTO.setActive(event.getIsActive());
-            eventResponseDTO.setOwner(event.getOwner() != null && event.getOwner().equals(user));
-            eventsInfo.add(eventResponseDTO);
+            eventsInfo.add(setResponseEventInfo(event, user));
         }
-
         return eventsInfo;
+    }
+
+    private EventResponseDTO setResponseEventInfo(Event event, User user) {
+        EventResponseDTO eventResponseDTO = new EventResponseDTO();
+        eventResponseDTO.setId(event.getId());
+        eventResponseDTO.setTitle(event.getTitle());
+        eventResponseDTO.setText(event.getText());
+        eventResponseDTO.setStartTime(event.getStartTime());
+        eventResponseDTO.setEndTime(event.getEndTime());
+        eventResponseDTO.setPlace(event.getPlace());
+        eventResponseDTO.setMember(event.getUsers().contains(user));
+        eventResponseDTO.setUsersCounter(event.getUsersCounter());
+        eventResponseDTO.setActive(event.getIsActive());
+        eventResponseDTO.setOwner(event.getOwner() != null && event.getOwner().equals(user));
+        return eventResponseDTO;
     }
 }
