@@ -48,7 +48,7 @@ public class EventController {
                                            @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return getNonValidTokenResponse();
 
-        EventResponseDTO event = allEventService.getEvent(userEventDTO.getEventId(), userEventDTO.getUserId());
+        EventResponseDTO event = allEventService.getEvent(userEventDTO.getEventId(), userEventDTO.getUserId(), token);
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 

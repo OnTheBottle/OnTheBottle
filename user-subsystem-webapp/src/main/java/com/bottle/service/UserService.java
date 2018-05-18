@@ -4,6 +4,7 @@ import com.bottle.entity.User;
 import com.bottle.model.dto.UserDTO;
 import com.bottle.model.dto.request.ReqRegDTO;
 import com.bottle.model.dto.request.ReqAuthDTO;
+import com.bottle.model.dto.request.UserIdDTO;
 import com.bottle.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -85,6 +86,22 @@ public class UserService {
         }
         userDTO.setFriendsId(friends);
         return userDTO;
+    }
+
+    public Set<UserDTO> getPreliminaryInfo(List<UserIdDTO> usersId) {
+        Set<UserDTO> users = new HashSet<>();
+
+        for (UserIdDTO userIdDTO : usersId) {
+            User user = userRepository.getOne(userIdDTO.getId());
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setName(user.getName());
+            userDTO.setSurname(user.getSurname());
+            userDTO.setAvatarUrl(user.getAvatarUrl());
+            users.add(userDTO);
+        }
+
+        return users;
     }
 
 }

@@ -6,5 +6,5 @@ import java.util.UUID;
 
 @Data
 public class UserIdDTO {
-    UUID id;
+    private UUID id;
 }

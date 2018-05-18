@@ -1,9 +1,7 @@
 package com.bottle.service.event;
 
-import com.bottle.model.DTO.EventDTO;
-import com.bottle.model.DTO.EventResponseDTO;
-import com.bottle.model.DTO.OptionsDTO;
-import com.bottle.model.DTO.RequestEventDTO;
+import com.bottle.client.UserSubsystemClient;
+import com.bottle.model.DTO.*;
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.User;
 import com.bottle.model.repository.EventRepository;
@@ -21,15 +19,19 @@ public class AllEventService {
     private EntityBinder entityBinder;
     private GetterUser getterUser;
     private EventRepository eventRepository;
+    private UserSubsystemClient client;
 
     @Autowired
-    public AllEventService(RegistrationEvent registrationEvent, GetterEvent getterEvent, CloseEvent closeEvent, EntityBinder entityBinder, GetterUser getterUser, EventRepository eventRepository) {
+    public AllEventService(RegistrationEvent registrationEvent, GetterEvent getterEvent, CloseEvent closeEvent,
+                           EntityBinder entityBinder, GetterUser getterUser, EventRepository eventRepository,
+                           UserSubsystemClient client) {
         this.registrationEvent = registrationEvent;
         this.getterEvent = getterEvent;
         this.closeEvent = closeEvent;
         this.entityBinder = entityBinder;
         this.getterUser = getterUser;
         this.eventRepository = eventRepository;
+        this.client = client;
     }
 
     public void createEvent(EventDTO eventDTO) {
@@ -66,10 +68,16 @@ public class AllEventService {
         closeEvent.closeEvent(id);
     }
 
-    public EventResponseDTO getEvent(UUID idEvent, UUID idUser) {
+    public EventResponseDTO getEvent(UUID idEvent, UUID idUser, String token) {
         Event event = getterEvent.getEvent(idEvent);
         User user = getterUser.getUser(idUser);
-        return setResponseEventInfo(event, user);
+        List<User> users = new ArrayList<>();
+        List<Map> friends = client.getFriends(idUser, token);
+        for (Map<String, String> friend : friends) {
+            users.add(getterUser.getUser(UUID.fromString(friend.get("id"))));
+        }
+
+        return setResponseEventInfo(event, user, users);
     }
 
     public String addUser(UUID idEvent, UUID idUser) {
@@ -94,12 +102,17 @@ public class AllEventService {
     private Set<EventResponseDTO> getSetResponseEventsInfo(Set<Event> events, User user) {
         Set<EventResponseDTO> eventsInfo = new HashSet<>();
         for (Event event : events) {
-            eventsInfo.add(setResponseEventInfo(event, user));
+            eventsInfo.add(setResponseEventInfo(event, user, null));
         }
         return eventsInfo;
     }
 
-    private EventResponseDTO setResponseEventInfo(Event event, User user) {
+    private EventResponseDTO setResponseEventInfo(Event event, User user, List<User> friends) {
+        Set<User> usersEvent = event.getUsers();
+        List<User> friendsPreliminary = new ArrayList<>();
+        List<User> usersPreliminary = new ArrayList<>();
+        int index = 0;
+
         EventResponseDTO eventResponseDTO = new EventResponseDTO();
         eventResponseDTO.setId(event.getId());
         eventResponseDTO.setTitle(event.getTitle());
@@ -107,10 +120,33 @@ public class AllEventService {
         eventResponseDTO.setStartTime(event.getStartTime());
         eventResponseDTO.setEndTime(event.getEndTime());
         eventResponseDTO.setPlace(event.getPlace());
-        eventResponseDTO.setMember(event.getUsers().contains(user));
-        eventResponseDTO.setUsersCounter(event.getUsersCounter());
+        eventResponseDTO.setMember(usersEvent.contains(user));
         eventResponseDTO.setActive(event.getIsActive());
         eventResponseDTO.setOwner(event.getOwner() != null && event.getOwner().equals(user));
+
+        if (friends != null) {
+            for (User friend : friends) {
+                if (index == 6) break;
+                if (usersEvent.contains(friend)) {
+                    friendsPreliminary.add(friend);
+                    index++;
+                    usersEvent.remove(friend);
+                }
+            }
+        }
+
+        for (User userEvent : usersEvent) {
+            if (index == 6) break;
+            usersPreliminary.add(userEvent);
+            index++;
+        }
+
+
+        eventResponseDTO.setFriends(friendsPreliminary);
+        eventResponseDTO.setFriendsCounter(friendsPreliminary.size());
+        eventResponseDTO.setUsers(usersPreliminary);
+        eventResponseDTO.setUsersCounter(event.getUsersCounter());
+
         return eventResponseDTO;
     }
 }

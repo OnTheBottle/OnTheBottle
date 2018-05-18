@@ -18,11 +18,7 @@ public class GetterUser {
     }
 
     public User getUser(UUID id) {
-        if (userRepository.exists(id)) {
-            return userRepository.getOne(id);
-        } else {
-            return createUser(id);
-        }
+        return userRepository.getOne(id);
     }
 
     public List<User> getAll() {

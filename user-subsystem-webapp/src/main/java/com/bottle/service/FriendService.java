@@ -3,17 +3,10 @@ package com.bottle.service;
 import com.bottle.entity.User;
 import com.bottle.model.dto.UserDTO;
 import com.bottle.repository.UserRepository;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class FriendService {
@@ -54,12 +47,12 @@ public class FriendService {
     public boolean isFriend(UUID authId, UUID userId) {
         User auth = userRepository.getUserById(authId);
         User user = userRepository.getUserById(userId);
-        boolean isTrue = auth.getFriends().contains(user)&&user.getFriends().contains(auth);
+        boolean isTrue = auth.getFriends().contains(user) && user.getFriends().contains(auth);
         return isTrue;
     }
 
 
-        public Set<User> getFriends(UUID authId, UUID userId, String select) {
+    public Set<User> getFriends(UUID authId, UUID userId, String select) {
         User auth = userRepository.getUserById(authId);
         Set<User> friends = new HashSet<>();
 

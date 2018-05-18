@@ -7,7 +7,6 @@ import com.bottle.service.AuthService;
 import com.bottle.service.UserService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,18 +41,11 @@ public class UserController {
     }
 
     @RequestMapping(path = "/getUsersInfo", method = RequestMethod.POST)
-    public ResponseEntity<?> leaveUserEvent(@RequestBody List<UserIdDTO> usersIdDTO,
+    public ResponseEntity<?> leaveUserEvent(@RequestBody List<UserIdDTO> usersId,
                                             @RequestParam(name = "access_token") String token) {
-        if (!authService.isValidToken(token)) return getNonValidTokenResponse();
+        if (!authService.isValidToken(token)) return NonValidTokenResponse.getNonValidTokenResponse("Non-valid token");
 
-        usersIdDTO.forEach(System.out::println); //TODO
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    private ResponseEntity<String> getNonValidTokenResponse() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-type", "text/plain");
-        String message = "Non-valid token";
-        return new ResponseEntity<>(message, headers, HttpStatus.BAD_REQUEST);
+        Set<UserDTO> users = userService.getPreliminaryInfo(usersId);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }
