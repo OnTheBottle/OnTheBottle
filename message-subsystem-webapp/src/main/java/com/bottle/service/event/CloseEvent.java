@@ -19,8 +19,13 @@ public class CloseEvent {
     }
 
     public void closeEvent(UUID id) {
-        Event event = getterEvent.getEvent(id);
-        event.setIsActive(false);
-        eventRepository.save(event);
+        Event event;
+        try {
+            event = getterEvent.getEvent(id);
+            event.setIsActive(false);
+            eventRepository.save(event);
+        } catch (NotEventException e) {
+            e.printStackTrace();
+        }
     }
 }

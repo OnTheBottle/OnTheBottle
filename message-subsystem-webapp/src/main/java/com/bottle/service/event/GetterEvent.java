@@ -6,8 +6,8 @@ import com.bottle.model.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.*;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class GetterEvent {
@@ -18,7 +18,8 @@ public class GetterEvent {
         this.eventRepository = eventRepository;
     }
 
-    public Event getEvent(UUID id) {
+    public Event getEvent(UUID id) throws NotEventException {
+        if (!eventRepository.exists(id)) throw new NotEventException("No events with id: " + id);
         return eventRepository.getOne(id);
     }
 

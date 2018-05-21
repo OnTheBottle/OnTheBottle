@@ -43,11 +43,16 @@ public class RegistrationEvent {
     }
 
     public void updateEvent(EventDTO eventDTO) {
-        Event event = getterEvent.getEvent(eventDTO.getId());
-        Place place = placeService.getPlace(eventDTO.getPlace());
-        buildEvent.build(eventDTO, event);
-        event.setPlace(place);
-        eventRepository.save(event);
+        Event event;
+        try {
+            event = getterEvent.getEvent(eventDTO.getId());
+            Place place = placeService.getPlace(eventDTO.getPlace());
+            buildEvent.build(eventDTO, event);
+            event.setPlace(place);
+            eventRepository.save(event);
+        } catch (NotEventException e) {
+            e.printStackTrace();
+        }
     }
 }
 

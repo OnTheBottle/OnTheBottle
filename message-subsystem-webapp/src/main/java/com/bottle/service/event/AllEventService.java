@@ -68,7 +68,7 @@ public class AllEventService {
         closeEvent.closeEvent(id);
     }
 
-    public EventResponseDTO getEvent(UUID idEvent, UUID idUser, String token) {
+    public EventResponseDTO getEvent(UUID idEvent, UUID idUser, String token) throws NotEventException {
         Event event = getterEvent.getEvent(idEvent);
         User user = getterUser.getUser(idUser);
         List<User> users = new ArrayList<>();
