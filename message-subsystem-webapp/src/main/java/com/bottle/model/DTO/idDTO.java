@@ -5,7 +5,6 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class RequestEventDTO {
-    UUID userId;
-    OptionsDTO options;
+public class idDTO {
+    private UUID id;
 }

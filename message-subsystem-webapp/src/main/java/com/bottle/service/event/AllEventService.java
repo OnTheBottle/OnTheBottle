@@ -38,9 +38,8 @@ public class AllEventService {
         registrationEvent.createEvent(eventDTO);
     }
 
-    public Set<EventResponseDTO> getEvents(RequestEventDTO requestEventDTO) {
-        OptionsDTO options = requestEventDTO.getOptions();
-        User user = getterUser.getUser(requestEventDTO.getUserId());
+    public Set<EventResponseDTO> getEvents(OptionsDTO options, UUID userId) {
+        User user = getterUser.getUser(userId);
         if (options.isAllEvents()) {
             if (options.isActiveEvents()) {
                 if (options.isOwnerEvents()) {
@@ -55,9 +54,9 @@ public class AllEventService {
             if (options.isOwnerEvents()) {
                 return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user), user);
             }
-            return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveFromUser(requestEventDTO.getUserId())), user);
+            return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveFromUser(userId)), user);
         }
-        return getSetResponseEventsInfo(getterEvent.getPassedFromUser(requestEventDTO.getUserId()), user);
+        return getSetResponseEventsInfo(getterEvent.getPassedFromUser(userId), user);
     }
 
     public void updateEvent(EventDTO eventDTO) {
