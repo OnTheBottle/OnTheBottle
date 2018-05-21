@@ -38,25 +38,25 @@ public class AllEventService {
         registrationEvent.createEvent(eventDTO);
     }
 
-    public Set<EventResponseDTO> getEvents(OptionsDTO options, UUID userId) {
+    public Set<EventResponseDTO> getEvents(OptionsDTO options, int eventsPage, UUID userId) {
         User user = getterUser.getUser(userId);
         if (options.isAllEvents()) {
             if (options.isActiveEvents()) {
                 if (options.isOwnerEvents()) {
-                    return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user), user);
+                    return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user, eventsPage), user);
                 }
-                return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveEvents()), user);
+                return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveEvents(eventsPage)), user);
             }
-            return getSetResponseEventsInfo(getterEvent.getPassedEvents(), user);
+            return getSetResponseEventsInfo(getterEvent.getPassedEvents(eventsPage), user);
         }
 
         if (options.isActiveEvents()) {
             if (options.isOwnerEvents()) {
-                return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user), user);
+                return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user, eventsPage), user);
             }
-            return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveFromUser(userId)), user);
+            return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveFromUser(userId, eventsPage)), user);
         }
-        return getSetResponseEventsInfo(getterEvent.getPassedFromUser(userId), user);
+        return getSetResponseEventsInfo(getterEvent.getPassedFromUser(userId, eventsPage), user);
     }
 
     public void updateEvent(EventDTO eventDTO) {

@@ -32,11 +32,12 @@ public class EventController {
     }
 
     @RequestMapping(value = "/getEvents", method = RequestMethod.POST)
-    public ResponseEntity<?> getAllEvents(@RequestBody OptionsDTO options,
+    public ResponseEntity<?> getAllEvents(@RequestBody EventRequestDTO eventRequest,
                                            @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
-        Set<EventResponseDTO> events = allEventService.getEvents(options, authService.getAuthId(token));
+        Set<EventResponseDTO> events = allEventService.getEvents(
+                eventRequest.getOptions(), eventRequest.getEventsPage(), authService.getAuthId(token));
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
