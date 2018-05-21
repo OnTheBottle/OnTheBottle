@@ -121,7 +121,7 @@ public class AllEventService {
         eventResponseDTO.setPlace(event.getPlace());
         eventResponseDTO.setMember(usersEvent.contains(user));
         eventResponseDTO.setActive(event.getIsActive());
-        eventResponseDTO.setOwner(event.getOwner() != null && event.getOwner().equals(user));
+        eventResponseDTO.setOwner(event.getOwner());
 
         if (friends != null) {
             for (User friend : friends) {

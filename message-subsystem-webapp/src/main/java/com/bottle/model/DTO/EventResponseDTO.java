@@ -21,7 +21,7 @@ public class EventResponseDTO {
     private Place place; //TODO UUID
     private boolean member;
     private boolean active;
-    private boolean owner;
+    private User owner;
     private int usersCounter;
     private int friendsCounter;
     private List<User> users;
