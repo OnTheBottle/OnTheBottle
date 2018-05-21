@@ -20,6 +20,10 @@ import java.util.UUID;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "users")
 public class User {
+    public User(UUID id) {
+        this.id = id;
+    }
+
     @Id
 //    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
 //    @GeneratedValue(generator = "uuid-gen")
