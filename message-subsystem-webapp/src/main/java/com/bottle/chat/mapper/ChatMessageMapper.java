@@ -15,7 +15,7 @@ public class ChatMessageMapper {
             dtos.add(
                     new ChatMessageDTO(
                             chatMessage.getContent(),
-                            chatMessage.getAuthor().getId(),
+                            chatMessage.getSender().getId(),
                             chatMessage.getRecipient().getId()
                     )
             );
@@ -26,9 +26,9 @@ public class ChatMessageMapper {
     public static ChatMessage mapChatDTOtoMessage(ChatMessageDTO dto) {
         return new ChatMessage(
                 // only need the id for mapping
-                new User(dto.getFromUserId()),
-                new User(dto.getToUserId()),
-                dto.getContents()
+                new User(dto.getSenderId()),
+                new User(dto.getRecipientId()),
+                dto.getContent()
         );
     }
 }

@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatMessageDTO {
-    private String contents;
-    private UUID fromUserId;
-    private UUID toUserId;
+    private String content;
+    private UUID senderId;
+    private UUID recipientId;
 }

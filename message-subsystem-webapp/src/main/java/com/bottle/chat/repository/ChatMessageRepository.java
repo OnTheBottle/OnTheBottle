@@ -16,7 +16,7 @@ import java.util.UUID;
 public interface ChatMessageRepository extends CrudRepository<ChatMessage, UUID> {
 
     @Query("SELECT m FROM ChatMessage m"
-        + "  WHERE m.author.id IN (:userIdOne, :userIdTwo)"
+        + "  WHERE m.sender.id IN (:userIdOne, :userIdTwo)"
         + "  AND m.recipient.id IN (:userIdOne, :userIdTwo)"
         + "  ORDER BY m.time DESC")
     public List<ChatMessage> getExistingChatMessages(

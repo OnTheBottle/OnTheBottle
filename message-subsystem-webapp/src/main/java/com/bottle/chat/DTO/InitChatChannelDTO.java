@@ -7,7 +7,8 @@ import java.util.UUID;
 
 @Data
 @ToString
-public class ChatChannelInitializationDTO {
-    private UUID userIdOne;
-    private UUID userIdTwo;
+public class InitChatChannelDTO {
+    private String token;
+    private UUID senderId;
+    private UUID recipientId;
 }

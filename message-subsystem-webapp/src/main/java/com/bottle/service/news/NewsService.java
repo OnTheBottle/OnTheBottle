@@ -44,7 +44,7 @@ public class NewsService {
     public List getUserPosts(UUID userId, String token) {
         List<Map> friends = new ArrayList<>();
         List<Post> posts = new ArrayList<>();
-        friends.add(client.getFriend(userId, token));
+        friends.add(client.getUser(userId, token));
 
         int securityLevel = 1;
         if (client.isFriend(userId, token)) securityLevel = 2;

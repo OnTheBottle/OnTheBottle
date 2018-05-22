@@ -16,8 +16,8 @@ import java.util.UUID;
 @Table(name = "chatMessage")
 public class ChatMessage {
 
-    public ChatMessage(User author, User recipient, String content) {
-        this.author = author;
+    public ChatMessage(User sender, User recipient, String content) {
+        this.sender = sender;
         this.recipient = recipient;
         this.time = new Date();
         this.content = content;
@@ -29,7 +29,7 @@ public class ChatMessage {
 
     @OneToOne
     @JoinColumn(name = "authorId")
-    private User author;
+    private User sender;
 
     @OneToOne
     @JoinColumn(name = "recipientId")

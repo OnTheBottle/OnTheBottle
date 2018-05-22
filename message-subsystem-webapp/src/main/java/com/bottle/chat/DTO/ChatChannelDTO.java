@@ -1,16 +1,18 @@
 package com.bottle.chat.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Data
 @ToString
 @AllArgsConstructor
-public class EstablishedChatChannelDTO {
+public class ChatChannelDTO {
     private UUID channelId;
-    private UUID firstUserId;
-    private UUID secondUserId;
+    private Map firstUser;
+    private Map secondUser;
 }
