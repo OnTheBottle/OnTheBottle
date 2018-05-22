@@ -12,9 +12,8 @@ import java.util.UUID;
 public interface EventRepository extends JpaRepository<Event, UUID> {
     List<Event> findAllByIsActive(boolean isActive, Pageable pageable);
 
-    @Query(value = "SELECT * FROM users INNER JOIN event_users ON users.user_id = event_users.user_id INNER JOIN event ON event_users.event_id = event.event_id where users.user_id = ?1 AND event.is_active = ?2",
-            nativeQuery=true)
-    List<Event> getEventsFromUserIsActive(UUID id, boolean isActive);
+    @Query(value = "SELECT e FROM Event e join e.users as u where u.id = ?1 and e.isActive = ?2")
+    List<Event> getEventsFromUserIsActive(UUID id, boolean isActive, Pageable pageable);
 
     List<Event> getEventsByOwnerAndIsActiveTrue(User owner, Pageable pageable);
 }

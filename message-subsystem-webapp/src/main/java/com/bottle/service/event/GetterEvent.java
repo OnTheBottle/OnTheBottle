@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @Service
 public class GetterEvent {
+    private static final int eventsCount = 3;
     private EventRepository eventRepository;
 
     @Autowired
@@ -28,24 +29,26 @@ public class GetterEvent {
 
     public Set<Event> getActiveEvents(int eventsPage) {
         return new HashSet<>(eventRepository.findAllByIsActive(true,
-                new PageRequest(eventsPage, 3, Sort.Direction.DESC,"startTime")));
+                new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC,"startTime")));
     }
 
     public Set<Event> getPassedEvents(int eventsPage) {
         return new HashSet<>(eventRepository.findAllByIsActive(false,
-                new PageRequest(eventsPage, 3, Sort.Direction.DESC, "startTime")));
+                new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, "startTime")));
     }
 
     public Set<Event> getActiveFromUser(UUID idUser, int eventsPage) {
-        return new HashSet<>(eventRepository.getEventsFromUserIsActive(idUser, true));
+        return new HashSet<>(eventRepository.getEventsFromUserIsActive(idUser, true,
+                new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, "startTime")));
     }
 
     public Set<Event> getPassedFromUser(UUID idUser, int eventsPage) {
-        return new HashSet<>(eventRepository.getEventsFromUserIsActive(idUser, false));
+        return new HashSet<>(eventRepository.getEventsFromUserIsActive(idUser, false,
+                new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, "startTime")));
     }
 
     public Set<Event> getOwnerFromUser(User user, int eventsPage) {
         return new HashSet<>(eventRepository.getEventsByOwnerAndIsActiveTrue(user,
-                new PageRequest(eventsPage, 3, Sort.Direction.DESC, "startTime")));
+                new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, "startTime")));
     }
 }
