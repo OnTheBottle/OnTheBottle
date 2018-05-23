@@ -38,25 +38,25 @@ public class AllEventService {
         registrationEvent.createEvent(eventDTO);
     }
 
-    public Set<EventResponseDTO> getEvents(OptionsDTO options, int eventsPage, UUID userId) {
+    public List<EventResponseDTO> getEvents(OptionsDTO options, int eventsPage, String sortType, UUID userId) {
         User user = getterUser.getUser(userId);
         if (options.isAllEvents()) {
             if (options.isActiveEvents()) {
                 if (options.isOwnerEvents()) {
-                    return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user, eventsPage), user);
+                    return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user, eventsPage, sortType), user);
                 }
-                return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveEvents(eventsPage)), user);
+                return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveEvents(eventsPage, sortType)), user);
             }
-            return getSetResponseEventsInfo(getterEvent.getPassedEvents(eventsPage), user);
+            return getSetResponseEventsInfo(getterEvent.getPassedEvents(eventsPage, sortType), user);
         }
 
         if (options.isActiveEvents()) {
             if (options.isOwnerEvents()) {
-                return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user, eventsPage), user);
+                return getSetResponseEventsInfo(getterEvent.getOwnerFromUser(user, eventsPage, sortType), user);
             }
-            return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveFromUser(userId, eventsPage)), user);
+            return getSetResponseEventsInfo(checkPassedEvents(getterEvent.getActiveFromUser(userId, eventsPage, sortType)), user);
         }
-        return getSetResponseEventsInfo(getterEvent.getPassedFromUser(userId, eventsPage), user);
+        return getSetResponseEventsInfo(getterEvent.getPassedFromUser(userId, eventsPage, sortType), user);
     }
 
     public void updateEvent(EventDTO eventDTO) {
@@ -87,7 +87,7 @@ public class AllEventService {
         entityBinder.deleteUserFromEvent(idEvent, idUser);
     }
 
-    private Set<Event> checkPassedEvents(Set<Event> events) {
+    private List<Event> checkPassedEvents(List<Event> events) {
         Date today = new Date();
         for (Event event : events) {
             if (event.getEndTime().before(today)) {
@@ -98,8 +98,8 @@ public class AllEventService {
         return events;
     }
 
-    private Set<EventResponseDTO> getSetResponseEventsInfo(Set<Event> events, User user) {
-        Set<EventResponseDTO> eventsInfo = new HashSet<>();
+    private List<EventResponseDTO> getSetResponseEventsInfo(List<Event> events, User user) {
+        List<EventResponseDTO> eventsInfo = new ArrayList<>();
         for (Event event : events) {
             eventsInfo.add(setResponseEventInfo(event, user, null));
         }

@@ -8,9 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class GetterEvent {
@@ -27,28 +25,33 @@ public class GetterEvent {
         return eventRepository.getOne(id);
     }
 
-    public Set<Event> getActiveEvents(int eventsPage) {
-        return new HashSet<>(eventRepository.findAllByIsActive(true,
-                new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC,"startTime")));
+    public List<Event> getActiveEvents(int eventsPage, String sortType) {
+        return eventRepository.findAllByIsActive(true, getPageRequest(eventsPage, sortType));
     }
 
-    public Set<Event> getPassedEvents(int eventsPage) {
-        return new HashSet<>(eventRepository.findAllByIsActive(false,
-                new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, "startTime")));
+    public List<Event> getPassedEvents(int eventsPage, String sortType) {
+        return eventRepository.findAllByIsActive(false, getPageRequest(eventsPage, sortType));
     }
 
-    public Set<Event> getActiveFromUser(UUID idUser, int eventsPage) {
-        return new HashSet<>(eventRepository.getEventsFromUserIsActive(idUser, true,
-                new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, "startTime")));
+    public List<Event> getActiveFromUser(UUID idUser, int eventsPage, String sortType) {
+        return eventRepository.getEventsFromUserIsActive(idUser, true, getPageRequest(eventsPage, sortType));
     }
 
-    public Set<Event> getPassedFromUser(UUID idUser, int eventsPage) {
-        return new HashSet<>(eventRepository.getEventsFromUserIsActive(idUser, false,
-                new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, "startTime")));
+    public List<Event> getPassedFromUser(UUID idUser, int eventsPage, String sortType) {
+        return eventRepository.getEventsFromUserIsActive(idUser, false, getPageRequest(eventsPage, sortType));
     }
 
-    public Set<Event> getOwnerFromUser(User user, int eventsPage) {
-        return new HashSet<>(eventRepository.getEventsByOwnerAndIsActiveTrue(user,
-                new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, "startTime")));
+    public List<Event> getOwnerFromUser(User user, int eventsPage, String sortType) {
+        return eventRepository.getEventsByOwnerAndIsActiveTrue(user, getPageRequest(eventsPage, sortType));
+    }
+
+    private PageRequest getPageRequest(int eventsPage, String sortType) {
+        switch (sortType) {
+            case "title": return new  PageRequest(eventsPage, eventsCount, Sort.Direction.ASC, sortType);
+            case "startTime": return new  PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, sortType);
+            case "text": return new  PageRequest(eventsPage, eventsCount, Sort.Direction.ASC, sortType);
+            case "usersCounter": return new  PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, sortType);
+            default: return new  PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, "startTime");
+        }
     }
 }
