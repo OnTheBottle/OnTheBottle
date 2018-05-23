@@ -87,6 +87,11 @@ public class AllEventService {
         entityBinder.deleteUserFromEvent(idEvent, idUser);
     }
 
+    public List<EventResponseDTO> searchEvents(String searchQuery, int eventsPage, UUID idUser) {
+        User user = getterUser.getUser(idUser);
+        return getSetResponseEventsInfo(getterEvent.searchEvents(searchQuery, eventsPage), user);
+    }
+
     private List<Event> checkPassedEvents(List<Event> events) {
         Date today = new Date();
         for (Event event : events) {

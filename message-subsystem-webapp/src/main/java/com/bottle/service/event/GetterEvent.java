@@ -45,13 +45,17 @@ public class GetterEvent {
         return eventRepository.getEventsByOwnerAndIsActiveTrue(user, getPageRequest(eventsPage, sortType));
     }
 
+    public List<Event> searchEvents(String searchQuery, int eventsPage) {
+        return eventRepository.getAllByStringQuery(searchQuery, getPageRequest(eventsPage, ""));
+    }
+
     private PageRequest getPageRequest(int eventsPage, String sortType) {
         switch (sortType) {
             case "title": return new  PageRequest(eventsPage, eventsCount, Sort.Direction.ASC, sortType);
             case "startTime": return new  PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, sortType);
             case "text": return new  PageRequest(eventsPage, eventsCount, Sort.Direction.ASC, sortType);
             case "usersCounter": return new  PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, sortType);
-            default: return new  PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, "startTime");
+            default: return new  PageRequest(eventsPage, eventsCount);
         }
     }
 }

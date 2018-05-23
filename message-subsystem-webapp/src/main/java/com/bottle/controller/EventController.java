@@ -65,11 +65,11 @@ public class EventController {
     }
 
     @RequestMapping(path = "/createEvent", method = RequestMethod.POST)
-    public ResponseEntity<?> createEvent(@RequestBody EventDTO eventDTO,
+    public ResponseEntity<?> createEvent(@RequestBody EventDTO event,
                                          @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
-        allEventService.createEvent(eventDTO);
+        allEventService.createEvent(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -94,11 +94,11 @@ public class EventController {
     }
 
     @RequestMapping(path = "/updateEvent", method = RequestMethod.POST)
-    public ResponseEntity<?> updateEvent(@RequestBody EventDTO eventDTO,
+    public ResponseEntity<?> updateEvent(@RequestBody EventDTO event,
                                             @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
-        allEventService.updateEvent(eventDTO);
+        allEventService.updateEvent(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -109,6 +109,16 @@ public class EventController {
 
         allEventService.closeEvent(event.getId());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/searchEvents", method = RequestMethod.POST)
+    public ResponseEntity<?> searchEvents(@RequestBody SearchEventsDTO searchEvents,
+                                        @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
+
+        List<EventResponseDTO> events = allEventService.searchEvents(searchEvents.getSearchQuery(),
+                searchEvents.getEventsPage(), authService.getAuthId(token));
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 }
 

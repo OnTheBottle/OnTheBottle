@@ -12,8 +12,11 @@ import java.util.UUID;
 public interface EventRepository extends JpaRepository<Event, UUID> {
     List<Event> findAllByIsActive(boolean isActive, Pageable pageable);
 
-    @Query(value = "SELECT e FROM Event e join e.users as u where u.id = ?1 and e.isActive = ?2")
+    @Query(value = "select e from Event e join e.users as u where u.id = ?1 and e.isActive = ?2")
     List<Event> getEventsFromUserIsActive(UUID id, boolean isActive, Pageable pageable);
 
     List<Event> getEventsByOwnerAndIsActiveTrue(User owner, Pageable pageable);
+
+    @Query(value = "select e from Event e where lower(e.title) like lower(concat('%', ?1, '%')) or lower(e.text) like lower(concat('%', ?1, '%'))")
+    List<Event> getAllByStringQuery(String query, Pageable pageable);
 }
