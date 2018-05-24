@@ -45,7 +45,7 @@ public class UserController {
                                             @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
-        Set<UserDTO> users = userService.getPreliminaryInfo(usersId);
+        Set<UserDTO> users = userService.getUsersInfo(usersId);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

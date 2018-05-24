@@ -87,7 +87,7 @@ public class UserService {
 */
     }
 
-    public UserDTO getUserDTO(User user) {
+    private UserDTO getUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setFriendStatus(user.getFriendStatus());
         userDTO.setName(user.getName());
@@ -106,16 +106,12 @@ public class UserService {
         return userDTO;
     }
 
-    public Set<UserDTO> getPreliminaryInfo(List<UserIdDTO> usersId) {
+    public Set<UserDTO> getUsersInfo(List<UserIdDTO> usersId) {
         Set<UserDTO> users = new HashSet<>();
 
         for (UserIdDTO userIdDTO : usersId) {
             User user = userRepository.getOne(userIdDTO.getId());
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(user.getId());
-            userDTO.setName(user.getName());
-            userDTO.setSurname(user.getSurname());
-            userDTO.setAvatarUrl(user.getAvatarUrl());
+            UserDTO userDTO = getUserDTO(user);
             users.add(userDTO);
         }
 
