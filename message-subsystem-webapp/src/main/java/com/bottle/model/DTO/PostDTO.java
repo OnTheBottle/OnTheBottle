@@ -7,7 +7,7 @@ import java.util.UUID;
 @Data
 public class PostDTO {
     private UUID id;
-    private SecurityDTO security;
+    private String security;
     private UUID user_id;
     private String text;
     private String title;

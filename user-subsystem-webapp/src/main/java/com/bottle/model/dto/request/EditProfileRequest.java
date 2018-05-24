@@ -21,4 +21,5 @@ public class EditProfileRequest {
     private String city;
     private String avatarUrl;
     private String status;
+    private String info;
 }

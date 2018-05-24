@@ -1,10 +1,12 @@
 package com.bottle.service;
 
 import com.bottle.entity.User;
+import com.bottle.entity.UserOnline;
 import com.bottle.model.dto.UserDTO;
 import com.bottle.model.dto.request.ReqRegDTO;
 import com.bottle.model.dto.request.ReqAuthDTO;
 import com.bottle.model.dto.request.UserIdDTO;
+import com.bottle.repository.UserOnlineRepository;
 import com.bottle.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,10 +18,12 @@ import java.util.*;
 public class UserService {
 
     private UserRepository userRepository;
+    private UserOnlineRepository onlineRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserOnlineRepository onlineRepository) {
         this.userRepository = userRepository;
+        this.onlineRepository = onlineRepository;
     }
 
     public boolean isUserById(UUID id) {
@@ -67,6 +71,20 @@ public class UserService {
             usersDTO.add(getUserDTO(user));
         }
         return usersDTO;
+    }
+
+    public void setOnlineStatus(UUID userId){
+/*
+        UserOnline userOnline;
+        if (!onlineRepository.existsByUserId(userId)){
+            userOnline = new UserOnline();
+            userOnline.setUserId(userId);
+        }else {
+            userOnline = onlineRepository.getByUserId(userId);
+        }
+        userOnline.setOnline(true);
+        onlineRepository.save(userOnline);
+*/
     }
 
     public UserDTO getUserDTO(User user) {

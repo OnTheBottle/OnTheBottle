@@ -23,7 +23,7 @@ public class EditProfileController {
     public void editProfile(EditProfileRequest request) {
 
         int result = userRepository.setUserById(request.getId(), request.getName(), request.getSurname(), request.getAge(),
-                request.getEmail(), request.getCountry(), request.getCity(), request.getStatus());
+                request.getEmail(), request.getCountry(), request.getCity(), request.getStatus(), request.getInfo());
 
         System.out.println("TestController: Rows affected: " + result);
     }

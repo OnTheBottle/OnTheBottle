@@ -1,6 +1,7 @@
 package com.bottle.service.post;
 
 
+import com.bottle.model.DTO.SecurityDTO;
 import com.bottle.model.entity.Security;
 import com.bottle.model.repository.SecurityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,4 @@ public class SecurityService {
     public Security getSecurityByDescription(String description) {
         return securityRepository.getSecurityByDescription( description );
     }
-
 }

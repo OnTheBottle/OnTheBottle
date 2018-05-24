@@ -56,8 +56,11 @@ public class UserSubsystemClient {
         return isFriend;
     }
 
-    public Map getFriend(UUID id, String token) {
+    public Map getUser(UUID id, String token) {
         String url = Properties.SUB_USER_PATH + "/user/get_by_id";
+        System.out.println("Client getUser id:" + id);
+        System.out.println("Client getUser token:" + token);
+        System.out.println("Client getUser url:" + url);
         Map map = new HashMap();
         try {
             String json = Request.Post(url)
@@ -65,12 +68,14 @@ public class UserSubsystemClient {
                             .add("userId", id.toString())
                             .build())
                     .execute().returnContent().toString();
+            System.out.println("Client getUser json:" + json);
             ObjectMapper mapper = new ObjectMapper();
             map = mapper.readValue(json, HashMap.class);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Client getUser:" + map);
         return map;
     }
 
