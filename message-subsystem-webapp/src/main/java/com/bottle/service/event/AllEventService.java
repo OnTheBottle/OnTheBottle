@@ -92,6 +92,31 @@ public class AllEventService {
         return getSetResponseEventsInfo(getterEvent.searchEvents(searchQuery, eventsPage), user);
     }
 
+    public UsersDTO getUsersEvent(UUID eventId, UUID userId, String token) throws NotEventException {
+        Event event = getterEvent.getEvent(eventId);
+        Set<User> usersEvent = event.getUsers();
+        List<User> friends = new ArrayList<>();
+
+        List<User> allFriends = new ArrayList<>();
+        List<Map> friendsMap = client.getFriends(userId, token);
+        for (Map<String, String> friend : friendsMap) {
+            allFriends.add(getterUser.getUser(UUID.fromString(friend.get("id"))));
+        }
+
+        for (User friend : allFriends) {
+            if (usersEvent.contains(friend)) {
+                friends.add(friend);
+                usersEvent.remove(friend);
+            }
+        }
+
+        UsersDTO result = new UsersDTO();
+        result.setFriends(friends);
+        result.setUsers(new ArrayList<>(usersEvent));
+
+        return result;
+    }
+
     private List<Event> checkPassedEvents(List<Event> events) {
         Date today = new Date();
         for (Event event : events) {
