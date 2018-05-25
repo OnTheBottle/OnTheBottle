@@ -8,27 +8,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatMessageMapper {
-    public static List<ChatMessageDTO> mapMessagesToChatDTOs(List<ChatMessage> chatMessages) {
-        List<ChatMessageDTO> dtos = new ArrayList<ChatMessageDTO>();
 
-        for (ChatMessage chatMessage : chatMessages) {
-            dtos.add(
-                    new ChatMessageDTO(
-                            chatMessage.getContent(),
-                            chatMessage.getSender().getId(),
-                            chatMessage.getRecipient().getId()
-                    )
-            );
+    public static List<ChatMessageDTO> mapMessagesToChatDTOs(List<ChatMessage> messages) {
+        List<ChatMessageDTO> messagesDTO = new ArrayList<ChatMessageDTO>();
+        for (ChatMessage message : messages) {
+            messagesDTO.add(mapToChatMessageDTO(message));
         }
-        return dtos;
+        return messagesDTO;
     }
 
-    public static ChatMessage mapChatDTOtoMessage(ChatMessageDTO dto) {
+    public static ChatMessage mapChatDTOtoMessage(ChatMessageDTO messageDTO) {
         return new ChatMessage(
                 // only need the id for mapping
-                new User(dto.getSenderId()),
-                new User(dto.getRecipientId()),
-                dto.getContent()
+                new User(messageDTO.getSenderId()),
+                new User(messageDTO.getRecipientId()),
+                messageDTO.getContent()
         );
+    }
+
+    public static ChatMessageDTO mapToChatMessageDTO(ChatMessage message) {
+        ChatMessageDTO messageDTO = new ChatMessageDTO();
+        messageDTO.setContent(message.getContent());
+        messageDTO.setTime(message.getTime());
+        messageDTO.setSenderId(message.getSender().getId());
+        messageDTO.setRecipientId(message.getRecipient().getId());
+        return messageDTO;
     }
 }
