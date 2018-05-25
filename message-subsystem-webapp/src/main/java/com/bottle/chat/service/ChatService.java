@@ -74,10 +74,10 @@ public class ChatService {
         return (uuid != null) ? uuid : newChatSession(senderId, recipientId);
     }
 
-    public void submitMessage(ChatMessageDTO chatMessageDTO) {
-        ChatMessage chatMessage = ChatMessageMapper.mapChatDTOtoMessage(chatMessageDTO);
-
-        chatMessageRepository.save(chatMessage);
+    public ChatMessageDTO submitMessage(ChatMessageDTO messageDTO) {
+        ChatMessage message = ChatMessageMapper.mapChatDTOtoMessage(messageDTO);
+        chatMessageRepository.save(message);
+        return ChatMessageMapper.mapToChatMessageDTO(message);
 
 /*
         User senderUser = userService.getUser(chatMessage.getSender().getId());

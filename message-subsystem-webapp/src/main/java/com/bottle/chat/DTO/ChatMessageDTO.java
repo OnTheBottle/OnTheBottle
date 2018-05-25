@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -13,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ChatMessageDTO {
     private String content;
+    private Date time;
     private UUID senderId;
     private UUID recipientId;
 }
