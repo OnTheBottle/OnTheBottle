@@ -1,6 +1,6 @@
 package com.bottle.controller;
 
-import com.bottle.logic.FindPerson;
+import com.bottle.service.FindPersonService;
 import com.bottle.repository.UserRepository;
 import com.bottle.model.dto.request.FindPersonRequest;
 import com.bottle.model.dto.response.FindPersonResponse;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FindPersonController {
 
-    private final UserRepository userRepository;
+    private final FindPersonService findPersonService;
 
     @Autowired
-    public FindPersonController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public FindPersonController(FindPersonService findPersonService) {
+        this.findPersonService = findPersonService;
     }
 
     @PostMapping("/person_search")
@@ -27,7 +27,7 @@ public class FindPersonController {
     public FindPersonResponse getListOfPersons(FindPersonRequest request) {
         System.out.println("request contents: " + request.getSearch() + " " + request.getSearchType());
         // TODO: 24.04.2018 why? need normal service
-        return new FindPerson().findFromDB(userRepository, request);
+        return findPersonService.findFromDB(request);
     }
 
 }

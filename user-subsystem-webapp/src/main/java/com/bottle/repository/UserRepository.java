@@ -4,6 +4,7 @@ import com.bottle.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -44,4 +45,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Transactional
     @Query("update User u set u.name = ?2, u.surname = ?3, u.age = ?4, u.email = ?5, u.country = ?6, u.city = ?7, u.status = ?8, u.info = ?9 where u.id = ?1")
     int setUserById(UUID id, String name, String surname, Integer age, String email, String country, String city, String status, String info);
+
+    @Query("select u from User u where lower(u.name) like :s or lower(u.surname) like :s")
+    List<User> getAllUsersLike(@Param("s")String s);
 }

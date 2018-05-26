@@ -24,7 +24,8 @@ public class InfoPageController {
     @ResponseBody
     public InfoPageResponse getUserInfo(InfoPageRequest request) {
 
-        User user = userRepository.getUserById(request.getId());
+//        User user = userRepository.getUserById(request.getId());
+        User user = userRepository.findOne(request.getId());
 //        User user = userRepository.findOne(UUID.fromString("14dd28b2-1e7e-4575-9923-135c4fbf345b"));
         InfoPageResponse infoPageResponse = new InfoPageResponse();
 
