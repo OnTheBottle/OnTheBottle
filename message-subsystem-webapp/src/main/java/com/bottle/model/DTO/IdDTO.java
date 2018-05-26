@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class idDTO {
+public class IdDTO {
     private UUID id;
 }

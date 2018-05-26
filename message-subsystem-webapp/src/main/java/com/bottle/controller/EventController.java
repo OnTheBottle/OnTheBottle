@@ -3,6 +3,7 @@ package com.bottle.controller;
 import com.bottle.model.DTO.*;
 import com.bottle.model.DTO.validators.EventValidator;
 import com.bottle.model.entity.Place;
+import com.bottle.model.entity.User;
 import com.bottle.service.auth.AuthService;
 import com.bottle.service.event.AllEventService;
 import com.bottle.service.event.NotEventException;
@@ -33,17 +34,17 @@ public class EventController {
 
     @RequestMapping(value = "/getEvents", method = RequestMethod.POST)
     public ResponseEntity<?> getAllEvents(@RequestBody EventRequestDTO eventRequest,
-                                           @RequestParam(name = "access_token") String token) {
+                                          @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         List<EventResponseDTO> events = allEventService.getEvents(
-                eventRequest.getOptions(), eventRequest.getEventsPage(), eventRequest.getSortType() , authService.getAuthId(token));
+                eventRequest.getOptions(), eventRequest.getEventsPage(), eventRequest.getSortType(), authService.getAuthId(token));
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getEvent", method = RequestMethod.POST)
-    public ResponseEntity<?> getEvent(@RequestBody idDTO event,
-                                           @RequestParam(name = "access_token") String token) {
+    public ResponseEntity<?> getEvent(@RequestBody IdDTO event,
+                                      @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         EventResponseDTO eventResponse;
@@ -74,8 +75,8 @@ public class EventController {
     }
 
     @RequestMapping(path = "/joinEvent", method = RequestMethod.POST)
-    public ResponseEntity<?> addUserToEvent(@RequestBody idDTO event,
-                                               @RequestParam(name = "access_token") String token) {
+    public ResponseEntity<?> addUserToEvent(@RequestBody IdDTO event,
+                                            @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         String result = allEventService.addUser(event.getId(), authService.getAuthId(token));
@@ -85,8 +86,8 @@ public class EventController {
     }
 
     @RequestMapping(path = "/leaveEvent", method = RequestMethod.POST)
-    public ResponseEntity<?> leaveUserEvent(@RequestBody idDTO event,
-                                               @RequestParam(name = "access_token") String token) {
+    public ResponseEntity<?> leaveUserEvent(@RequestBody IdDTO event,
+                                            @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         allEventService.deleteUser(event.getId(), authService.getAuthId(token));
@@ -95,7 +96,7 @@ public class EventController {
 
     @RequestMapping(path = "/updateEvent", method = RequestMethod.POST)
     public ResponseEntity<?> updateEvent(@RequestBody EventDTO event,
-                                            @RequestParam(name = "access_token") String token) {
+                                         @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         allEventService.updateEvent(event);
@@ -103,8 +104,8 @@ public class EventController {
     }
 
     @RequestMapping(path = "/closeEvent", method = RequestMethod.POST)
-    public ResponseEntity<?> closeEvent(@RequestBody idDTO event,
-                                           @RequestParam(name = "access_token") String token) {
+    public ResponseEntity<?> closeEvent(@RequestBody IdDTO event,
+                                        @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         allEventService.closeEvent(event.getId());
@@ -113,12 +114,25 @@ public class EventController {
 
     @RequestMapping(path = "/searchEvents", method = RequestMethod.POST)
     public ResponseEntity<?> searchEvents(@RequestBody SearchEventsDTO searchEvents,
-                                        @RequestParam(name = "access_token") String token) {
+                                          @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         List<EventResponseDTO> events = allEventService.searchEvents(searchEvents.getSearchQuery(),
                 searchEvents.getEventsPage(), authService.getAuthId(token));
         return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/getAllUsers", method = RequestMethod.POST)
+    public ResponseEntity<?> getAllUsers(@RequestBody IdDTO event,
+                                                   @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
+
+        try {
+            UsersDTO users = allEventService.getUsersEvent(event.getId(), authService.getAuthId(token), token);
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (NotEventException e) {
+            return ErrorResponse.getErrorResponse("Doesn't exist event");
+        }
     }
 }
 
