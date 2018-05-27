@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FindPersonRequest {
     private String search;
-    private String searchType;
+//    private String searchType;
 }

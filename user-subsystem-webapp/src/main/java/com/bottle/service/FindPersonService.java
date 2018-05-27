@@ -22,28 +22,8 @@ public class FindPersonService {
 
     public FindPersonResponse findFromDB(FindPersonRequest request) {
         FindPersonResponse response = new FindPersonResponse();
-//        String searchQuery = request.getSearch();
-//        String type = request.getSearchType();
         List<User> userList;
         List<UserDTO> dtoList = new ArrayList<>();
-        // TODO: 24.04.2018 use ENUM
-//        switch (type) {
-//            case "name":
-//                userList = repository.getByName(searchQuery);
-//                break;
-//            case "surname":
-//                userList = repository.getBySurname(searchQuery);
-//                break;
-//            case "city":
-//                userList = repository.getByCity(searchQuery);
-//                break;
-//            case "country":
-//                userList = repository.getByCountry(searchQuery);
-//                break;
-//            case "age":
-//                userList = repository.getByAge(Integer.parseInt(searchQuery));
-//                break;
-//        }
 
         userList = userRepository.getAllUsersLike("%" + request.getSearch().toLowerCase() + "%");
 

@@ -25,8 +25,7 @@ public class FindPersonController {
     @PostMapping("/person_search")
     @ResponseBody
     public FindPersonResponse getListOfPersons(FindPersonRequest request) {
-        System.out.println("request contents: " + request.getSearch() + " " + request.getSearchType());
-        // TODO: 24.04.2018 why? need normal service
+        System.out.println("request contents: " + request.getSearch());
         return findPersonService.findFromDB(request);
     }
 
