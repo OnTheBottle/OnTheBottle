@@ -31,7 +31,7 @@ public class RegistrationEvent {
         this.eventRepository = eventRepository;
     }
 
-    public void createEvent(EventDTO eventDTO) {
+    public Event createEvent(EventDTO eventDTO) {
         Event event = buildEvent.build(eventDTO);
         Place place = placeService.getPlace(eventDTO.getPlace());
         User owner = userService.getUser(eventDTO.getOwner());
@@ -40,6 +40,7 @@ public class RegistrationEvent {
         event.setOwner(owner);
 
         entityBinder.addUserToEvent(event, owner);
+        return event;
     }
 
     public void updateEvent(EventDTO eventDTO) {

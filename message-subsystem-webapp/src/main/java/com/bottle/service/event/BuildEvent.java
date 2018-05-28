@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.UUID;
 
 @Service
 public class BuildEvent {
@@ -15,6 +16,7 @@ public class BuildEvent {
         Event event = new Event();
         event = setInfo(eventDTO, event);
         event.setIsActive(true);
+        event.setId(UUID.randomUUID());
 
         return event;
     }

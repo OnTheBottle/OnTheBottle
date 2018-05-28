@@ -5,6 +5,7 @@ import com.bottle.model.DTO.*;
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.User;
 import com.bottle.model.repository.EventRepository;
+import com.bottle.service.post.AllPostService;
 import com.bottle.service.user.GetterUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,12 @@ public class AllEventService {
     private GetterUser getterUser;
     private EventRepository eventRepository;
     private UserSubsystemClient client;
+    private AllPostService allPostService;
 
     @Autowired
     public AllEventService(RegistrationEvent registrationEvent, GetterEvent getterEvent, CloseEvent closeEvent,
                            EntityBinder entityBinder, GetterUser getterUser, EventRepository eventRepository,
-                           UserSubsystemClient client) {
+                           UserSubsystemClient client, AllPostService allPostService) {
         this.registrationEvent = registrationEvent;
         this.getterEvent = getterEvent;
         this.closeEvent = closeEvent;
@@ -32,10 +34,14 @@ public class AllEventService {
         this.getterUser = getterUser;
         this.eventRepository = eventRepository;
         this.client = client;
+        this.allPostService = allPostService;
     }
 
     public void createEvent(EventDTO eventDTO) {
-        registrationEvent.createEvent(eventDTO);
+        Event event = registrationEvent.createEvent(eventDTO);
+        if (eventDTO.isAddPost()) {
+            allPostService.addPost(setPostInfo(event));
+        }
     }
 
     public List<EventResponseDTO> getEvents(OptionsDTO options, int eventsPage, String sortType, UUID userId) {
@@ -177,5 +183,17 @@ public class AllEventService {
         eventResponseDTO.setUsersCounter(event.getUsersCounter());
 
         return eventResponseDTO;
+    }
+
+    private PostDTO setPostInfo(Event event) {
+        PostDTO post = new PostDTO();
+
+        post.setSecurity("Anybody views a post");
+        post.setTitle(String.format("Я создал ивент: %s", event.getTitle()));
+        post.setText(String.format("Я собираю людей %1$td.%1$tm в %tT! Собираемся в %s. " +
+                        "Подробности по ссылке: \nhttp://localhost:8080/master.html#!/eventInfo/%s",
+                event.getStartTime(), event.getPlace().getTitle(), event.getId()));
+        post.setUser_id(event.getOwner().getId());
+        return post;
     }
 }

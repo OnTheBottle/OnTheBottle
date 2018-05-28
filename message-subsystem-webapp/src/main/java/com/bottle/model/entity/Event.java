@@ -1,8 +1,6 @@
 package com.bottle.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,8 +15,6 @@ import java.util.UUID;
 public class Event {
 
     @Id
-    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
-    @GeneratedValue(generator = "uuid-gen")
     @Column(name = "event_id")
     private UUID id;
 
