@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class FindPersonService {
 
@@ -25,7 +26,11 @@ public class FindPersonService {
         List<User> userList;
         List<UserDTO> dtoList = new ArrayList<>();
 
-        userList = userRepository.getAllUsersLike("%" + request.getSearch().toLowerCase() + "%");
+        if (request.getSearch()!= null && !request.getSearch().isEmpty()) {
+            userList = userRepository.getAllUsersLike("%" + request.getSearch().toLowerCase() + "%");
+        } else {
+            userList = userRepository.findAll();
+        }
 
 // TODO: 24.04.2018 write build method
         for (User user : userList) {
