@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -27,7 +28,8 @@ public class FindPersonService {
         List<UserDTO> dtoList = new ArrayList<>();
 
         if (request.getSearch()!= null && !request.getSearch().isEmpty()) {
-            userList = userRepository.getAllUsersLike("%" + request.getSearch().toLowerCase() + "%");
+//            userList = userRepository.getAllUsersLike("%" + request.getSearch().toLowerCase() + "%");
+            userList = userRepository.getAllUsersIn(Arrays.asList(request.getSearch().toLowerCase().split(" ")));
         } else {
             userList = userRepository.findAll();
         }

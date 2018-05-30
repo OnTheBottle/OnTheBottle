@@ -48,4 +48,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query("select u from User u where lower(u.name) like :s or lower(u.surname) like :s")
     List<User> getAllUsersLike(@Param("s")String s);
+
+    @Query("select u from User u where lower(u.name) in :s or lower(u.surname) in :s")
+    List<User> getAllUsersIn(@Param("s")List<String> s);
 }
