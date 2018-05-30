@@ -81,29 +81,39 @@ public class FriendService {
         return setFriendsStatus(friends, auth);
     }
 
+    public User getFriendStatus(UUID userId, UUID authId){
+        User user = userService.getUser(userId);
+        User auth = userService.getUser(authId);
+        return setFriendStatus(user, auth);
+    }
+
+    private User setFriendStatus(User user, User auth) {
+        String status = "";
+        int count = 1;
+        if (user.getFriends().contains(auth)) count = count + 2;
+        if (auth.getFriends().contains(user)) count = count + 4;
+
+        switch (count) {
+            case 1:
+                status = "unknown";
+                break;
+            case 3:
+                status = "notconfirmed";
+                break;
+            case 5:
+                status = "requested";
+                break;
+            case 7:
+                status = "confirmed";
+                break;
+        }
+        user.setFriendStatus(status);
+        return user;
+    }
+
     private Set<User> setFriendsStatus(Set<User> friends, User auth) {
-
         for (User friend : friends) {
-            String status = "";
-            int count = 1;
-            if (friend.getFriends().contains(auth)) count = count + 2;
-            if (auth.getFriends().contains(friend)) count = count + 4;
-
-            switch (count) {
-                case 1:
-                    status = "unknown";
-                    break;
-                case 3:
-                    status = "notconfirmed";
-                    break;
-                case 5:
-                    status = "requested";
-                    break;
-                case 7:
-                    status = "confirmed";
-                    break;
-            }
-            friend.setFriendStatus(status);
+            setFriendStatus(friend, auth);
         }
         return friends;
     }

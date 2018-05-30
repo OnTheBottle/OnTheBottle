@@ -87,7 +87,7 @@ public class UserService {
 */
     }
 
-    private UserDTO getUserDTO(User user) {
+    public UserDTO getUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setFriendStatus(user.getFriendStatus());
         userDTO.setName(user.getName());

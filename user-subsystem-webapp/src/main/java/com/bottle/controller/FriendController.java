@@ -89,6 +89,19 @@ public class FriendController {
         return getFriendsDTO(token, userId, select);
     }
 
+    @RequestMapping(path = "/get_status", method = RequestMethod.POST)
+    public UserDTO getFriendStatus(
+            @RequestParam(name = "access_token") String token,
+            @RequestParam(value = "userId") UUID userId) {
+        if (authService.isValidToken(token)) {
+            if (userService.isUserById(userId)) {
+                UUID authId = authService.getAuthId(token);
+                return userService.getUserDTO(friendService.getFriendStatus(userId, authId));
+            }
+        }
+        return null;
+    }
+
     @RequestMapping(path = "/is_confirmed_friend", method = RequestMethod.POST)
     public boolean isConfirmedFriend(
             @RequestParam(name = "access_token") String token,
@@ -127,6 +140,18 @@ public class FriendController {
         }
         return null;
     }
+
+/*
+    private UserDTO getFriendStatusDTO(String token, UUID userId) {
+        if (authService.isValidToken(token)) {
+            if (userService.isUserById(userId)) {
+                UUID authId = authService.getAuthId(token);
+                return userService.getUserDTO(friendService.getFriendStatus(userId, authId));
+            }
+        }
+        return null;
+    }
+*/
 }
 
 

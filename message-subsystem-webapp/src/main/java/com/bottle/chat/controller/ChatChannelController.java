@@ -3,6 +3,7 @@ package com.bottle.chat.controller;
 import com.bottle.chat.DTO.ChatChannelDTO;
 import com.bottle.chat.DTO.ChatMessageDTO;
 import com.bottle.chat.DTO.InitChatChannelDTO;
+import com.bottle.chat.DTO.ReadingTimeDTO;
 import com.bottle.chat.entity.ChatMessage;
 import com.bottle.chat.mapper.ChatMessageMapper;
 import com.bottle.chat.service.ChatService;
@@ -15,10 +16,7 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -51,6 +49,41 @@ public class ChatChannelController {
     }
 
 /*
+    @RequestMapping(value = "/chat/channel/setTime", method = RequestMethod.POST)
+    @ResponseBody
+    public void setReadingTime(ReadingTimeDTO readingTimeDTO) {
+        if (authService.isValidToken(readingTimeDTO.getToken())) {
+            UUID authId = authService.getAuthId(readingTimeDTO.getToken());
+            chatService.setReadingTime(authId, readingTimeDTO);
+        }
+    }
+*/
+
+    @RequestMapping(value = "/chat/channel/setTime", method = RequestMethod.POST)
+    @ResponseBody
+    public void setReadingTime(
+            @RequestParam(name = "token") String token,
+            @RequestParam(name = "channelId") UUID channelId,
+            @RequestParam(name = "time") long time) {
+        if (authService.isValidToken(token)) {
+            UUID authId = authService.getAuthId(token);
+            chatService.setReadingTime(authId, channelId, new Date(time));
+        }
+    }
+
+    @RequestMapping(value = "/chat/channel/getUnreadCount", method = RequestMethod.POST)
+    @ResponseBody
+    public int getUnreadCount(
+            @RequestParam(name = "token") String token,
+            @RequestParam(name = "interlocutorId") UUID interlocutorId) {
+        if (authService.isValidToken(token)) {
+            UUID authId = authService.getAuthId(token);
+            return chatService.getUnreadCount(authId, interlocutorId);
+        }
+        return 0;
+    }
+
+/*
     @MessageMapping("/private.chat.{channelId}")
     @SendTo("/topic/private.chat.{channelId}")
     public ChatMessageDTO chatMessage(@DestinationVariable String channelId, ChatMessageDTO messageDTO) {
@@ -59,22 +92,22 @@ public class ChatChannelController {
     }
 */
 
-/*
-    @RequestMapping(value = "/chat/channel/getmessages", method = RequestMethod.POST)
-    @ResponseBody
-    public void getExistingChatMessages(
-            @RequestParam(name = "token") String token,
-            @RequestParam(name = "channelId") UUID channelId) {
-        //@PathVariable("channelId") UUID channelId){
-        if (authService.isValidToken(token)) {
-            List messagesDTO = chatService.getExistingChatMessages(channelId);
+    /*
+        @RequestMapping(value = "/chat/channel/getmessages", method = RequestMethod.POST)
+        @ResponseBody
+        public void getExistingChatMessages(
+                @RequestParam(name = "token") String token,
+                @RequestParam(name = "channelId") UUID channelId) {
+            //@PathVariable("channelId") UUID channelId){
+            if (authService.isValidToken(token)) {
+                List messagesDTO = chatService.getExistingChatMessages(channelId);
 
-            //messagesDTO.stream().sorted(Comparator.reverseOrder()).forEachOrdered(messageDTO ->messagingTemplate.convertAndSend("/topic/private.chat." + channelId, messageDTO));
-            messagesDTO.forEach(messageDTO ->messagingTemplate.convertAndSend("/topic/private.chat." + channelId, messageDTO));
-            //messagingTemplate.convertAndSend("/topic/private.chat." + channelId, messagesDTO);
+                //messagesDTO.stream().sorted(Comparator.reverseOrder()).forEachOrdered(messageDTO ->messagingTemplate.convertAndSend("/topic/private.chat." + channelId, messageDTO));
+                messagesDTO.forEach(messageDTO ->messagingTemplate.convertAndSend("/topic/private.chat." + channelId, messageDTO));
+                //messagingTemplate.convertAndSend("/topic/private.chat." + channelId, messagesDTO);
+            }
         }
-    }
-*/
+    */
     @RequestMapping(value = "/chat/channel/getmessages", method = RequestMethod.POST)
     @ResponseBody
     public List<ChatMessageDTO> getExistingChatMessages(

@@ -1,20 +1,20 @@
 package com.bottle.chat.service;
 
-import com.bottle.chat.DTO.ChatChannelDTO;
-import com.bottle.chat.DTO.ChatMessageDTO;
-import com.bottle.chat.DTO.InitChatChannelDTO;
-import com.bottle.chat.DTO.NotificationDTO;
+import com.bottle.chat.DTO.*;
 import com.bottle.chat.entity.ChatChannel;
 import com.bottle.chat.entity.ChatMessage;
+import com.bottle.chat.entity.ChatTime;
 import com.bottle.chat.mapper.ChatMessageMapper;
 import com.bottle.chat.repository.ChatChannelRepository;
 import com.bottle.chat.repository.ChatMessageRepository;
+import com.bottle.chat.repository.ChatTimeRepository;
 import com.bottle.client.UserSubsystemClient;
 import com.bottle.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -24,6 +24,7 @@ public class ChatService {
 
     private ChatChannelRepository chatChannelRepository;
     private ChatMessageRepository chatMessageRepository;
+    private ChatTimeRepository chatTimeRepository;
     private UserService userService;
     private UserSubsystemClient client;
     private final int MAX_PAGABLE_CHAT_MESSAGES = 100;
@@ -32,10 +33,12 @@ public class ChatService {
     public ChatService(
             ChatChannelRepository chatChannelRepository,
             ChatMessageRepository chatMessageRepository,
+            ChatTimeRepository chatTimeRepository,
             UserSubsystemClient client,
             UserService userService) {
         this.chatChannelRepository = chatChannelRepository;
         this.chatMessageRepository = chatMessageRepository;
+        this.chatTimeRepository = chatTimeRepository;
         this.client = client;
         this.userService = userService;
     }
@@ -63,6 +66,18 @@ public class ChatService {
                 userService.getUser(recipientId)
         );
         chatChannelRepository.save(channel);
+
+        ChatTime chatTimeSender = new ChatTime(
+                channel.getId(),
+                senderId
+        );
+        ChatTime chatTimeRecipient = new ChatTime(
+                channel.getId(),
+                recipientId
+        );
+        chatTimeRepository.save(chatTimeSender);
+        chatTimeRepository.save(chatTimeRecipient);
+
         return channel.getId();
     }
 
@@ -78,6 +93,32 @@ public class ChatService {
         ChatMessage message = ChatMessageMapper.mapChatDTOtoMessage(messageDTO);
         chatMessageRepository.save(message);
         return ChatMessageMapper.mapToChatMessageDTO(message);
+    }
+
+    public void setReadingTime(UUID authId, ReadingTimeDTO readingTimeDTO) {
+        UUID channelId = readingTimeDTO.getChannelId();
+        Date time = readingTimeDTO.getTime();
+        chatTimeRepository.setReadingTime(authId, channelId, time);
+    }
+
+    public void setReadingTime(UUID authId, UUID channelId, Date time) {
+//        System.out.println("setReadingTime time: " + time);
+//        System.out.println("setReadingTime authId: " + authId);
+//        System.out.println("setReadingTime channelId: " + channelId);
+        chatTimeRepository.setReadingTime(authId, channelId, time);
+    }
+
+    public int getUnreadCount(UUID authId, UUID interlocutorId) {
+        UUID channelId = chatChannelRepository.getChannelId(authId, interlocutorId);
+        Date time = chatTimeRepository.getReadingTime(authId, channelId);
+        System.out.println("getUnreadCount authId: " + authId);
+        System.out.println("getUnreadCount interlocutorId: " + interlocutorId);
+        System.out.println("getUnreadCount time: " + time);
+        int count = chatMessageRepository.getNumberOfUnreadMessages(authId, interlocutorId, time);
+        //int count = chatMessageRepository.getNumberOfUnreadMessages(authId, time);
+        System.out.println("getUnreadCount count: " + count);
+        return count;
+    }
 
 /*
         User senderUser = userService.getUser(chatMessage.getSender().getId());
@@ -91,7 +132,7 @@ public class ChatService {
                 )
         );
 */
-    }
+
 
     public List<ChatMessageDTO> getExistingChatMessages(UUID channelId) {
         ChatChannel channel = chatChannelRepository.findOne(channelId);
