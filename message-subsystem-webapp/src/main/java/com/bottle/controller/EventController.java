@@ -51,7 +51,6 @@ public class EventController {
         try {
             eventResponse = allEventService.getEvent(event.getId(), authService.getAuthId(token), token);
         } catch (NotEventException e) {
-            System.out.println(e.getMessage());
             return ErrorResponse.getErrorResponse("Doesn't exist event");
         }
         return new ResponseEntity<>(eventResponse, HttpStatus.OK);
@@ -79,8 +78,8 @@ public class EventController {
                                             @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
-        String result = allEventService.addUser(event.getId(), authService.getAuthId(token));
-        if (result.equals("Closed")) return ErrorResponse.getErrorResponse("Closed event");
+        boolean result = allEventService.addUser(event.getId(), authService.getAuthId(token));
+        if (!result) return ErrorResponse.getErrorResponse("Closed event");
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

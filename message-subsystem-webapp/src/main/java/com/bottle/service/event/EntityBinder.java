@@ -24,7 +24,7 @@ public class EntityBinder {
     }
 
     @Transactional
-    public String addUserToEvent(UUID idEvent, UUID idUser) {
+    public boolean addUserToEvent(UUID idEvent, UUID idUser) {
         Event event = eventRepository.getOne(idEvent);
         User user = userRepository.getOne(idUser);
 
@@ -33,9 +33,9 @@ public class EntityBinder {
             user.getEvents().add(event);
             event.setUsersCounter(event.getUsersCounter() + 1);
             eventRepository.save(event);
-            return "Ok";
+            return true;
         } else {
-            return "Closed";
+            return false;
         }
     }
 

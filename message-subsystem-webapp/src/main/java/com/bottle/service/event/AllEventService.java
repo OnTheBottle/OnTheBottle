@@ -85,7 +85,7 @@ public class AllEventService {
         return setResponseEventInfo(event, user, users);
     }
 
-    public String addUser(UUID idEvent, UUID idUser) {
+    public boolean addUser(UUID idEvent, UUID idUser) {
         return entityBinder.addUserToEvent(idEvent, idUser);
     }
 
