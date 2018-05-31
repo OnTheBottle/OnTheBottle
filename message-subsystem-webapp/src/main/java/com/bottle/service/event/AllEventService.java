@@ -104,18 +104,15 @@ public class AllEventService {
         List<User> friends = new ArrayList<>();
 
         List<User> allFriends = new ArrayList<>();
-        List<Map> friendsMap = client.getFriends(userId, token);
-        for (Map<String, String> friend : friendsMap) {
-            allFriends.add(getterUser.getUser(UUID.fromString(friend.get("id"))));
-        }
-
-        for (User friend : allFriends) {
+        List<Map<String,String>> friendsMaps = client.getFriends(userId, token);
+        friendsMaps.forEach(friendsMap -> {
+            User friend = getterUser.getUser(UUID.fromString(friendsMap.get("id")));
             if (usersEvent.contains(friend)) {
                 friends.add(friend);
                 usersEvent.remove(friend);
             }
-        }
-
+            allFriends.add(friend);
+        });
         UsersDTO result = new UsersDTO();
         result.setFriends(friends);
         result.setUsers(new ArrayList<>(usersEvent));
