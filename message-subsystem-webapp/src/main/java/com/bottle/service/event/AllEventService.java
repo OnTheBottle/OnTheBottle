@@ -3,6 +3,7 @@ package com.bottle.service.event;
 import com.bottle.client.UserSubsystemClient;
 import com.bottle.model.DTO.*;
 import com.bottle.model.entity.Event;
+import com.bottle.model.entity.UploadFile;
 import com.bottle.model.entity.User;
 import com.bottle.model.repository.EventRepository;
 import com.bottle.service.post.PostService;
@@ -194,6 +195,7 @@ public class AllEventService {
                         "Подробности по ссылке: \nhttp://localhost:8080/master.html#!/eventInfo/%s",
                 event.getStartTime(), event.getPlace().getTitle(), event.getId()));
         post.setUserId(event.getOwner().getId());
+        post.setUploadFiles(new ArrayList<>());
         return post;
     }
 }
