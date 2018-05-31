@@ -18,8 +18,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(exclude = {"likes","comments","images"})
-@ToString(exclude = {"likes","comments","images"})
+@EqualsAndHashCode(exclude = {"likes","comments","uploadFiles"})
+@ToString(exclude = {"likes","comments","uploadFiles"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "posts")
 public class Post {
@@ -46,8 +46,7 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "post")
-    private Set<Image> images;
-
+    private Set<UploadFile> uploadFiles;
 
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
@@ -79,3 +78,4 @@ public class Post {
     @ManyToMany(mappedBy = "posts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Saver> savers;
 }
+

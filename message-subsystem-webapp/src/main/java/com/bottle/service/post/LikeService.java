@@ -1,41 +1,44 @@
 package com.bottle.service.post;
 
-import com.bottle.model.entity.Like;
-import com.bottle.model.repository.LikeRepository;
+import com.bottle.model.DTO.LikeDTO;
+import com.bottle.model.entity.*;
+import com.bottle.model.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
-
 @Service
 public class LikeService {
-
     private LikeRepository likeRepository;
+    private UserRepository userRepository;
+    private PostRepository postRepository;
 
     @Autowired
-    public LikeService(LikeRepository likeRepository) {
+    public LikeService(LikeRepository likeRepository, PostRepository postRepository, UserRepository userRepository) {
         this.likeRepository = likeRepository;
+        this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     @Transactional
-    public void save(Like like) {
-        likeRepository.save( like );
+    public boolean addLike(LikeDTO likeDTO) {
+        Post post = postRepository.findOne( likeDTO.getPostId() );
+        User user = userRepository.findOne( likeDTO.getUserId() );
+        boolean proverka = likeRepository.existsByPost_IdAndUser_Id( likeDTO.getPostId(), likeDTO.getUserId() );
+        if (proverka) {
+            return true;
+        } else {
+            Like like = new Like( likeDTO.getStatus(), post, user );
+            likeRepository.save( like );
+            return false;
+        }
     }
 
     @Transactional
-    public HashSet<Like> findByPost_Id(UUID post_id) {
-        return likeRepository.findByPost_Id( post_id );
-    }
-
-    @Transactional
-    public List<Like> findByPostId(UUID postId) {
+    public List<Like> getLikes(UUID postId) {
         return likeRepository.findAllByPost_Id( postId );
     }
-
-    @Transactional
-    public boolean exists(UUID postId,UUID userId){return likeRepository.existsByPost_IdAndUser_Id( postId,userId );}
 }

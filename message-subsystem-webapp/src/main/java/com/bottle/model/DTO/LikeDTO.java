@@ -6,8 +6,8 @@ import java.util.UUID;
 
 @Data
 public class LikeDTO {
-    private UUID like_id;
-    private UUID post_id;
-    private UUID user_id;
+    private UUID likeId;
+    private UUID postId;
+    private UUID userId;
     private String status;
 }

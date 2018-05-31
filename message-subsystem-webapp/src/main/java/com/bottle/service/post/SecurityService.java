@@ -1,7 +1,5 @@
 package com.bottle.service.post;
 
-
-import com.bottle.model.DTO.SecurityDTO;
 import com.bottle.model.entity.Security;
 import com.bottle.model.repository.SecurityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +22,5 @@ public class SecurityService {
     @Transactional
     public List<Security> getSecurities() {
         return securityRepository.findAll();
-    }
-
-    @Transactional
-    public Security getSecurity(Integer security_id) {
-        return securityRepository.findOne( security_id );
-    }
-
-    @Transactional
-    public Security getSecurityByDescription(String description) {
-        return securityRepository.getSecurityByDescription( description );
     }
 }

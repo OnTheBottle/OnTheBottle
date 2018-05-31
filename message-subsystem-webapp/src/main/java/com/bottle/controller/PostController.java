@@ -1,6 +1,5 @@
 package com.bottle.controller;
 
-
 import com.bottle.model.DTO.*;
 import com.bottle.model.entity.*;
 import com.bottle.service.post.*;
@@ -15,60 +14,59 @@ import java.util.*;
 @CrossOrigin(origins = "*")
 @RestController
 public class PostController {
-    private AllPostService allPostService;
+    private PostService PostService;
     private AllUserService allUserService;
-    private AllCommentService allCommentService;
-    private AllLikeService allLikeService;
+    private CommentService CommentService;
+    private LikeService LikeService;
     private SecurityService securityService;
-    private ImageService imageService;
 
     @Autowired
-    public PostController(AllPostService allPostService, AllUserService allUserService, SecurityService securityService, ImageService imageService, AllCommentService allCommentService, AllLikeService allLikeService) {
-        this.allPostService = allPostService;
+    public PostController(PostService PostService, AllUserService allUserService, SecurityService securityService, CommentService CommentService, LikeService LikeService) {
+        this.PostService = PostService;
         this.allUserService = allUserService;
         this.securityService = securityService;
-        this.imageService = imageService;
-        this.allCommentService = allCommentService;
-        this.allLikeService = allLikeService;
+        this.CommentService = CommentService;
+        this.LikeService = LikeService;
     }
 
     @RequestMapping(value = "/getPosts", params = "userId", method = RequestMethod.GET)
     public ResponseEntity<List<Post>> listAllPosts(@RequestParam("userId") UUID id) {
-        return new ResponseEntity<>( allPostService.getPostsWithSaver( id ), HttpStatus.OK );
+        return new ResponseEntity<>( PostService.getPostsWithSaver( id ), HttpStatus.OK );
     }
 
     @RequestMapping(value = "/getPostsFriend", params = "userId", method = RequestMethod.GET)
     public ResponseEntity<List<Post>> listAllPostsFriend(@RequestParam("userId") UUID id) {
-        return new ResponseEntity<>( allPostService.getPostsFriend( id ), HttpStatus.OK );
+        return new ResponseEntity<>( PostService.getPostsFriend( id ), HttpStatus.OK );
     }
 
     @RequestMapping(path = "/savePostToMyWall", method = RequestMethod.POST)
     public ResponseEntity<Void> savePostToMyWall(@RequestBody SaverDTO saverDTO) {
-        allPostService.postToMyWall( saverDTO );
+        PostService.postToMyWall( saverDTO );
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
     @RequestMapping(path = "/dropFromWall", method = RequestMethod.DELETE)
     public ResponseEntity<Void> dropFromWall(@RequestBody SaverDTO saverDTO) {
-        allPostService.deleteFromWall( saverDTO );
+        PostService.deleteFromWall( saverDTO );
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
     @RequestMapping(path = "/savePost", method = RequestMethod.POST)
     public ResponseEntity<Void> savePost(@RequestBody PostDTO postDTO) {
-        allPostService.addPost( postDTO );
+        PostService.addPost( postDTO );
         return new ResponseEntity<>( HttpStatus.OK );
+
     }
 
     @RequestMapping(value = "/deletePost", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deletePost(@RequestParam("id") UUID postId) {
-        allPostService.deletePost( postId );
+        PostService.deletePost( postId );
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
     @RequestMapping(path = "/updatePost", method = RequestMethod.POST)
     public ResponseEntity<Void> updatePost(@RequestBody PostDTO postDTO) {
-        allPostService.updatePost( postDTO );
+        PostService.updatePost( postDTO );
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
@@ -84,34 +82,34 @@ public class PostController {
 
     @RequestMapping(path = "/saveComment", method = RequestMethod.POST)
     public ResponseEntity<Void> saveComment(@RequestBody CommentDTO commentDTO) {
-        allCommentService.saveComment( commentDTO );
+        CommentService.saveComment( commentDTO );
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
     @RequestMapping(value = "/getComments", params = "postId", method = RequestMethod.GET)
     public ResponseEntity<List<Comment>> listAllComments(@RequestParam("postId") UUID postId) {
-       return new ResponseEntity<>(allCommentService.getComments( postId ), HttpStatus.OK );
+        return new ResponseEntity<>( CommentService.getComments( postId ), HttpStatus.OK );
     }
 
     @RequestMapping(value = "/deleteComment", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteComment(@RequestParam("id") UUID commentId) {
-        allCommentService.deleteComment( commentId );
+        CommentService.deleteComment( commentId );
         return new ResponseEntity<>( HttpStatus.NO_CONTENT );
     }
 
     @RequestMapping(path = "/addLike", method = RequestMethod.POST)
-    public ResponseEntity<Void> addLike(@RequestBody LikeDTO likeDTO) {
-        boolean like=allLikeService.addLike(likeDTO);
+    public ResponseEntity<List<Like>> addLike(@RequestBody LikeDTO likeDTO) {
+        boolean like = LikeService.addLike( likeDTO );
         if (like) {
             return new ResponseEntity<>( HttpStatus.NO_CONTENT );
         } else {
-            return new ResponseEntity<>( HttpStatus.OK );
+            return new ResponseEntity<>( LikeService.getLikes( likeDTO.getPostId() ), HttpStatus.OK );
         }
     }
 
     @RequestMapping(value = "/getLikes", params = "postId", method = RequestMethod.GET)
     public ResponseEntity<List<Like>> listAllLikes(@RequestParam("postId") UUID postId) {
-        return new ResponseEntity<>(allLikeService.getLikes( postId ), HttpStatus.OK );
+        return new ResponseEntity<>( LikeService.getLikes( postId ), HttpStatus.OK );
     }
 }
 

@@ -23,7 +23,7 @@ public class FavoriteNewsService {
 
     public boolean changeState(UUID postId, UUID userId) {
         User user = userRepository.findOne(userId);
-        Post post = postRepository.getById(postId);
+        Post post = postRepository.findOne(postId);
         boolean isExist = postRepository.existsByIdAndFavoriteUsersContaining(postId, user);
         if (isExist) {
             post.getFavoriteUsers().remove(user);

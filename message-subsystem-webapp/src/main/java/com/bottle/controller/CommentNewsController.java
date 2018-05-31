@@ -1,9 +1,7 @@
 package com.bottle.controller;
 
 import com.bottle.model.entity.Comment;
-import com.bottle.model.repository.CommentRepository;
 import com.bottle.service.auth.AuthService;
-import com.bottle.service.news.LikeNewsService;
 import com.bottle.service.post.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +40,7 @@ public class CommentNewsController {
             @RequestParam(name = "commentId") UUID commentId) {
         if (authService.isValidToken(token)) {
             UUID authId = authService.getAuthId(token);
-            return commentService.deleteComment(authId, commentId);
+            return commentService.isDeletedComment(authId, commentId);
         }
         return false;
     }

@@ -8,6 +8,6 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 public class UserDTO {
-    private UUID user_id;
+    private UUID userId;
 }
 

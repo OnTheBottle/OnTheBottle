@@ -7,27 +7,41 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "images")
+@Table(name = "uploadfiles")
 @Entity
 @EqualsAndHashCode
 @ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Image {
+public class UploadFile {
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
-    @Column(name = "image_id")
+    @Column(name = "uploadFile_id")
     private UUID id;
 
-    @Column(name = "path")
-    private String path;
+    @Column(name = "uploadFile_name")
+    private String name;
+
+    @Column(name = "url")
+    private String url;
+
+    @Column(name = "size")
+    private Long size;
+
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "location")
+    private String location;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
-}
+
+   }

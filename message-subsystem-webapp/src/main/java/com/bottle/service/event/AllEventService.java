@@ -5,7 +5,7 @@ import com.bottle.model.DTO.*;
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.User;
 import com.bottle.model.repository.EventRepository;
-import com.bottle.service.post.AllPostService;
+import com.bottle.service.post.PostService;
 import com.bottle.service.user.GetterUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +21,12 @@ public class AllEventService {
     private GetterUser getterUser;
     private EventRepository eventRepository;
     private UserSubsystemClient client;
-    private AllPostService allPostService;
+    private PostService allPostService;
 
     @Autowired
     public AllEventService(RegistrationEvent registrationEvent, GetterEvent getterEvent, CloseEvent closeEvent,
                            EntityBinder entityBinder, GetterUser getterUser, EventRepository eventRepository,
-                           UserSubsystemClient client, AllPostService allPostService) {
+                           UserSubsystemClient client, PostService allPostService) {
         this.registrationEvent = registrationEvent;
         this.getterEvent = getterEvent;
         this.closeEvent = closeEvent;
@@ -193,7 +193,7 @@ public class AllEventService {
         post.setText(String.format("Я собираю людей %1$td.%1$tm в %tT! Собираемся в %s. " +
                         "Подробности по ссылке: \nhttp://localhost:8080/master.html#!/eventInfo/%s",
                 event.getStartTime(), event.getPlace().getTitle(), event.getId()));
-        post.setUser_id(event.getOwner().getId());
+        post.setUserId(event.getOwner().getId());
         return post;
     }
 }
