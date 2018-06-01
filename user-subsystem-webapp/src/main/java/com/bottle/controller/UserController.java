@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/getUsersInfo", method = RequestMethod.POST)
-    public ResponseEntity<?> leaveUserEvent(@RequestBody List<UserIdDTO> usersId,
+    public ResponseEntity<?> getUsersInfo(@RequestBody List<UserIdDTO> usersId,
                                             @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
