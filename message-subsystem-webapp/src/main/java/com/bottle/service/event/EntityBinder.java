@@ -2,69 +2,42 @@ package com.bottle.service.event;
 
 import com.bottle.model.entity.Event;
 import com.bottle.model.entity.User;
-import com.bottle.model.repository.EventRepository;
-import com.bottle.model.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Random;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
 public class EntityBinder {
-    private EventRepository eventRepository;
-    private UserRepository userRepository;
-
-    @Autowired
-    public EntityBinder(EventRepository eventRepository, UserRepository userRepository) {
-        this.eventRepository = eventRepository;
-        this.userRepository = userRepository;
-    }
-
-    @Transactional
-    public boolean addUserToEvent(UUID idEvent, UUID idUser) {
-        Event event = eventRepository.getOne(idEvent);
-        User user = userRepository.getOne(idUser);
-
-        if (event.getUsers().size() != 0 && event.getIsActive()) {
+    public boolean addUserToEvent(Event event, User user) {
+        if (event.getIsActive()) {
             event.getUsers().add(user);
             user.getEvents().add(event);
             event.setUsersCounter(event.getUsersCounter() + 1);
-            eventRepository.save(event);
             return true;
         } else {
             return false;
         }
     }
 
-    public void addUserToEvent(Event event, User user) {
-        event.getUsers().add(user);
-        user.getEvents().add(event);
-        eventRepository.save(event);
-    }
-
-    @Transactional
-    public void deleteUserFromEvent(UUID idEvent, UUID idUser) {
-        Event event = eventRepository.getOne(idEvent);
-        User user = userRepository.getOne(idUser);
-
-        event.getUsers().remove(user);
-        user.getEvents().remove(event);
-        event.setUsersCounter(event.getUsersCounter() - 1);
-
-        if (user.equals(event.getOwner())) {
-            User owner = getRandomOwner(event.getUsers());
-            if (owner != null) {
-                event.setOwner(owner);
-            } else {
-                event.setOwner(null);
-                event.setIsActive(false);
+    public boolean deleteUserFromEvent(Event event, User user) {
+        if (event.getUsers().size() != 0 && event.getIsActive()) {
+            event.getUsers().remove(user);
+            user.getEvents().remove(event);
+            event.setUsersCounter(event.getUsersCounter() - 1);
+            if (user.equals(event.getOwner())) {
+                User owner = getRandomOwner(event.getUsers());
+                if (owner != null) {
+                    event.setOwner(owner);
+                } else {
+                    event.setOwner(null);
+                    event.setIsActive(false);
+                }
             }
+            return true;
+        } else {
+            return false;
         }
-
-        eventRepository.save(event);
     }
 
     private User getRandomOwner(Set<User> users) {

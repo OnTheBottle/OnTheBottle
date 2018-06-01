@@ -1,15 +1,13 @@
 package com.bottle.model.DTO.validators;
 
-import com.bottle.model.DTO.EventDTO;
+import com.bottle.model.DTO.Request.EventDTO;
+import com.bottle.service.Utilities;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 @Component
 public class EventValidator implements Validator {
@@ -38,24 +36,11 @@ public class EventValidator implements Validator {
     }
 
     private void checkTime(String startTime, String endTime, Errors errors) {
-        Date start = formatDate(startTime);
-        Date end = formatDate(endTime);
+        Date start = Utilities.formatDate(startTime);
+        Date end = Utilities.formatDate(endTime);
 
         if (start.after(end)) {
             errors.rejectValue("startTime", "time.noValid", "Start time must be before end time.");
         }
-    }
-
-    private Date formatDate(String param) {
-        Date date = new Date();
-        try {
-            param = param.replace('T', ' ');
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC+2"));
-            date = dateFormat.parse(param);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
     }
 }

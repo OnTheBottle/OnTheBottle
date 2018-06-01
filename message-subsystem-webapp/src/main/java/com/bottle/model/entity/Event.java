@@ -18,24 +18,24 @@ public class Event {
     @Column(name = "event_id")
     private UUID id;
 
-    @Column(name = "Title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "Text", columnDefinition = "TEXT")
+    @Column(name = "text", columnDefinition = "TEXT")
     private String text;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "Start_time")
+    @Column(name = "start_time")
     private Date startTime;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "End_time")
+    @Column(name = "end_time")
     private Date endTime;
 
     @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<User> users = new HashSet<>();
 
-    @Column(name = "Users_counter")
+    @Column(name = "users_counter")
     private int usersCounter;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
