@@ -1,4 +1,4 @@
-package com.bottle.model.DTO;
+package com.bottle.model.DTO.Response;
 
 import com.bottle.model.entity.Place;
 import com.bottle.model.entity.User;
