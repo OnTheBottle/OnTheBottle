@@ -80,7 +80,7 @@ public class EventController {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         boolean result = eventService.addUser(event.getId(), authService.getAuthId(token));
-        if (!result) return ErrorResponse.getErrorResponse("Closed event"); //TODO
+        if (!result) return ErrorResponse.getErrorResponse("Closed event");
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -91,7 +91,7 @@ public class EventController {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         boolean result = eventService.deleteUser(event.getId(), authService.getAuthId(token));
-        if (!result) return ErrorResponse.getErrorResponse("Closed event"); //TODO
+        if (!result) return ErrorResponse.getErrorResponse("Closed event");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
