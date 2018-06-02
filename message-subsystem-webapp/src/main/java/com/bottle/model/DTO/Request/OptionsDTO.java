@@ -1,4 +1,4 @@
-package com.bottle.model.DTO;
+package com.bottle.model.DTO.Request;
 
 import lombok.Data;
 

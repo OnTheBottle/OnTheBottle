@@ -1,32 +1,39 @@
 package com.bottle.controller;
 
-import com.bottle.model.DTO.*;
+import com.bottle.model.DTO.CommentDTO;
+import com.bottle.model.DTO.LikeDTO;
+import com.bottle.model.DTO.PostDTO;
+import com.bottle.model.DTO.SaverDTO;
 import com.bottle.model.entity.*;
-import com.bottle.service.post.*;
-import com.bottle.service.user.AllUserService;
+import com.bottle.model.repository.UserRepository;
+import com.bottle.service.post.CommentService;
+import com.bottle.service.post.LikeService;
+import com.bottle.service.post.PostService;
+import com.bottle.service.post.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class PostController {
     private PostService PostService;
-    private AllUserService allUserService;
     private CommentService CommentService;
     private LikeService LikeService;
     private SecurityService securityService;
+    private UserRepository userRepository;
 
     @Autowired
-    public PostController(PostService PostService, AllUserService allUserService, SecurityService securityService, CommentService CommentService, LikeService LikeService) {
+    public PostController(PostService PostService, SecurityService securityService, CommentService CommentService, LikeService LikeService, UserRepository userRepository) {
         this.PostService = PostService;
-        this.allUserService = allUserService;
         this.securityService = securityService;
         this.CommentService = CommentService;
         this.LikeService = LikeService;
+        this.userRepository = userRepository;
     }
 
     @RequestMapping(value = "/getPosts", params = "userId", method = RequestMethod.GET)
@@ -72,7 +79,7 @@ public class PostController {
 
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
-        return new ResponseEntity<>( allUserService.getAllUsers(), HttpStatus.OK );
+        return new ResponseEntity<>( userRepository.findAll(), HttpStatus.OK );
     }
 
     @RequestMapping(value = "/getSecurities", method = RequestMethod.GET)
