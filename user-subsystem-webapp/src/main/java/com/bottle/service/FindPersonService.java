@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FindPersonService {
@@ -22,31 +23,32 @@ public class FindPersonService {
         this.userRepository = userRepository;
     }
 
-    public FindPersonResponse findFromDB(FindPersonRequest request) {
-        FindPersonResponse response = new FindPersonResponse();
-        List<User> userList;
-        List<UserDTO> dtoList = new ArrayList<>();
+    public List<User> findFromDB(String request) {
+        List<User> userList = userRepository.findAll();
+        List<String> requestList;
 
-        if (request.getSearch()!= null && !request.getSearch().isEmpty()) {
+        if (request != null && !request.isEmpty()) {
 //            userList = userRepository.getAllUsersLike("%" + request.getSearch().toLowerCase() + "%");
-            userList = userRepository.getAllUsersIn(Arrays.asList(request.getSearch().toLowerCase().split(" ")));
-        } else {
-            userList = userRepository.findAll();
+//            userList = userRepository.getAllUsersIn(Arrays.asList(request.toLowerCase().split(" ")));
+            requestList = Arrays.asList(request.toLowerCase().split(" "));
+            userList = userList.stream().filter(user -> requestList.stream()
+                    .anyMatch(req -> user.getName().toLowerCase().contains(req)
+                            || user.getSurname().toLowerCase().contains(req)))
+                    .collect(Collectors.toList());
         }
 
 // TODO: 24.04.2018 write build method
-        for (User user : userList) {
-            UserDTO dto = new UserDTO();
-            dto.setId(user.getId());
-            dto.setAge(user.getAge());
-            dto.setAvatarUrl(user.getAvatarUrl());
-            dto.setCity(user.getCity());
-            dto.setCountry(user.getCountry());
-            dto.setName(user.getName());
-            dto.setSurname(user.getSurname());
-            dtoList.add(dto);
-        }
-        response.setListOfPersons(dtoList);
-        return response;
+//        for (User user : userList) {
+//            UserDTO dto = new UserDTO();
+//            dto.setId(user.getId());
+//            dto.setAge(user.getAge());
+//            dto.setAvatarUrl(user.getAvatarUrl());
+//            dto.setCity(user.getCity());
+//            dto.setCountry(user.getCountry());
+//            dto.setName(user.getName());
+//            dto.setSurname(user.getSurname());
+////            dtoList.add(dto);
+//        }
+        return userList;
     }
 }
