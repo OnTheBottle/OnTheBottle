@@ -29,6 +29,34 @@ public class UserController {
         this.authService = authService;
     }
 
+    @RequestMapping(path = "/getUser", method = RequestMethod.POST)
+    public UserDTO getUser(
+            @RequestParam(name = "access_token") String token,
+            @RequestParam(value = "userId") UUID userId) {
+        if (authService.isValidToken(token)) {
+            if (userService.isUserById(userId)) {
+                return userService.getUserDTO(userService.getUser(userId));
+            }
+        }
+        return null;
+    }
+
+    @RequestMapping(path = "/getUsers", method = RequestMethod.POST)
+    public Set<UserDTO> getUsers(
+            @RequestParam(name = "access_token") String token,
+            @RequestParam(value = "usersId") Set<UUID> uuidSet) {
+        System.out.println("getUsers uuidSet: " + uuidSet);
+        if (authService.isValidToken(token)) {
+            Set<UserDTO> userDTOSet = userService.getUsersDTO(userService.getUsers(uuidSet));
+            System.out.println("userDTOSet:" + userDTOSet);
+            return userDTOSet;
+            //return userService.getUsersDTO(userService.getUsers(uuidSet));
+        }
+        return null;
+    }
+
+
+    @Deprecated
     @RequestMapping(path = "/get_by_id", method = RequestMethod.POST)
     public UserDTO getUserById(@RequestParam(name = "userId") UUID userId) {
         return userService.getUserById(userId);
@@ -42,7 +70,7 @@ public class UserController {
 
     @RequestMapping(path = "/getUsersInfo", method = RequestMethod.POST)
     public ResponseEntity<?> getUsersInfo(@RequestBody List<UserIdDTO> usersId,
-                                            @RequestParam(name = "access_token") String token) {
+                                          @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         Set<UserDTO> users = userService.getUsersInfo(usersId);
