@@ -40,7 +40,7 @@ public class CommentNewsController {
             @RequestParam(name = "commentId") UUID commentId) {
         if (authService.isValidToken(token)) {
             UUID authId = authService.getAuthId(token);
-            return commentService.isDeletedComment(authId, commentId);
+            return commentService.deleteComment(authId, commentId);
         }
         return false;
     }

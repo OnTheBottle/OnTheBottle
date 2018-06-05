@@ -1,122 +1,186 @@
 package com.bottle.controller;
 
-import com.bottle.model.DTO.CommentDTO;
-import com.bottle.model.DTO.LikeDTO;
-import com.bottle.model.DTO.PostDTO;
-import com.bottle.model.DTO.SaverDTO;
+import com.bottle.model.DTO.*;
 import com.bottle.model.entity.*;
-import com.bottle.model.repository.UserRepository;
-import com.bottle.service.post.CommentService;
-import com.bottle.service.post.LikeService;
-import com.bottle.service.post.PostService;
-import com.bottle.service.post.SecurityService;
+import com.bottle.service.auth.AuthService;
+import com.bottle.service.post.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class PostController {
-    private PostService PostService;
-    private CommentService CommentService;
-    private LikeService LikeService;
+    private PostService postService;
+    private CommentService commentService;
+    private LikeService likeService;
     private SecurityService securityService;
-    private UserRepository userRepository;
+    private AuthService authService;
 
     @Autowired
-    public PostController(PostService PostService, SecurityService securityService, CommentService CommentService, LikeService LikeService, UserRepository userRepository) {
-        this.PostService = PostService;
+    public PostController(PostService postService, SecurityService securityService, CommentService commentService, LikeService likeService, AuthService authService) {
+        this.postService = postService;
         this.securityService = securityService;
-        this.CommentService = CommentService;
-        this.LikeService = LikeService;
-        this.userRepository = userRepository;
+        this.commentService = commentService;
+        this.likeService = likeService;
+        this.likeService = likeService;
+        this.authService = authService;
     }
 
-    @RequestMapping(value = "/getPosts", params = "userId", method = RequestMethod.GET)
-    public ResponseEntity<List<Post>> listAllPosts(@RequestParam("userId") UUID id) {
-        return new ResponseEntity<>( PostService.getPostsWithSaver( id ), HttpStatus.OK );
+    @RequestMapping(path = "/getMorePosts", method = RequestMethod.GET)
+    public ResponseEntity<?> listMorePosts(@RequestParam("lastPostId") UUID lastPostId,
+                                           @RequestParam("userId") UUID userId,
+                                           @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        if (lastPostId == null) {
+            return ErrorResponse.getErrorResponse( "PostId may not be null" );
+        }
+        return new ResponseEntity<>( postService.getMorePosts( userId, lastPostId ), HttpStatus.OK );
     }
 
-    @RequestMapping(value = "/getPostsFriend", params = "userId", method = RequestMethod.GET)
-    public ResponseEntity<List<Post>> listAllPostsFriend(@RequestParam("userId") UUID id) {
-        return new ResponseEntity<>( PostService.getPostsFriend( id ), HttpStatus.OK );
+    @RequestMapping(path = "/getPosts", method = RequestMethod.GET)
+    public ResponseEntity<?> listAllPosts(@RequestParam("userId") UUID id,
+                                          @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        return new ResponseEntity<>( postService.getPostsWithSaver( id ), HttpStatus.OK );
+    }
+
+    @RequestMapping(path = "/getPostsFriend", params = "userId", method = RequestMethod.GET)
+    public ResponseEntity<?> listAllPostsFriend(@RequestParam("userId") UUID id,
+                                                @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        return new ResponseEntity<>( postService.getPostsFriend( id ), HttpStatus.OK );
     }
 
     @RequestMapping(path = "/savePostToMyWall", method = RequestMethod.POST)
-    public ResponseEntity<Void> savePostToMyWall(@RequestBody SaverDTO saverDTO) {
-        PostService.postToMyWall( saverDTO );
+    public ResponseEntity<?> savePostToMyWall(@RequestParam("postId") UUID postId,
+                                              @RequestParam("saverId") UUID saverId,
+                                              @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        postService.postToMyWall( postId, saverId );
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
     @RequestMapping(path = "/dropFromWall", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> dropFromWall(@RequestBody SaverDTO saverDTO) {
-        PostService.deleteFromWall( saverDTO );
+    public ResponseEntity<?> dropFromWall(@RequestParam("postId") UUID postId,
+                                          @RequestParam("saverId") UUID saverId,
+                                          @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        postService.deleteFromWall( postId, saverId );
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
     @RequestMapping(path = "/savePost", method = RequestMethod.POST)
-    public ResponseEntity<Void> savePost(@RequestBody PostDTO postDTO) {
-        PostService.addPost( postDTO );
-        return new ResponseEntity<>( HttpStatus.OK );
-
+    public ResponseEntity<?> savePost(@RequestBody PostDTO postDTO,
+                                      @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        Post post = postService.addPost( postDTO );
+        return new ResponseEntity<>( post, HttpStatus.OK );
     }
 
-    @RequestMapping(value = "/deletePost", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deletePost(@RequestParam("id") UUID postId) {
-        PostService.deletePost( postId );
+    @RequestMapping(path = "/deletePost", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deletePost(@RequestParam("postId") UUID postId,
+                                        @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        postService.deletePost( postId );
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
     @RequestMapping(path = "/updatePost", method = RequestMethod.POST)
-    public ResponseEntity<Void> updatePost(@RequestBody PostDTO postDTO) {
-        PostService.updatePost( postDTO );
+    public ResponseEntity<?> updatePost(@RequestBody PostDTO postDTO,
+                                        @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        postService.updatePost( postDTO );
         return new ResponseEntity<>( HttpStatus.OK );
     }
 
-    @RequestMapping(value = "/getUsers", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> listAllUsers() {
-        return new ResponseEntity<>( userRepository.findAll(), HttpStatus.OK );
-    }
-
-    @RequestMapping(value = "/getSecurities", method = RequestMethod.GET)
-    public ResponseEntity<List<Security>> listAllSecurities() {
+    @RequestMapping(path = "/getSecurities", method = RequestMethod.GET)
+    public ResponseEntity<?> listAllSecurities(@RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
         return new ResponseEntity<>( securityService.getSecurities(), HttpStatus.OK );
     }
 
     @RequestMapping(path = "/saveComment", method = RequestMethod.POST)
-    public ResponseEntity<Void> saveComment(@RequestBody CommentDTO commentDTO) {
-        CommentService.saveComment( commentDTO );
-        return new ResponseEntity<>( HttpStatus.OK );
+    public ResponseEntity<?> saveComment(@RequestBody CommentDTO commentDTO,
+                                         @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        Comment comment = commentService.saveComment( commentDTO );
+        return new ResponseEntity<>( comment, HttpStatus.OK );
     }
 
-    @RequestMapping(value = "/getComments", params = "postId", method = RequestMethod.GET)
-    public ResponseEntity<List<Comment>> listAllComments(@RequestParam("postId") UUID postId) {
-        return new ResponseEntity<>( CommentService.getComments( postId ), HttpStatus.OK );
+    @RequestMapping(value = "/getComments", method = RequestMethod.GET)
+    public ResponseEntity<?> listAllComments(@RequestParam("postId") UUID postId,
+                                             @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        return new ResponseEntity<>( commentService.getComments( postId ), HttpStatus.OK );
     }
 
     @RequestMapping(value = "/deleteComment", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteComment(@RequestParam("id") UUID commentId) {
-        CommentService.deleteComment( commentId );
+    public ResponseEntity<?> deleteComment(@RequestParam("commentId") UUID commentId,
+                                           @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        commentService.deleteCommentFromPost( commentId );
         return new ResponseEntity<>( HttpStatus.NO_CONTENT );
     }
 
     @RequestMapping(path = "/addLike", method = RequestMethod.POST)
-    public ResponseEntity<List<Like>> addLike(@RequestBody LikeDTO likeDTO) {
-        boolean like = LikeService.addLike( likeDTO );
+    public ResponseEntity<?> addLike(@RequestBody LikeDTO likeDTO,
+                                     @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        boolean like = likeService.addLike( likeDTO );
         if (like) {
             return new ResponseEntity<>( HttpStatus.NO_CONTENT );
         } else {
-            return new ResponseEntity<>( LikeService.getLikes( likeDTO.getPostId() ), HttpStatus.OK );
+            return new ResponseEntity<>( likeService.getLikes( likeDTO.getPostId() ), HttpStatus.OK );
         }
     }
 
-    @RequestMapping(value = "/getLikes", params = "postId", method = RequestMethod.GET)
-    public ResponseEntity<List<Like>> listAllLikes(@RequestParam("postId") UUID postId) {
-        return new ResponseEntity<>( LikeService.getLikes( postId ), HttpStatus.OK );
+    @RequestMapping(value = "/getLikes", method = RequestMethod.GET)
+    public ResponseEntity<?> listAllLikes(@RequestParam("postId") UUID postId,
+                                          @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+        return new ResponseEntity<>( likeService.getLikes( postId ), HttpStatus.OK );
+    }
+
+    @RequestMapping(value = "/deleteLike", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteLike(@RequestParam("likeId") UUID likeId,
+                                        @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) {
+            return ErrorResponse.getErrorResponse( "Non-valid token" );
+        }
+
+        return new ResponseEntity<>( likeService.deleteLike( likeId), HttpStatus.OK );
     }
 }
 

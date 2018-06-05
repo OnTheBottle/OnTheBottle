@@ -10,14 +10,20 @@ import java.util.UUID;
 @Repository
 public interface PostRepository extends JpaRepository<Post, UUID> {
 
-    List<Post> findAllByIsDeletedIsFalseAndUserId(UUID user_id);
+    List<Post> findAllByIsDeletedIsFalseAndUserId(UUID userId);
 
-    List<Post> findAllByIsDeletedIsFalseAndUserIdAndSecurityIdLessThan(UUID user_id, int securityLevel);
+    List<Post> findAllByIsDeletedIsFalseAndUserIdAndSecurityIdLessThan(UUID userId, int securityLevel);
 
     boolean existsByIdAndFavoriteUsersContaining(UUID postId, User user);
     //boolean existsByIdAndLikeUsersContaining(UUID postId, User user);
 
-    List<Post> findAllByIsDeletedIsFalseAndUserIdAndSecurity_Name(UUID user_id, String SecurityName);
+    List<Post> findAllByIsDeletedIsFalseAndUserIdAndSecurityName(UUID userId, String SecurityName);
 
-    List<Post> findAllByUserIdOrSaversContainingAndIsDeletedFalseOrderByDateDesc(UUID userId, Saver saver);
+    List<Post> findFirst5ByIsDeletedIsFalseAndUserIdOrSaversContainingOrderByDateDesc(UUID userId, Saver saver);
+
+    List<Post> findAllByIsDeletedIsFalseAndUserIdOrSaversContainingOrderByDateDesc(UUID userId, Saver saver);
+
+
+
+
 }

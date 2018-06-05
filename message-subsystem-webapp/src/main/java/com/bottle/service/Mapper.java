@@ -2,7 +2,10 @@ package com.bottle.service;
 
 import com.bottle.model.DTO.Request.EventDTO;
 import com.bottle.model.DTO.Response.EventResponseDTO;
+import com.bottle.model.DTO.Response.LikesDTO;
 import com.bottle.model.entity.Event;
+import com.bottle.model.entity.Like;
+import com.bottle.model.entity.Post;
 import com.bottle.model.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +17,15 @@ import java.util.Set;
 public class Mapper {
     public List<EventResponseDTO> eventsToEventDTO(List<Event> events, User user) {
         List<EventResponseDTO> eventsInfo = new ArrayList<>();
-        events.forEach(e -> eventsInfo.add(eventToEventDTO(e, user, null)));
+        events.forEach( e -> eventsInfo.add( eventToEventDTO( e, user, null ) ) );
         return eventsInfo;
     }
 
     public void eventDTOToEvent(EventDTO eventDTO, Event event) {
-        event.setTitle(eventDTO.getTitle());
-        event.setText(eventDTO.getText());
-        event.setStartTime(Utilities.formatDate(eventDTO.getStartTime()));
-        event.setEndTime(Utilities.formatDate(eventDTO.getEndTime()));
+        event.setTitle( eventDTO.getTitle() );
+        event.setText( eventDTO.getText() );
+        event.setStartTime( Utilities.formatDate( eventDTO.getStartTime() ) );
+        event.setEndTime( Utilities.formatDate( eventDTO.getEndTime() ) );
     }
 
     public EventResponseDTO eventToEventDTO(Event event, User user, List<User> friends) {
@@ -32,39 +35,69 @@ public class Mapper {
         int index = 0;
 
         EventResponseDTO eventResponseDTO = new EventResponseDTO();
-        eventResponseDTO.setId(event.getId());
-        eventResponseDTO.setTitle(event.getTitle());
-        eventResponseDTO.setText(event.getText());
-        eventResponseDTO.setStartTime(event.getStartTime());
-        eventResponseDTO.setEndTime(event.getEndTime());
-        eventResponseDTO.setPlace(event.getPlace());
-        eventResponseDTO.setMember(usersEvent.contains(user));
-        eventResponseDTO.setActive(event.getIsActive());
-        eventResponseDTO.setOwner(event.getOwner());
+        eventResponseDTO.setId( event.getId() );
+        eventResponseDTO.setTitle( event.getTitle() );
+        eventResponseDTO.setText( event.getText() );
+        eventResponseDTO.setStartTime( event.getStartTime() );
+        eventResponseDTO.setEndTime( event.getEndTime() );
+        eventResponseDTO.setPlace( event.getPlace() );
+        eventResponseDTO.setMember( usersEvent.contains( user ) );
+        eventResponseDTO.setActive( event.getIsActive() );
+        eventResponseDTO.setOwner( event.getOwner() );
 
         if (friends != null) {
             for (User friend : friends) {
                 if (index == 6) break;
-                if (usersEvent.contains(friend)) {
-                    friendsPreliminary.add(friend);
+                if (usersEvent.contains( friend )) {
+                    friendsPreliminary.add( friend );
                     index++;
-                    usersEvent.remove(friend);
+                    usersEvent.remove( friend );
                 }
             }
         }
 
         for (User userEvent : usersEvent) {
             if (index == 6) break;
-            usersPreliminary.add(userEvent);
+            usersPreliminary.add( userEvent );
             index++;
         }
 
 
-        eventResponseDTO.setFriends(friendsPreliminary);
-        eventResponseDTO.setFriendsCounter(friendsPreliminary.size());
-        eventResponseDTO.setUsers(usersPreliminary);
-        eventResponseDTO.setUsersCounter(event.getUsersCounter());
+        eventResponseDTO.setFriends( friendsPreliminary );
+        eventResponseDTO.setFriendsCounter( friendsPreliminary.size() );
+        eventResponseDTO.setUsers( usersPreliminary );
+        eventResponseDTO.setUsersCounter( event.getUsersCounter() );
 
         return eventResponseDTO;
     }
+
+    public LikesDTO likesToLikeDTO(List<Like> likes, User user, Post post) {
+        LikesDTO likesDTO = new LikesDTO();
+        int countLike = 0;
+        int countDislike = 0;
+        boolean userDislike = false;
+        boolean userLike = false;
+        for (Like like : likes) {
+            if (like.getStatus().equals( "like" )) {
+                countLike++;
+                if (like.getUser().getId() == user.getId()) {
+                    userLike = true;
+                }
+            }
+            if (like.getStatus().equals( "dislike" )) {
+                countDislike++;
+                if (like.getUser().getId() == user.getId()) {
+                    userDislike = true;
+                }
+            }
+        }
+        likesDTO.setLikes( likes );
+        likesDTO.setCountLike( countLike );
+        likesDTO.setCountDislike( countDislike );
+        likesDTO.setUserDislike( userDislike );
+        likesDTO.setUserLike( userLike );
+        return likesDTO;
+    }
+
+
 }
