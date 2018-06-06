@@ -33,7 +33,7 @@ public class EventService {
     private UserRepository userRepository;
     private PlaceRepository placeRepository;
     private EventRepository eventRepository;
-    private static final int EVENTS_COUNT = 3;
+    private static final int EVENTS_COUNT = 6;
 
     @Autowired
     public EventService(EntityBinder entityBinder, EventRepository eventRepository, UserSubsystemClient client,
