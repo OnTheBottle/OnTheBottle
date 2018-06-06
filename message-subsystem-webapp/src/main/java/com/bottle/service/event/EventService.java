@@ -141,24 +141,19 @@ public class EventService {
                 searchQuery, getPageRequest(eventsPage, "")), user);
     }
 
-    public UsersDTO getUsersEvent(UUID eventId, UUID userId, String token) { //TODO stream?
+    public UsersDTO getUsersEvent(UUID eventId, UUID userId, String token) {
         Event event = eventRepository.getOne(eventId);
         Set<User> usersEvent = event.getUsers();
+
         List<User> friends = new ArrayList<>();
-
-        List<User> allFriends = new ArrayList<>();
-        List<Map> friendsMap = client.getFriends(userId, token);
-        for (Map<String, String> friend : friendsMap) {
-            allFriends.add(userRepository.getOne(UUID.fromString(friend.get("id"))));
-        }
-
-        for (User friend : allFriends) {
+        List<Map<String,String>> friendsMaps = client.getFriends(userId, token);
+        friendsMaps.forEach(friendsMap -> {
+            User friend = userRepository.getOne(UUID.fromString(friendsMap.get("id")));
             if (usersEvent.contains(friend)) {
                 friends.add(friend);
                 usersEvent.remove(friend);
             }
-        }
-
+        });
         UsersDTO result = new UsersDTO();
         result.setFriends(friends);
         result.setUsers(new ArrayList<>(usersEvent));
