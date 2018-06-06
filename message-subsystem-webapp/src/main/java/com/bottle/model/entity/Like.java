@@ -23,7 +23,7 @@ public class Like {
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
     @Column(name = "like_id")
-    private UUID like_id;
+    private UUID id;
 
     @Column(name = "status")
     private String status;

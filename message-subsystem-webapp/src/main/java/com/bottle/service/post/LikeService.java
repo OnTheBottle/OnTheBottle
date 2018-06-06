@@ -1,10 +1,8 @@
 package com.bottle.service.post;
 
 import com.bottle.model.DTO.LikeDTO;
-import com.bottle.model.DTO.Response.LikesDTO;
 import com.bottle.model.entity.*;
 import com.bottle.model.repository.*;
-import com.bottle.service.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +15,12 @@ public class LikeService {
     private LikeRepository likeRepository;
     private UserRepository userRepository;
     private PostRepository postRepository;
-    private Mapper mapper;
 
     @Autowired
-    public LikeService(LikeRepository likeRepository, PostRepository postRepository, UserRepository userRepository, Mapper mapper) {
+    public LikeService(LikeRepository likeRepository, PostRepository postRepository, UserRepository userRepository) {
         this.likeRepository = likeRepository;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
-        this.mapper = mapper;
     }
 
     @Transactional
@@ -47,14 +43,10 @@ public class LikeService {
     }
 
     @Transactional
-    public LikesDTO deleteLike(UUID likeId) {
-        Like like=likeRepository.findOne( likeId );
-        UUID postId=like.getPost().getId();
-        User user = like.getUser();
-        Post post= like.getPost();
+    public List<Like> deleteLike(UUID likeId) {
+        Like like = likeRepository.findOne( likeId );
+        UUID postId = like.getPost().getId();
         likeRepository.delete( likeId );
-        List<Like> likes = likeRepository.findAllByPostId( postId );
-        LikesDTO likesDTO = mapper.likesToLikeDTO( likes,user,post);
-        return likesDTO;
+        return likeRepository.findAllByPostId( postId );
     }
 }

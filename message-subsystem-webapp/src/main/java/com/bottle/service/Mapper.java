@@ -2,10 +2,7 @@ package com.bottle.service;
 
 import com.bottle.model.DTO.Request.EventDTO;
 import com.bottle.model.DTO.Response.EventResponseDTO;
-import com.bottle.model.DTO.Response.LikesDTO;
 import com.bottle.model.entity.Event;
-import com.bottle.model.entity.Like;
-import com.bottle.model.entity.Post;
 import com.bottle.model.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -70,34 +67,4 @@ public class Mapper {
 
         return eventResponseDTO;
     }
-
-    public LikesDTO likesToLikeDTO(List<Like> likes, User user, Post post) {
-        LikesDTO likesDTO = new LikesDTO();
-        int countLike = 0;
-        int countDislike = 0;
-        boolean userDislike = false;
-        boolean userLike = false;
-        for (Like like : likes) {
-            if (like.getStatus().equals( "like" )) {
-                countLike++;
-                if (like.getUser().getId() == user.getId()) {
-                    userLike = true;
-                }
-            }
-            if (like.getStatus().equals( "dislike" )) {
-                countDislike++;
-                if (like.getUser().getId() == user.getId()) {
-                    userDislike = true;
-                }
-            }
-        }
-        likesDTO.setLikes( likes );
-        likesDTO.setCountLike( countLike );
-        likesDTO.setCountDislike( countDislike );
-        likesDTO.setUserDislike( userDislike );
-        likesDTO.setUserLike( userLike );
-        return likesDTO;
-    }
-
-
 }

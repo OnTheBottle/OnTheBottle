@@ -179,8 +179,7 @@ public class PostController {
         if (!authService.isValidToken( token )) {
             return ErrorResponse.getErrorResponse( "Non-valid token" );
         }
-
-        return new ResponseEntity<>( likeService.deleteLike( likeId), HttpStatus.OK );
+        return new ResponseEntity<>( likeService.deleteLike( likeId ), HttpStatus.OK );
     }
 }
 
