@@ -33,7 +33,7 @@ public class EventService {
     private UserRepository userRepository;
     private PlaceRepository placeRepository;
     private EventRepository eventRepository;
-    private static final int EVENTS_COUNT = 6;
+    private static final int EVENTS_COUNT = 7;
 
     @Autowired
     public EventService(EntityBinder entityBinder, EventRepository eventRepository, UserSubsystemClient client,
@@ -146,7 +146,7 @@ public class EventService {
         Set<User> usersEvent = event.getUsers();
 
         List<User> friends = new ArrayList<>();
-        List<Map<String,String>> friendsMaps = client.getFriends(userId, token);
+        List<Map<String, String>> friendsMaps = client.getFriends(userId, token);
         friendsMaps.forEach(friendsMap -> {
             User friend = userRepository.getOne(UUID.fromString(friendsMap.get("id")));
             if (usersEvent.contains(friend)) {
@@ -159,6 +159,11 @@ public class EventService {
         result.setUsers(new ArrayList<>(usersEvent));
 
         return result;
+    }
+
+    public List<EventResponseDTO> getEventsFromUser(UUID idUser) {
+        User user = userRepository.getOne(idUser);
+        return mapper.eventsToEventDTO(new ArrayList<>(user.getEvents()), user);
     }
 
     private List<Event> checkPassedEvents(List<Event> events) {

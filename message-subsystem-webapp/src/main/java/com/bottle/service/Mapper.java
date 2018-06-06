@@ -14,15 +14,15 @@ import java.util.Set;
 public class Mapper {
     public List<EventResponseDTO> eventsToEventDTO(List<Event> events, User user) {
         List<EventResponseDTO> eventsInfo = new ArrayList<>();
-        events.forEach( e -> eventsInfo.add( eventToEventDTO( e, user, null ) ) );
+        events.forEach(e -> eventsInfo.add(eventToEventDTO(e, user, null)));
         return eventsInfo;
     }
 
     public void eventDTOToEvent(EventDTO eventDTO, Event event) {
-        event.setTitle( eventDTO.getTitle() );
-        event.setText( eventDTO.getText() );
-        event.setStartTime( Utilities.formatDate( eventDTO.getStartTime() ) );
-        event.setEndTime( Utilities.formatDate( eventDTO.getEndTime() ) );
+        event.setTitle(eventDTO.getTitle());
+        event.setText(eventDTO.getText());
+        event.setStartTime(Utilities.formatDate(eventDTO.getStartTime()));
+        event.setEndTime(Utilities.formatDate(eventDTO.getEndTime()));
     }
 
     public EventResponseDTO eventToEventDTO(Event event, User user, List<User> friends) {
@@ -32,38 +32,37 @@ public class Mapper {
         int index = 0;
 
         EventResponseDTO eventResponseDTO = new EventResponseDTO();
-        eventResponseDTO.setId( event.getId() );
-        eventResponseDTO.setTitle( event.getTitle() );
-        eventResponseDTO.setText( event.getText() );
-        eventResponseDTO.setStartTime( event.getStartTime() );
-        eventResponseDTO.setEndTime( event.getEndTime() );
-        eventResponseDTO.setPlace( event.getPlace() );
-        eventResponseDTO.setMember( usersEvent.contains( user ) );
-        eventResponseDTO.setActive( event.getIsActive() );
-        eventResponseDTO.setOwner( event.getOwner() );
+        eventResponseDTO.setId(event.getId());
+        eventResponseDTO.setTitle(event.getTitle());
+        eventResponseDTO.setText(event.getText());
+        eventResponseDTO.setStartTime(event.getStartTime());
+        eventResponseDTO.setEndTime(event.getEndTime());
+        eventResponseDTO.setPlace(event.getPlace());
+        eventResponseDTO.setMember(usersEvent.contains(user));
+        eventResponseDTO.setActive(event.getIsActive());
+        eventResponseDTO.setOwner(event.getOwner());
 
         if (friends != null) {
             for (User friend : friends) {
                 if (index == 6) break;
-                if (usersEvent.contains( friend )) {
-                    friendsPreliminary.add( friend );
+                if (usersEvent.contains(friend)) {
+                    friendsPreliminary.add(friend);
                     index++;
-                    usersEvent.remove( friend );
+                    usersEvent.remove(friend);
                 }
             }
         }
 
         for (User userEvent : usersEvent) {
             if (index == 6) break;
-            usersPreliminary.add( userEvent );
+            usersPreliminary.add(userEvent);
             index++;
         }
 
-
-        eventResponseDTO.setFriends( friendsPreliminary );
-        eventResponseDTO.setFriendsCounter( friendsPreliminary.size() );
-        eventResponseDTO.setUsers( usersPreliminary );
-        eventResponseDTO.setUsersCounter( event.getUsersCounter() );
+        eventResponseDTO.setFriends(friendsPreliminary);
+        eventResponseDTO.setFriendsCounter(friendsPreliminary.size());
+        eventResponseDTO.setUsers(usersPreliminary);
+        eventResponseDTO.setUsersCounter(event.getUsersCounter());
 
         return eventResponseDTO;
     }

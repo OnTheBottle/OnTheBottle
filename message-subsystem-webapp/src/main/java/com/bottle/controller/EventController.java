@@ -131,23 +131,13 @@ public class EventController {
         UsersDTO users = eventService.getUsersEvent(event.getId(), authService.getAuthId(token), token);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-}
 
- /*
-    @PostMapping(path = "/showEventsFromUser")
-    @ResponseBody
-    public EventsResponseDTO showEventsFromUser(IdRequestDTO idRequestDTO) {
-        EventsResponseDTO eventListDTO = new EventsResponseDTO();
-        eventListDTO.setActiveEvents(allUserService.getAllEventsIdFromUser(idRequestDTO.getId()));
+    @RequestMapping(path = "/getEventsFromUser", method = RequestMethod.POST)
+    public ResponseEntity<?> getEventsFromUser(@RequestBody IdDTO event,
+                                         @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
-        return eventListDTO;
+        List<EventResponseDTO> events = eventService.getEventsFromUser(event.getId());
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
-
-    @PostMapping(path = "/showEventsFromPlace")
-    @ResponseBody
-    public EventsResponseDTO showEventsFromPlace(IdRequestDTO idRequestDTO) {
-        EventsResponseDTO eventListDTO = new EventsResponseDTO();
-        eventListDTO.setActiveEvents(allPlaceService.getAllEventsIdInPlace(idRequestDTO.getId()));
-
-        return eventListDTO;
-    }*/
+}
