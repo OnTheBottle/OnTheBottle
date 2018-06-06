@@ -2,6 +2,7 @@ package com.bottle.service;
 
 import com.bottle.entity.User;
 import com.bottle.entity.UserOnline;
+import com.bottle.model.dto.SmallUserDTO;
 import com.bottle.model.dto.UserDTO;
 import com.bottle.model.dto.request.ReqRegDTO;
 import com.bottle.model.dto.request.ReqAuthDTO;
@@ -129,16 +130,34 @@ public class UserService {
         return userDTO;
     }
 
+    public SmallUserDTO getSmallUserDTO(User user) {
+        SmallUserDTO userDTO = new SmallUserDTO();
+        userDTO.setName( user.getName() );
+        userDTO.setSurname( user.getSurname() );
+        userDTO.setId( user.getId() );
+        userDTO.setAvatarUrl( user.getAvatarUrl() );
+        return userDTO;
+    }
+
     public Set<UserDTO> getUsersInfo(List<UserIdDTO> usersId) {
         Set<UserDTO> users = new HashSet<>();
 
         for (UserIdDTO userIdDTO : usersId) {
-            User user = userRepository.getOne(userIdDTO.getId());
-            UserDTO userDTO = getUserDTO(user);
-            users.add(userDTO);
+            User user = userRepository.getOne( userIdDTO.getId() );
+            UserDTO userDTO = getUserDTO( user );
+            users.add( userDTO );
         }
 
         return users;
     }
 
+    public Set<SmallUserDTO> getSmallUsersInfo(List<UserIdDTO> usersId) {
+        Set<SmallUserDTO> users = new HashSet<>();
+        for (UserIdDTO userIdDTO : usersId) {
+            User user = userRepository.getOne( userIdDTO.getId() );
+            SmallUserDTO userDTO = getSmallUserDTO( user );
+            users.add( userDTO );
+        }
+        return users;
+    }
 }

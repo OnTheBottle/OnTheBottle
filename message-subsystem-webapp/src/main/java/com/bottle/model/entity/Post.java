@@ -24,8 +24,6 @@ import java.util.UUID;
 @Table(name = "posts")
 public class Post {
     @Id
-    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
-    @GeneratedValue(generator = "uuid-gen")
     @Column(name = "post_id")
     private UUID id;
 

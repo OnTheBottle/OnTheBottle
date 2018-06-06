@@ -39,7 +39,7 @@ public class UploadController {
                 MultipartFile file = request.getFile( uploadedFile );
                 if (!file.isEmpty()) {
                     try {
-                        uploadFile = uploadFileService.getFile( file );
+                        uploadFile = uploadFileService.saveFile( file );
                     } catch (Exception e) {
                         System.out.println( e.getMessage() );
                         return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
@@ -55,7 +55,7 @@ public class UploadController {
     @RequestMapping(value = "/multiUpload", method = RequestMethod.POST)
     public ResponseEntity<List<UploadFile>> uploadedFiles(MultipartHttpServletRequest request) throws IOException {
         MultiValueMap<String, MultipartFile> filesMap = request.getMultiFileMap();
-        List<UploadFile> uploadFiles = uploadFileService.getListFiles( filesMap );
+        List<UploadFile> uploadFiles = uploadFileService.saveFiles( filesMap );
         return new ResponseEntity<>( uploadFiles, HttpStatus.OK );
     }
 

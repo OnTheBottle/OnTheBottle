@@ -10,7 +10,7 @@ import java.util.UUID;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, UUID> {
 
-    List<Comment> findAllByIsDeletedIsFalseAndPostId(UUID post_id);
+    List<Comment> findAllByIsDeletedIsFalseAndPostId(UUID postId);
 
     boolean existsByIdAndUserId(UUID commentId, UUID userId);
 }

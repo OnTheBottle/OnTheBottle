@@ -27,7 +27,7 @@ public class LikeService {
     public boolean addLike(LikeDTO likeDTO) {
         Post post = postRepository.findOne( likeDTO.getPostId() );
         User user = userRepository.findOne( likeDTO.getUserId() );
-        boolean proverka = likeRepository.existsByPost_IdAndUser_Id( likeDTO.getPostId(), likeDTO.getUserId() );
+        boolean proverka = likeRepository.existsByPostIdAndUserId( likeDTO.getPostId(), likeDTO.getUserId() );
         if (proverka) {
             return true;
         } else {
@@ -39,6 +39,14 @@ public class LikeService {
 
     @Transactional
     public List<Like> getLikes(UUID postId) {
-        return likeRepository.findAllByPost_Id( postId );
+        return likeRepository.findAllByPostId( postId );
+    }
+
+    @Transactional
+    public List<Like> deleteLike(UUID likeId) {
+        Like like = likeRepository.findOne( likeId );
+        UUID postId = like.getPost().getId();
+        likeRepository.delete( likeId );
+        return likeRepository.findAllByPostId( postId );
     }
 }

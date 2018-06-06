@@ -1,7 +1,10 @@
 package com.bottle.service.post;
 
+import com.bottle.config.UploadConfig;
+import com.bottle.model.entity.Post;
 import com.bottle.model.entity.UploadFile;
 import com.bottle.model.repository.UploadFileRepository;
+import com.bottle.service.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -17,33 +20,39 @@ import java.util.UUID;
 @Service
 public class UploadFileService {
     private UploadFileRepository uploadFileRepository;
+    private UploadConfig uploadConfig;
+    private Builder builder;
 
     @Autowired
-    public UploadFileService(UploadFileRepository uploadFileRepository) {
+    public UploadFileService(UploadFileRepository uploadFileRepository, UploadConfig uploadConfig, Builder builder) {
         this.uploadFileRepository = uploadFileRepository;
+        this.uploadConfig = uploadConfig;
+        this.builder = builder;
     }
 
-    public UploadFile getFile(MultipartFile file) throws IOException {
-        saveFileToFolder( file );
-        UploadFile fileInfo=getUploadedFileInfo( file );
-        return saveFileToDatabase( fileInfo );
-    }
-
-    public List<UploadFile> getListFiles(MultiValueMap<String, MultipartFile> multiValueMap) throws IOException {
+    public List<UploadFile> saveFiles(MultiValueMap<String, MultipartFile> multiValueMap) throws IOException {
         List<UploadFile> uploadFiles = new ArrayList<>();
         for (List<MultipartFile> files : multiValueMap.values()) {
             for (MultipartFile multipartFile : files) {
-                saveFileToFolder( multipartFile );
-                UploadFile fileInfo = getUploadedFileInfo( multipartFile );
-                uploadFiles.add( saveFileToDatabase( fileInfo ) );
+                UploadFile fileInfo = saveFile( multipartFile );
+                uploadFiles.add( fileInfo );
             }
         }
         return uploadFiles;
     }
 
+    public UploadFile saveFile(MultipartFile multipartFile) throws IOException {
+        saveFileToFolder( multipartFile );
+        String path = getPath( multipartFile.getOriginalFilename() );
+        String location = getUploadedFolder();
+        UploadFile fileInfo = builder.buildFileInfo( multipartFile, path, location );
+        saveUploadFileToDatabace( fileInfo );
+        return fileInfo;
+    }
+
     @Transactional
     public UploadFile getFile(UUID id) {
-        return uploadFileRepository.findOne(id);
+        return uploadFileRepository.findOne( id );
     }
 
     private void saveFileToFolder(MultipartFile multipartFile) throws IOException {
@@ -51,46 +60,28 @@ public class UploadFileService {
         FileCopyUtils.copy( multipartFile.getBytes(), new FileOutputStream( outputFileName ) );
     }
 
-    private UploadFile saveFileToDatabase(UploadFile uploadFile) {
-        uploadFileRepository.save(uploadFile);
-        return uploadFile;
+    @Transactional
+    public void saveUploadFileToDatabace(UploadFile fileInfo) {
+        uploadFileRepository.save( fileInfo );
+    }
+
+    @Transactional
+    public void linkFilesWithPost(List<UploadFile> uploadFiles, Post post) {
+        for (UploadFile uploadFile : uploadFiles) {
+            uploadFile.setPost( post );
+            uploadFileRepository.save( uploadFile );
+        }
     }
 
     private String getPath(String name) {
-        return "http://localhost:8083//com/bottle/wall/images/" + name;
+        return uploadConfig.getFilePath() + name;
     }
 
     private String getUploadedFolder() {
-        return "message-subsystem-webapp/src/main/resources/static/com/bottle/wall/images/";
-    }
-
-    private UploadFile getUploadedFileInfo(MultipartFile multipartFile)
-            throws IOException {
-        UploadFile fileInfo = new UploadFile();
-        fileInfo.setName( multipartFile.getOriginalFilename() );
-        fileInfo.setSize( multipartFile.getSize() );
-        fileInfo.setType( multipartFile.getContentType() );
-        fileInfo.setUrl( getPath( multipartFile.getOriginalFilename() ) );
-        fileInfo.setLocation( getUploadedFolder() );
-        return fileInfo;
+        return uploadConfig.getUploadFolder();
     }
 
     private String getFilename(MultipartFile multipartFile) {
         return getUploadedFolder() + multipartFile.getOriginalFilename();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

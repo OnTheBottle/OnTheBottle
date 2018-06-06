@@ -1,6 +1,8 @@
 package com.bottle.controller;
 
 
+import com.bottle.entity.User;
+import com.bottle.model.dto.SmallUserDTO;
 import com.bottle.model.dto.UserDTO;
 import com.bottle.model.dto.request.UserIdDTO;
 import com.bottle.service.AuthService;
@@ -33,9 +35,9 @@ public class UserController {
     public UserDTO getUser(
             @RequestParam(name = "access_token") String token,
             @RequestParam(value = "userId") UUID userId) {
-        if (authService.isValidToken(token)) {
-            if (userService.isUserById(userId)) {
-                return userService.getUserDTO(userService.getUser(userId));
+        if (authService.isValidToken( token )) {
+            if (userService.isUserById( userId )) {
+                return userService.getUserDTO( userService.getUser( userId ) );
             }
         }
         return null;
@@ -45,10 +47,10 @@ public class UserController {
     public Set<UserDTO> getUsers(
             @RequestParam(name = "access_token") String token,
             @RequestParam(value = "usersId") Set<UUID> uuidSet) {
-        System.out.println("getUsers uuidSet: " + uuidSet);
-        if (authService.isValidToken(token)) {
-            Set<UserDTO> userDTOSet = userService.getUsersDTO(userService.getUsers(uuidSet));
-            System.out.println("userDTOSet:" + userDTOSet);
+        System.out.println( "getUsers uuidSet: " + uuidSet );
+        if (authService.isValidToken( token )) {
+            Set<UserDTO> userDTOSet = userService.getUsersDTO( userService.getUsers( uuidSet ) );
+            System.out.println( "userDTOSet:" + userDTOSet );
             return userDTOSet;
             //return userService.getUsersDTO(userService.getUsers(uuidSet));
         }
@@ -59,7 +61,7 @@ public class UserController {
     @Deprecated
     @RequestMapping(path = "/get_by_id", method = RequestMethod.POST)
     public UserDTO getUserById(@RequestParam(name = "userId") UUID userId) {
-        return userService.getUserById(userId);
+        return userService.getUserById( userId );
     }
 
     @PostMapping("/get_all")
@@ -68,12 +70,27 @@ public class UserController {
         return userService.getUsers();
     }
 
+    @RequestMapping(path = "/getUser", params = "userId", method = RequestMethod.GET)
+    public ResponseEntity<?> getUser(@RequestParam("userId") UUID id) {
+        User user = userService.getUser( id );
+        return new ResponseEntity<>( user, HttpStatus.OK );
+    }
+
     @RequestMapping(path = "/getUsersInfo", method = RequestMethod.POST)
     public ResponseEntity<?> getUsersInfo(@RequestBody List<UserIdDTO> usersId,
                                           @RequestParam(name = "access_token") String token) {
-        if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
+        if (!authService.isValidToken( token )) return ErrorResponse.getErrorResponse( "Non-valid token" );
 
-        Set<UserDTO> users = userService.getUsersInfo(usersId);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        Set<UserDTO> users = userService.getUsersInfo( usersId );
+        return new ResponseEntity<>( users, HttpStatus.OK );
+    }
+
+    @RequestMapping(path = "/getSmallInfoAboutUsers", method = RequestMethod.POST)
+    public ResponseEntity<?> getSmallUsersInfo(@RequestBody List<UserIdDTO> usersId,
+                                               @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) return ErrorResponse.getErrorResponse( "Non-valid token" );
+
+        Set<SmallUserDTO> users = userService.getSmallUsersInfo( usersId );
+        return new ResponseEntity<>( users, HttpStatus.OK );
     }
 }
