@@ -12,22 +12,26 @@ import java.util.UUID;
 @Table(name = "place")
 public class Place {
     @Id
-    @GenericGenerator(name = "uuid-gen", strategy = "uuid")
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
     @Column(name = "place_id")
-    private UUID placeId;
+    private UUID id;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "text", columnDefinition = "TEXT")
+    private String text;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "type_id")
+    private Type type;
+
+    @Temporal(TemporalType.TIME)
     @Column(name = "start_time")
     private Date startTime;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     @Column(name = "end_time")
     private Date endTime;
 

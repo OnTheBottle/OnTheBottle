@@ -1,20 +1,17 @@
-package com.bottle.model.DTO.Request;
+package com.bottle.DTO;
 
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Data
-public class EventDTO {
+public class PlaceDTO {
     private UUID id;
     private String title;
     private String text;
     private Date startTime;
     private Date endTime;
-    private UUID place;
-    private List<UUID> users;
-    private UUID owner;
-    private boolean addPost;
+    private UUID type;
+    private String image;
 }

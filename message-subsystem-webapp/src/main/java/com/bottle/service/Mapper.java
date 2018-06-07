@@ -21,8 +21,8 @@ public class Mapper {
     public void eventDTOToEvent(EventDTO eventDTO, Event event) {
         event.setTitle(eventDTO.getTitle());
         event.setText(eventDTO.getText());
-        event.setStartTime(Utilities.formatDate(eventDTO.getStartTime()));
-        event.setEndTime(Utilities.formatDate(eventDTO.getEndTime()));
+        event.setStartTime(eventDTO.getStartTime());
+        event.setEndTime(eventDTO.getEndTime());
     }
 
     public EventResponseDTO eventToEventDTO(Event event, User user, List<User> friends) {

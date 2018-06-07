@@ -1,4 +1,4 @@
-package com.bottle.service.auth;
+package com.bottle.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

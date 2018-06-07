@@ -18,8 +18,8 @@ public class Builder {
         Event event = new Event();
         String title = eventDTO.getTitle();
         String text = eventDTO.getText();
-        Date startTime = Utilities.formatDate( eventDTO.getStartTime() );
-        Date endTime = Utilities.formatDate( eventDTO.getEndTime() );
+        Date startTime = eventDTO.getStartTime();
+        Date endTime = eventDTO.getEndTime();
 
         event.setTitle( title );
         event.setText( text );
