@@ -35,4 +35,8 @@ public class PlaceService {
     public List<Type> getTypesPlace() {
         return typeRepository.findAll();
     }
+
+    public List<Place> getPlaces() {
+        return placeRepository.findAll();
+    }
 }

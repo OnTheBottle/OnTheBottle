@@ -2,6 +2,7 @@ package com.bottle.controller;
 
 
 import com.bottle.DTO.PlaceDTO;
+import com.bottle.entity.Place;
 import com.bottle.entity.Type;
 import com.bottle.service.AuthService;
 import com.bottle.service.PlaceService;
@@ -40,5 +41,13 @@ public class PlacesController {
 
         List<Type> typesPlace = placeService.getTypesPlace();
         return new ResponseEntity<>(typesPlace, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/getPlaces", method = RequestMethod.GET)
+    public ResponseEntity<?> getPlaces(@RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
+
+        List<Place> places = placeService.getPlaces();
+        return new ResponseEntity<>(places, HttpStatus.OK);
     }
 }
