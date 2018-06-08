@@ -57,7 +57,7 @@ public class EventService {
         event.setOwner(owner);
         entityBinder.addUserToEvent(event, owner);
         eventRepository.save(event);
-        if (eventDTO.isAddPost()) allPostService.addPost(setPostInfo(event));
+        //if (eventDTO.isAddPost()) allPostService.addPost(setPostInfo(event)); TODO перенести на фронт
     }
 
     public List<EventResponseDTO> getEvents(OptionsDTO options, int eventsPage, String sortType, UUID userId) {
@@ -177,7 +177,7 @@ public class EventService {
         return events;
     }
 
-    private PostDTO setPostInfo(Event event) {
+    /*private PostDTO setPostInfo(Event event) { TODO
         PostDTO post = new PostDTO();
 
         post.setSecurity("Anybody views a post");
@@ -188,7 +188,7 @@ public class EventService {
         post.setUserId(event.getOwner().getId());
         post.setUploadFiles(new ArrayList<>());
         return post;
-    }
+    }*/
 
     private PageRequest getPageRequest(int eventsPage, String sortType) {
         switch (sortType) {

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PlaceService {
@@ -21,8 +22,11 @@ public class PlaceService {
         this.typeRepository = typeRepository;
     }
 
-    public void createPlace(PlaceDTO placeDTO) {
+    public String createPlace(PlaceDTO placeDTO) {
+        UUID id = UUID.randomUUID();
+
         Place place = new Place();
+        place.setId(id);
         place.setTitle(placeDTO.getTitle());
         place.setText(placeDTO.getText());
         place.setStartTime(placeDTO.getStartTime());
@@ -30,6 +34,8 @@ public class PlaceService {
         place.setType(typeRepository.getOne(placeDTO.getType()));
         place.setImage(placeDTO.getImage());
         placeRepository.save(place);
+
+        return id.toString();
     }
 
     public List<Type> getTypesPlace() {

@@ -15,16 +15,8 @@ import java.util.UUID;
 @ToString(exclude = "events")
 public class Place {
     @Id
-    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
-    @GeneratedValue(generator = "uuid-gen")
     @Column(name = "place_id")
     private UUID id;
-
-    @Column(name = "Title")
-    private String title;
-
-    @Column(name = "Avatar")
-    private String avatar;
 
     @JsonIgnore
     @OneToMany(mappedBy = "place")

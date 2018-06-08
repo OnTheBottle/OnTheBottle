@@ -19,11 +19,13 @@ import java.util.List;
 public class PlacesController {
     private AuthService authService;
     private PlaceService placeService;
+    private PlaceSubsystemClient client;
 
     @Autowired
-    public PlacesController(AuthService authService, PlaceService placeService) {
+    public PlacesController(AuthService authService, PlaceService placeService, PlaceSubsystemClient client) {
         this.authService = authService;
         this.placeService = placeService;
+        this.client = client;
     }
 
     @RequestMapping(path = "/createPlace", method = RequestMethod.POST)
@@ -31,7 +33,8 @@ public class PlacesController {
                                          @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
-        placeService.createPlace(place);
+        String id = placeService.createPlace(place);
+        client.addPlace(token, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
