@@ -1,10 +1,14 @@
 package com.bottle.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;

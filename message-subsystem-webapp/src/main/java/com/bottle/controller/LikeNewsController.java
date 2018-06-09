@@ -25,14 +25,14 @@ public class LikeNewsController {
     public int changeStateLike(
             @RequestParam(name = "access_token") String token,
             @RequestParam(name = "postId") UUID postId) {
-        return changeState(token,postId,"like"); //-1 removed, 1 - added
+        return changeState(token, postId, "like"); //-1 removed, 1 - added
     }
 
     @RequestMapping(path = "/change_dislike", method = RequestMethod.POST)
     public int changeStateDisLike(
             @RequestParam(name = "access_token") String token,
             @RequestParam(name = "postId") UUID postId) {
-        return changeState(token,postId,"dislike"); //-1 removed, 1 - added
+        return changeState(token, postId, "dislike"); //-1 removed, 1 - added
     }
 
     private int changeState(String token, UUID postId, String clickBy) {

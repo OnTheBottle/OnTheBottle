@@ -50,7 +50,7 @@ public class ChatService {
         return (channel != null && !channel.isEmpty()) ? channel.get(0).getId() : null;
     }
 
-    public ChatChannelDTO initChannel(InitChatChannelDTO initChatChannelDTO){
+    public ChatChannelDTO initChannel(InitChatChannelDTO initChatChannelDTO) {
         UUID senderId = initChatChannelDTO.getSenderId();
         UUID recipientId = initChatChannelDTO.getRecipientId();
         String token = initChatChannelDTO.getToken();

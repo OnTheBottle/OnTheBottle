@@ -18,7 +18,7 @@ public class EventResponseDTO {
     private Date startTime;
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     private Date endTime;
-    private Place place; //TODO UUID
+    private Place place;
     private boolean member;
     private boolean active;
     private User owner;

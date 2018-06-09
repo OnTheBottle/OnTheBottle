@@ -1,6 +1,8 @@
 package com.bottle.model.repository;
 
-import com.bottle.model.entity.*;
+import com.bottle.model.entity.Like;
+import com.bottle.model.entity.Post;
+import com.bottle.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

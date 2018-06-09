@@ -1,14 +1,11 @@
 package com.bottle.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,8 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(exclude = {"likes","comments","uploadFiles"})
-@ToString(exclude = {"likes","comments","uploadFiles"})
+@EqualsAndHashCode(exclude = {"likes", "comments", "uploadFiles"})
+@ToString(exclude = {"likes", "comments", "uploadFiles"})
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "posts")
 public class Post {
@@ -69,10 +66,10 @@ public class Post {
     @JoinTable(name = "FavoriteNews", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
     private Set<User> favoriteUsers;
 
-/*    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "LikeNews", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
-    private Set<User> likeUsers;
-*/
+    /*    @ManyToMany(fetch = FetchType.LAZY)
+        @JoinTable(name = "LikeNews", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
+        private Set<User> likeUsers;
+    */
     @ManyToMany(mappedBy = "posts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Saver> savers;
 }

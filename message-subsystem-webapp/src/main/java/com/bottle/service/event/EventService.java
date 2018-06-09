@@ -1,7 +1,6 @@
 package com.bottle.service.event;
 
 import com.bottle.client.UserSubsystemClient;
-import com.bottle.model.DTO.PostDTO;
 import com.bottle.model.DTO.Request.EventDTO;
 import com.bottle.model.DTO.Request.OptionsDTO;
 import com.bottle.model.DTO.Response.EventResponseDTO;
@@ -14,8 +13,8 @@ import com.bottle.model.repository.PlaceRepository;
 import com.bottle.model.repository.UserRepository;
 import com.bottle.service.Builder;
 import com.bottle.service.Mapper;
-import com.bottle.service.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -27,22 +26,21 @@ import java.util.*;
 public class EventService {
     private EntityBinder entityBinder;
     private UserSubsystemClient client;
-    private PostService allPostService;
     private Builder builder;
     private Mapper mapper;
     private UserRepository userRepository;
     private PlaceRepository placeRepository;
     private EventRepository eventRepository;
-    private static final int EVENTS_COUNT = 7;
+
+    @Value("${event.pagination.limit}")
+    private int eventsCount;
 
     @Autowired
     public EventService(EntityBinder entityBinder, EventRepository eventRepository, UserSubsystemClient client,
-                        PostService allPostService, Builder builder, Mapper mapper,
-                        UserRepository userRepository, PlaceRepository placeRepository) {
+                        Builder builder, Mapper mapper, UserRepository userRepository, PlaceRepository placeRepository) {
         this.entityBinder = entityBinder;
         this.eventRepository = eventRepository;
         this.client = client;
-        this.allPostService = allPostService;
         this.builder = builder;
         this.mapper = mapper;
         this.userRepository = userRepository;
@@ -105,10 +103,11 @@ public class EventService {
         Event event = eventRepository.getOne(idEvent);
         User user = userRepository.getOne(idUser);
         List<User> friends = new ArrayList<>();
-        List<Map> users = client.getFriends(idUser, token); //TODO stream?
+        List<Map> users = client.getFriends(idUser, token);
         for (Map<String, String> item : users) {
             friends.add(userRepository.getOne(UUID.fromString(item.get("id"))));
         }
+
         return mapper.eventToEventDTO(event, user, friends);
     }
 
@@ -179,15 +178,15 @@ public class EventService {
     private PageRequest getPageRequest(int eventsPage, String sortType) {
         switch (sortType) {
             case "title":
-                return new PageRequest(eventsPage, EVENTS_COUNT, Sort.Direction.ASC, sortType);
+                return new PageRequest(eventsPage, eventsCount, Sort.Direction.ASC, sortType);
             case "startTime":
-                return new PageRequest(eventsPage, EVENTS_COUNT, Sort.Direction.DESC, sortType);
+                return new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, sortType);
             case "text":
-                return new PageRequest(eventsPage, EVENTS_COUNT, Sort.Direction.ASC, sortType);
+                return new PageRequest(eventsPage, eventsCount, Sort.Direction.ASC, sortType);
             case "usersCounter":
-                return new PageRequest(eventsPage, EVENTS_COUNT, Sort.Direction.DESC, sortType);
+                return new PageRequest(eventsPage, eventsCount, Sort.Direction.DESC, sortType);
             default:
-                return new PageRequest(eventsPage, EVENTS_COUNT);
+                return new PageRequest(eventsPage, eventsCount);
         }
     }
 }

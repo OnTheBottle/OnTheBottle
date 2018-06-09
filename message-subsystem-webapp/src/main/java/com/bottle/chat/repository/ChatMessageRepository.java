@@ -23,7 +23,7 @@ public interface ChatMessageRepository extends CrudRepository<ChatMessage, UUID>
     List<ChatMessage> getExistingChatMessages(
             @Param("userIdOne") UUID userIdOne, @Param("userIdTwo") UUID userIdTwo, Pageable pageable);
 
-//    @Query("SELECT COUNT(m) FROM ChatMessage m " +
+    //    @Query("SELECT COUNT(m) FROM ChatMessage m " +
 //            "WHERE m.time=:time AND m.recipient.id=:authId")
 //    int getNumberOfUnreadMessages(
 //            @Param("authId") UUID authId,

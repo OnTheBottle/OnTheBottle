@@ -134,7 +134,7 @@ public class EventController {
 
     @RequestMapping(path = "/getEventsFromUser", method = RequestMethod.POST)
     public ResponseEntity<?> getEventsFromUser(@RequestBody IdDTO event,
-                                         @RequestParam(name = "access_token") String token) {
+                                               @RequestParam(name = "access_token") String token) {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         List<EventResponseDTO> events = eventService.getEventsFromUser(event.getId());

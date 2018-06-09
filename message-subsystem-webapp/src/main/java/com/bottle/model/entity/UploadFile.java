@@ -3,7 +3,6 @@ package com.bottle.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -42,4 +41,4 @@ public class UploadFile {
     @JoinColumn(name = "post_id")
     private Post post;
 
-   }
+}

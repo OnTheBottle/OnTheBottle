@@ -1,17 +1,10 @@
 package com.bottle.client;
 
-import com.bottle.Properties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -19,9 +12,11 @@ import java.util.*;
 
 @Controller
 public class UserSubsystemClient {
+    @Value("${sub.user.path}")
+    private String subUserPath;
 
     public List getFriends(UUID id, String token) {
-        String url = Properties.SUB_USER_PATH + "/friend/get_confirmed_friends";
+        String url = subUserPath + "/friend/get_confirmed_friends";
         List array = new ArrayList();
         try {
             String json = Request.Post(url)
@@ -39,7 +34,7 @@ public class UserSubsystemClient {
     }
 
     public boolean isFriend(UUID id, String token) {
-        String url = Properties.SUB_USER_PATH + "/friend/is_confirmed_friend";
+        String url = subUserPath + "/friend/is_confirmed_friend";
         boolean isFriend = false;
         try {
             String response = Request.Post(url)
@@ -57,7 +52,7 @@ public class UserSubsystemClient {
     }
 
     public Map getUser(UUID id, String token) {
-        String url = Properties.SUB_USER_PATH + "/user/get_by_id";
+        String url = subUserPath + "/user/get_by_id";
         Map map = new HashMap();
         try {
             String json = Request.Post(url)
@@ -75,7 +70,7 @@ public class UserSubsystemClient {
     }
 
     public List getFriendsOld(UUID id, String token) {
-        String userSystemPath = Properties.SUB_USER_PATH + "/friend/get_confirmed_friends";
+        String userSystemPath = subUserPath + "/friend/get_confirmed_friends";
         String url = userSystemPath + "?userId=" + id + "&access_token=" + token;
         System.out.println("client sends reguest: " + url);
         //POST request

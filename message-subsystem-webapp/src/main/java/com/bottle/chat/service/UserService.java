@@ -21,13 +21,13 @@ public class UserService {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    public User getUser(UUID userId){
+    public User getUser(UUID userId) {
         return userRepository.getOne(userId);
     }
 
     public void notifyUser(User recipientUser, NotificationDTO notification) {
-            simpMessagingTemplate
-                    .convertAndSend("/topic/user.notification." + recipientUser.getId(), notification);
+        simpMessagingTemplate
+                .convertAndSend("/topic/user.notification." + recipientUser.getId(), notification);
     }
 
 }

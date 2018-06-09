@@ -44,7 +44,7 @@ public class SyncController {
 
     @RequestMapping(path = "/place/addPlace", method = RequestMethod.POST)
     public void addPlace(@RequestParam(name = "access_token") String token,
-                                      @RequestParam(name = "place") String id) {
+                         @RequestParam(name = "place") String id) {
         if (authService.isValidToken(token)) {
             Place place = new Place();
             place.setId(UUID.fromString(id));

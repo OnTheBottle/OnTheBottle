@@ -36,38 +36,38 @@ public class UploadController {
             Iterator<String> itr = request.getFileNames();
             while (itr.hasNext()) {
                 String uploadedFile = itr.next();
-                MultipartFile file = request.getFile( uploadedFile );
+                MultipartFile file = request.getFile(uploadedFile);
                 if (!file.isEmpty()) {
                     try {
-                        uploadFile = uploadFileService.saveFile( file );
+                        uploadFile = uploadFileService.saveFile(file);
                     } catch (Exception e) {
-                        System.out.println( e.getMessage() );
-                        return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
+                        System.out.println(e.getMessage());
+                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                     }
                 }
             }
         } catch (Exception e) {
-            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR );
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>( uploadFile, HttpStatus.OK );
+        return new ResponseEntity<>(uploadFile, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/multiUpload", method = RequestMethod.POST)
     public ResponseEntity<List<UploadFile>> uploadedFiles(MultipartHttpServletRequest request) throws IOException {
         MultiValueMap<String, MultipartFile> filesMap = request.getMultiFileMap();
-        List<UploadFile> uploadFiles = uploadFileService.saveFiles( filesMap );
-        return new ResponseEntity<>( uploadFiles, HttpStatus.OK );
+        List<UploadFile> uploadFiles = uploadFileService.saveFiles(filesMap);
+        return new ResponseEntity<>(uploadFiles, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get/{fileId}", method = RequestMethod.GET)
     public void getFile(HttpServletResponse response, @PathVariable UUID fileId) {
-        UploadFile dataFile = uploadFileService.getFile( fileId );
-        File file = new File( dataFile.getLocation(), dataFile.getName() );
+        UploadFile dataFile = uploadFileService.getFile(fileId);
+        File file = new File(dataFile.getLocation(), dataFile.getName());
         try {
-            response.setContentType( dataFile.getType() );
-            response.setHeader( "Content-disposition", "attachment; filename=\"" + dataFile.getName() + "\"" );
-            FileCopyUtils.copy( FileUtils.readFileToByteArray( file ),
-                    response.getOutputStream() );
+            response.setContentType(dataFile.getType());
+            response.setHeader("Content-disposition", "attachment; filename=\"" + dataFile.getName() + "\"");
+            FileCopyUtils.copy(FileUtils.readFileToByteArray(file),
+                    response.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }

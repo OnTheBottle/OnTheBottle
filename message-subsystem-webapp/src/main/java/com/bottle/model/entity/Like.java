@@ -39,8 +39,8 @@ public class Like {
     private User user;
 
     public Like(String status, Post post, User user) {
-        this.status=status;
-        this.post=post;
-        this.user=user;
+        this.status = status;
+        this.post = post;
+        this.user = user;
     }
 }
