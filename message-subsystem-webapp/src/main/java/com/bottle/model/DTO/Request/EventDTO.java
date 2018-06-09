@@ -16,5 +16,4 @@ public class EventDTO {
     private UUID place;
     private List<UUID> users;
     private UUID owner;
-    private boolean addPost;
 }
