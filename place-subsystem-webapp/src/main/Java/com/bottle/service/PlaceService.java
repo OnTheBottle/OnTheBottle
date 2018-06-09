@@ -1,5 +1,6 @@
 package com.bottle.service;
 
+import com.bottle.DTO.IdDTO;
 import com.bottle.DTO.PlaceDTO;
 import com.bottle.entity.Place;
 import com.bottle.entity.Type;
@@ -8,6 +9,7 @@ import com.bottle.repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,5 +46,23 @@ public class PlaceService {
 
     public List<Place> getPlaces() {
         return placeRepository.findAll();
+    }
+
+    public List<PlaceDTO> getPlacesInfo(List<IdDTO> placesId) {
+        List<Place> places = new ArrayList<>();
+        if (placesId.isEmpty()) {
+            places = placeRepository.findAll();
+        }
+        List<PlaceDTO> placesDTO = new ArrayList<>();
+
+        places.forEach(p -> {
+            PlaceDTO placeDTO = new PlaceDTO();
+            placeDTO.setId(p.getId());
+            placeDTO.setTitle(p.getTitle());
+            placeDTO.setImage(p.getImage());
+            placesDTO.add(placeDTO);
+        });
+
+        return placesDTO;
     }
 }

@@ -1,6 +1,7 @@
 package com.bottle.controller;
 
 
+import com.bottle.DTO.IdDTO;
 import com.bottle.DTO.PlaceDTO;
 import com.bottle.entity.Place;
 import com.bottle.entity.Type;
@@ -51,6 +52,15 @@ public class PlacesController {
         if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
 
         List<Place> places = placeService.getPlaces();
+        return new ResponseEntity<>(places, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/getPlacesInfo", method = RequestMethod.POST)
+    public ResponseEntity<?> getPlacesInfo(@RequestBody List<IdDTO> placesId,
+                                           @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken(token)) return ErrorResponse.getErrorResponse("Non-valid token");
+
+        List<PlaceDTO> places = placeService.getPlacesInfo(placesId);
         return new ResponseEntity<>(places, HttpStatus.OK);
     }
 }
