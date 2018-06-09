@@ -1,11 +1,11 @@
 package com.bottle.service.post;
 
-import com.bottle.config.UploadConfig;
 import com.bottle.model.entity.Post;
 import com.bottle.model.entity.UploadFile;
 import com.bottle.model.repository.UploadFileRepository;
 import com.bottle.service.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.MultiValueMap;
@@ -20,13 +20,17 @@ import java.util.UUID;
 @Service
 public class UploadFileService {
     private UploadFileRepository uploadFileRepository;
-    private UploadConfig uploadConfig;
     private Builder builder;
 
+    @Value("${upload.filePath}")
+    private String filePath;
+
+    @Value("${upload.uploadFolder}")
+    private String uploadFolder;
+
     @Autowired
-    public UploadFileService(UploadFileRepository uploadFileRepository, UploadConfig uploadConfig, Builder builder) {
+    public UploadFileService(UploadFileRepository uploadFileRepository, Builder builder) {
         this.uploadFileRepository = uploadFileRepository;
-        this.uploadConfig = uploadConfig;
         this.builder = builder;
     }
 
@@ -74,11 +78,11 @@ public class UploadFileService {
     }
 
     private String getPath(String name) {
-        return uploadConfig.getFilePath() + name;
+        return filePath + name;
     }
 
     private String getUploadedFolder() {
-        return uploadConfig.getUploadFolder();
+        return uploadFolder;
     }
 
     private String getFilename(MultipartFile multipartFile) {

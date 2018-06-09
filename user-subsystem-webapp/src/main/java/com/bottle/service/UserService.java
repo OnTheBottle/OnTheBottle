@@ -29,19 +29,19 @@ public class UserService {
     }
 
     public boolean isUserById(UUID id) {
-        return userRepository.existsById(id);
+        return userRepository.existsById( id );
     }
 
     public UUID getIdByLogin(String login) {
-        return UUID.fromString(userRepository.getIdByLogin(login));
+        return UUID.fromString( userRepository.getIdByLogin( login ) );
     }
 
     public boolean addNewUser(ReqRegDTO userDTO) {
         try {
-            User user = new User(userDTO);
-            user.setLogin(userDTO.getLogin().toLowerCase());
-            user.setEmail(userDTO.getEmail().toLowerCase());
-            userRepository.save(user);
+            User user = new User( userDTO );
+            user.setLogin( userDTO.getLogin().toLowerCase() );
+            user.setEmail( userDTO.getEmail().toLowerCase() );
+            userRepository.save( user );
         } catch (Exception e) {
             return false;
         }
@@ -49,17 +49,28 @@ public class UserService {
     }
 
     public boolean isAuth(ReqAuthDTO authDTO) {
-        return userRepository.isAuth(authDTO.getLogin(), authDTO.getPassword());
+        return userRepository.isAuth( authDTO.getLogin(), authDTO.getPassword() );
     }
 
     public UserDTO getUserById(UUID id) {
-        User user = userRepository.getUserById(id);
-        return getUserDTO(user);
+        User user = userRepository.getUserById( id );
+        return getUserDTO( user );
     }
 
     @Transactional
-    public User getUser(UUID id) {
-        return userRepository.getUserById(id);
+    public User getUser(UUID userId) {
+        return userRepository.findOne( userId );
+    }
+
+    @Transactional
+    public SmallUserDTO getSmallInfoUser(UUID userId) {
+        User user = userRepository.findOne( userId );
+        SmallUserDTO smallUserDTO = new SmallUserDTO();
+        smallUserDTO.setId( user.getId() );
+        smallUserDTO.setName( user.getName() );
+        smallUserDTO.setSurname( user.getSurname() );
+        smallUserDTO.setAvatarUrl( user.getAvatarUrl() );
+        return smallUserDTO;
     }
 
     @Transactional
@@ -67,8 +78,8 @@ public class UserService {
         List<User> users = new ArrayList<>();
         for (UserIdDTO id : usersId) {
             UUID idUser = id.getId();
-            User user = userRepository.getUserById(idUser);
-            users.add(user);
+            User user = userRepository.getUserById( idUser );
+            users.add( user );
         }
         return users;
     }
@@ -77,22 +88,21 @@ public class UserService {
     public Set<User> getUsers(Set<UUID> usersId) {
         Set<User> users = new HashSet<>();
         for (UUID id : usersId) {
-            User user = userRepository.getUserById(id);
-            users.add(user);
+            User user = userRepository.getUserById( id );
+            users.add( user );
         }
         return users;
     }
 
-
     public Set<UserDTO> getUsers() {
         Set<User> users = userRepository.getAllByDeletedFalse();
-        return getUsersDTO(users);
+        return getUsersDTO( users );
     }
 
     public Set<UserDTO> getUsersDTO(Set<User> users) {
         Set<UserDTO> usersDTO = new HashSet<>();
         for (User user : users) {
-            usersDTO.add(getUserDTO(user));
+            usersDTO.add( getUserDTO( user ) );
         }
         return usersDTO;
     }
@@ -111,27 +121,27 @@ public class UserService {
 */
     }
 
+ //   public UserDTO getUserDTO(User user) {
+ //       UserDTO userDTO = new UserDTO();
+ //       userDTO.setFriendStatus( user.getFriendStatus() );
+ //       userDTO.setName( user.getName() );
+ //       userDTO.setSurname( user.getSurname() );
+ //       userDTO.setId( user.getId() );
+ //       userDTO.setAge( user.getAge() );
+ //       userDTO.setAvatarUrl( user.getAvatarUrl() );
+ //       userDTO.setCity( user.getCity() );
+ //       userDTO.setCountry( user.getCountry() );
+ //       List<UUID> friends = new ArrayList<>();
+//
+ //       for (User friend : user.getFriends()) {
+ //           friends.add( friend.getId() );
+ //       }
+ //       userDTO.setFriendsId( friends );
+ //       return userDTO;
+ //   }
+//
     public UserDTO getUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setFriendStatus(user.getFriendStatus());
-        userDTO.setName(user.getName());
-        userDTO.setSurname(user.getSurname());
-        userDTO.setId(user.getId());
-        userDTO.setAge(user.getAge());
-        userDTO.setAvatarUrl(user.getAvatarUrl());
-        userDTO.setCity(user.getCity());
-        userDTO.setCountry(user.getCountry());
-        List<UUID> friends = new ArrayList<>();
-
-        for (User friend : user.getFriends()) {
-            friends.add(friend.getId());
-        }
-        userDTO.setFriendsId(friends);
-        return userDTO;
-    }
-
-    public SmallUserDTO getSmallUserDTO(User user) {
-        SmallUserDTO userDTO = new SmallUserDTO();
         userDTO.setName( user.getName() );
         userDTO.setSurname( user.getSurname() );
         userDTO.setId( user.getId() );
@@ -139,23 +149,13 @@ public class UserService {
         return userDTO;
     }
 
+    @Transactional
     public Set<UserDTO> getUsersInfo(List<UserIdDTO> usersId) {
         Set<UserDTO> users = new HashSet<>();
 
         for (UserIdDTO userIdDTO : usersId) {
             User user = userRepository.getOne( userIdDTO.getId() );
             UserDTO userDTO = getUserDTO( user );
-            users.add( userDTO );
-        }
-
-        return users;
-    }
-
-    public Set<SmallUserDTO> getSmallUsersInfo(List<UserIdDTO> usersId) {
-        Set<SmallUserDTO> users = new HashSet<>();
-        for (UserIdDTO userIdDTO : usersId) {
-            User user = userRepository.getOne( userIdDTO.getId() );
-            SmallUserDTO userDTO = getSmallUserDTO( user );
             users.add( userDTO );
         }
         return users;

@@ -43,12 +43,12 @@ public class Builder {
         post.setText( postDTO.getText() );
         post.setIsDeleted( false );
         if (post.getComments() == null) {
-            post.setComments( new HashSet<Comment>() );
+            post.setComments( new HashSet<>() );
         } else {
             post.setComments( postDTO.getComments() );
         }
         if (post.getLikes() == null) {
-            post.setLikes( new HashSet<Like>() );
+            post.setLikes( new HashSet<>() );
         } else {
             post.setLikes( postDTO.getLikes() );
         }
