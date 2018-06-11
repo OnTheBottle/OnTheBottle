@@ -35,8 +35,8 @@ public class ChatChannelController {
 
     @MessageMapping("/private.chat.{channelId}")
     @SendTo("/topic/private.chat.{channelId}")
-    public ChatMessageDTO chatMessage(@DestinationVariable String channelId, ChatMessageDTO messageDTO) {
-        return chatService.submitMessage(messageDTO);
+    public ChatMessageDTO chatMessage(@DestinationVariable UUID channelId, ChatMessageDTO messageDTO) {
+        return chatService.submitMessage(channelId, messageDTO);
     }
 
     @RequestMapping(value = "/chat/channel/init", method = RequestMethod.POST)
@@ -78,7 +78,7 @@ public class ChatChannelController {
             @RequestParam(name = "interlocutorId") UUID interlocutorId) {
         if (authService.isValidToken(token)) {
             UUID authId = authService.getAuthId(token);
-            return chatService.getUnreadCount(authId, interlocutorId);
+            return chatService.getNumberNewChatMessages(authId, interlocutorId);
         }
         return 0;
     }
@@ -116,6 +116,19 @@ public class ChatChannelController {
         if (authService.isValidToken(token)) {
             List messages = chatService.getExistingChatMessages(channelId);
             return messages;
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/chat/channel/getChannels", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<UUID, UUID> getChannels(
+            @RequestParam(name = "token") String token,
+            @RequestParam(name = "interlocutorIds") List<UUID> interlocutorIds) {
+        if (authService.isValidToken(token)) {
+            UUID authId = authService.getAuthId(token);
+            Map<UUID, UUID> channelMap = chatService.getChannelMap(authId, interlocutorIds);
+            return channelMap;
         }
         return null;
     }

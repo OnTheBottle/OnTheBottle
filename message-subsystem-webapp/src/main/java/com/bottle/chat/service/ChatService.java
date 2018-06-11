@@ -14,13 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ChatService {
+
+    static Date nullDate = new Date(0);
 
     private ChatChannelRepository chatChannelRepository;
     private ChatMessageRepository chatMessageRepository;
@@ -89,8 +88,17 @@ public class ChatService {
         return (uuid != null) ? uuid : newChatSession(senderId, recipientId);
     }
 
-    public ChatMessageDTO submitMessage(ChatMessageDTO messageDTO) {
+    public Map<UUID, UUID> getChannelMap(UUID authId, List<UUID> interlocutorIds) {
+        Map<UUID, UUID> channelMap = new HashMap<>();
+        interlocutorIds.forEach(interlocutorId -> {
+            channelMap.put(interlocutorId, getChannel(authId, interlocutorId));
+        });
+        return channelMap;
+    }
+
+    public ChatMessageDTO submitMessage(UUID channelId, ChatMessageDTO messageDTO) {
         ChatMessage message = ChatMessageMapper.mapChatDTOtoMessage(messageDTO);
+        message.setChannelId(channelId);
         chatMessageRepository.save(message);
         return ChatMessageMapper.mapToChatMessageDTO(message);
     }
@@ -108,18 +116,52 @@ public class ChatService {
         chatTimeRepository.setReadingTime(authId, channelId, time);
     }
 
-    public int getUnreadCount(UUID authId, UUID interlocutorId) {
+    public int getNumberNewChatMessages(UUID authId, UUID interlocutorId) {
+        if (authId == null || interlocutorId == null) return 0;
+
         UUID channelId = chatChannelRepository.getChannelId(authId, interlocutorId);
         Date time = chatTimeRepository.getReadingTime(authId, channelId);
-        System.out.println("getUnreadCount authId: " + authId);
-        System.out.println("getUnreadCount interlocutorId: " + interlocutorId);
-        System.out.println("getUnreadCount time: " + time);
-        int count = chatMessageRepository.getNumberOfUnreadMessages(authId, interlocutorId, time);
-        //int count = chatMessageRepository.getNumberOfUnreadMessages(authId, time);
-        System.out.println("getUnreadCount count: " + count);
-        return count;
+        int number = chatMessageRepository.getNumberOfNewMessages(channelId, time);
+        System.out.println("getNumberNewChatMessages number: " + number);
+        return number;
     }
 
+/*
+    public int getNumberNewMessages(UUID authId) {
+        if (authId == null) return 0;
+
+        int count = 0;
+        Set<UUID> channelIds = chatChannelRepository.getChannelIds(authId);
+
+        for (UUID channelId : channelIds) {
+            Date time = chatTimeRepository.getReadingTime(authId, channelId);
+            UUID interlocutorId = chatChannelRepository.getInterlocutorId(authId, channelId);
+            count += chatMessageRepository.getNumberOfUnreadMessages(authId, interlocutorId, time);
+        }
+        System.out.println("getNumberAllUnreadMessages count: " + count);
+        return count;
+    }
+*/
+
+    public ChatNotificationDTO getChatNotificationDTO(UUID authId) {
+
+        if (authId == null) return null;
+
+        Map<UUID, Integer> map = new HashMap<>();
+        Set<UUID> channelIds = chatChannelRepository.getChannelIds(authId);
+
+        int count = 0;
+
+        for (UUID channelId : channelIds) {
+            Date time;
+            time = chatTimeRepository.getReadingTime(authId, channelId);
+            if (time == null) time = ChatService.nullDate;
+            int number = chatMessageRepository.getNumberOfNewMessages(channelId, time);
+            map.put(channelId, number);
+            count += number;
+        }
+        return new ChatNotificationDTO(count, map);
+    }
 /*
         User senderUser = userService.getUser(chatMessage.getSender().getId());
         User recipientUser = userService.getUser(chatMessage.getRecipient().getId());

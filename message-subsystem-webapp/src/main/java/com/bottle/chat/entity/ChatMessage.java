@@ -27,6 +27,9 @@ public class ChatMessage {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID messageId;
 
+    @Column
+    private UUID channelId;
+
     @OneToOne
     @JoinColumn(name = "authorId")
     private User sender;

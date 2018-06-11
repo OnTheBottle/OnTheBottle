@@ -30,9 +30,8 @@ public interface ChatMessageRepository extends CrudRepository<ChatMessage, UUID>
 //            @Param("time") Date time);
 //
     @Query("SELECT COUNT(m) FROM ChatMessage m " +
-            "WHERE m.time=:time AND m.sender.id=:interlocutorId AND m.recipient.id=:authId")
-    int getNumberOfUnreadMessages(
-            @Param("authId") UUID authId,
-            @Param("interlocutorId") UUID interlocutorId,
+            "WHERE m.time>:time AND m.channelId=:channelId")
+    int getNumberOfNewMessages(
+            @Param("channelId") UUID channelId,
             @Param("time") Date time);
 }

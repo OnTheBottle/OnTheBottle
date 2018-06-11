@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Transactional
@@ -25,7 +26,16 @@ public interface ChatChannelRepository extends CrudRepository<ChatChannel, UUID>
     @Query("SELECT c.id FROM ChatChannel c"
             + "  WHERE c.firstUser.id IN (:firstId, :secondId)"
             + "  AND c.secondUser.id IN (:firstId, :secondId)")
-    UUID getChannelId(
-            @Param("firstId") UUID firstId, @Param("secondId") UUID secondId);
+    UUID getChannelId(@Param("firstId") UUID firstId, @Param("secondId") UUID secondId);
+
+    @Query("SELECT c.id FROM ChatChannel c"
+            + "  WHERE c.firstUser.id=:authId OR c.secondUser.id=:authId")
+    Set<UUID> getChannelIds(@Param("authId") UUID authId);
+
+    @Query("SELECT c.firstUser.id FROM ChatChannel c"
+            + "  WHERE c.id=:channelId AND c.secondUser.id=:authId")
+    UUID getInterlocutorId(
+            @Param("authId") UUID authId,
+            @Param("channelId") UUID channelId);
 
 }
