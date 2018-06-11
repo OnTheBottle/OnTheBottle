@@ -146,6 +146,7 @@ public class UserService {
         userDTO.setSurname( user.getSurname() );
         userDTO.setId( user.getId() );
         userDTO.setAvatarUrl( user.getAvatarUrl() );
+        userDTO.setFriendStatus(user.getFriendStatus());
         return userDTO;
     }
 
