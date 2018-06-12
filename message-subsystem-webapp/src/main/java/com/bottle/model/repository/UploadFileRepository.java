@@ -8,6 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface UploadFileRepository extends JpaRepository<UploadFile, UUID> {
-
+    UploadFile getByName(String name);
 
 }

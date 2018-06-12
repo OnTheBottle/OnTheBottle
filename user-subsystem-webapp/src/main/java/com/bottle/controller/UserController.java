@@ -83,4 +83,15 @@ public class UserController {
         Set<UserDTO> users = userService.getUsersInfo( usersId );
         return new ResponseEntity<>( users, HttpStatus.OK );
     }
+
+    @RequestMapping(path = "/addAvatarUrl", method = RequestMethod.POST)
+    public ResponseEntity<?> addAvatar(@RequestParam(name = "avatarUrl") String url,
+                                     @RequestParam(name = "userId") UUID userId,
+                                     @RequestParam(name = "access_token") String token) {
+        if (!authService.isValidToken( token )) return ErrorResponse.getErrorResponse( "Non-valid token" );
+        User user = userService.getUser( userId );
+        user.setAvatarUrl( url );
+        userService.updateUser( user );
+        return new ResponseEntity<>( HttpStatus.OK );
+    }
 }

@@ -2,12 +2,13 @@ package com.bottle.service.post;
 
 import com.bottle.model.entity.Post;
 import com.bottle.model.entity.UploadFile;
+import com.bottle.model.entity.User;
 import com.bottle.model.repository.UploadFileRepository;
+import com.bottle.model.repository.UserRepository;
 import com.bottle.service.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,9 @@ public class UploadFileService {
 
     @Value("${upload.uploadFolder}")
     private String uploadFolder;
+
+    @Value("${upload.usersIcoUploadFolder}")
+    private String usersIcoUploadFolder;
 
     @Autowired
     public UploadFileService(UploadFileRepository uploadFileRepository, Builder builder) {
@@ -61,7 +65,15 @@ public class UploadFileService {
 
     private void saveFileToFolder(MultipartFile multipartFile) throws IOException {
         String outputFileName = getFilename( multipartFile );
-        FileCopyUtils.copy( multipartFile.getBytes(), new FileOutputStream( outputFileName ) );
+        BufferedOutputStream stream =
+                new BufferedOutputStream( new FileOutputStream( new File( outputFileName ) ) );
+        stream.write( multipartFile.getBytes() );
+        stream.close();
+    }
+
+    @Transactional
+    public UploadFile getFileByName(String name) throws IOException {
+        return uploadFileRepository.getByName( name );
     }
 
     @Transactional
@@ -87,5 +99,22 @@ public class UploadFileService {
 
     private String getFilename(MultipartFile multipartFile) {
         return getUploadedFolder() + multipartFile.getOriginalFilename();
+    }
+
+    public UploadFile writeAvatar(String data) throws IOException {
+        String base64Image = data.split( "," )[1];
+        String type = data.split( "," )[0].split( ";" )[0].split( ":" )[1].split( "/" )[1];
+        String randomName = UUID.randomUUID().toString();
+        String nameFile = randomName + "." + type;
+        String location = usersIcoUploadFolder + nameFile;
+        String path = filePath + nameFile;
+        byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary( base64Image );
+        BufferedOutputStream stream =
+                new BufferedOutputStream( new FileOutputStream( new File( location ) ) );
+        stream.write( imageBytes );
+        stream.close();
+        UploadFile fileInfo = builder.buildAvatarInfo( path, usersIcoUploadFolder, nameFile, type, imageBytes.length );
+        saveUploadFileToDatabace( fileInfo );
+        return fileInfo;
     }
 }

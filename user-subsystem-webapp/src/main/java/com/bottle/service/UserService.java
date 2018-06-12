@@ -63,6 +63,11 @@ public class UserService {
     }
 
     @Transactional
+    public void updateUser(User user){
+        userRepository.save( user );
+    }
+
+    @Transactional
     public SmallUserDTO getSmallInfoUser(UUID userId) {
         User user = userRepository.findOne( userId );
         SmallUserDTO smallUserDTO = new SmallUserDTO();
