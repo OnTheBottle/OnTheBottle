@@ -9,11 +9,9 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>api-gateway</module>
         <module>user-subsystem-webapp</module>
         <module>message-subsystem-webapp</module>
         <module>place-subsystem-webapp</module>
-        <module>file-upload-subsystem</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
