@@ -1,15 +1,14 @@
 package com.bottle.model.dto.response;
 
-import com.bottle.model.dto.UserDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 
 public class InfoPageResponse {
     private String name;

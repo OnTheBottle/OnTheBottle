@@ -1,4 +1,5 @@
 package com.bottle.controller;
+
 import com.bottle.entity.User;
 import com.bottle.model.dto.UserDTO;
 import com.bottle.repository.UserRepository;
@@ -27,17 +28,16 @@ public class InfoPageController {
 //        User user = userRepository.getUserById(request.getId());
         User user = userRepository.findOne(request.getId());
 //        User user = userRepository.findOne(UUID.fromString("14dd28b2-1e7e-4575-9923-135c4fbf345b"));
-        InfoPageResponse infoPageResponse = new InfoPageResponse();
-
-        infoPageResponse.setName(user.getName());
-        infoPageResponse.setSurname(user.getSurname());
-        infoPageResponse.setAge(user.getAge());
-        infoPageResponse.setEmail(user.getEmail());
-        infoPageResponse.setCountry((user.getCountry()));
-        infoPageResponse.setCity(user.getCity());
-        infoPageResponse.setAvatarUrl(user.getAvatarUrl());
-        infoPageResponse.setStatus(user.getStatus());
-        infoPageResponse.setInfo(user.getInfo());
+        InfoPageResponse infoPageResponse = InfoPageResponse.builder()
+                .name(user.getName())
+                .surname(user.getSurname())
+                .age(user.getAge())
+                .email(user.getEmail())
+                .country((user.getCountry()))
+                .city(user.getCity())
+                .avatarUrl(user.getAvatarUrl())
+                .status(user.getStatus())
+                .info(user.getInfo()).build();
 
         System.out.println("TestController: A name of the user is " + infoPageResponse.getName());
 
